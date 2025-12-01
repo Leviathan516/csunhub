@@ -1,0 +1,261 @@
+<!DOCTYPE HTML>
+<!--
+    CSUN Campus Resource Hub
+-->
+<html>
+  <head>
+    <title>CSUN Campus Resource Hub</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <!-- Phantom main stylesheet -->
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+  </head>
+  <body class="is-preload">
+    <!-- Wrapper -->
+    <div id="wrapper">
+
+      <!-- Header -->
+      <header id="header">
+        <div class="inner">
+
+          <!-- Logo -->
+          <a href="index.html" class="logo">
+            <span class="symbol">
+              <img src="images/CSUNlogo.png" alt="CSUN Logo" />
+            </span>
+            <span class="title">CSUN Campus Resource Hub</span>
+          </a>
+
+          <!-- Nav trigger -->
+          <nav>
+            <ul>
+              <li><a href="#menu">Menu</a></li>
+            </ul>
+          </nav>
+
+        </div>
+      </header>
+
+      <!-- Off-canvas Menu -->
+      <nav id="menu">
+        <h2>Menu</h2>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="dashboard480.html">Student Dashboard</a></li>
+          <li><a href="map480.html">Campus Map</a></li>
+          <li><a href="dining480.html">Dining</a></li>
+          <li><a href="clubs480.html">Clubs &amp; Orgs</a></li>
+          <li><a href="career480.html">Careers</a></li>
+          <li id="menu-login"><a href="login.html">Login</a></li>
+          <li id="menu-signup"><a href="signup.html">Sign Up</a></li>
+          <li id="menu-logout" style="display:none;"><a href="#" onclick="logout()">Logout</a></li>
+        </ul>
+      </nav>
+
+      <!-- Main -->
+      <div id="main">
+        <div class="inner">
+          <header>
+            <h1>Welcome to the CSUN Campus Resource Hub</h1>
+            <p>
+              A centralized portal created for CIT 480 Senior Design to help CSUN students quickly
+              find <strong>maps</strong>, <strong>dining</strong>, <strong>clubs</strong>, and
+              <strong>career</strong> resources on and around campus.
+            </p>
+            <!-- Dynamic welcome text when logged in -->
+            <p id="welcome" style="font-weight:600; margin-top:0.75rem;"></p>
+          </header>
+
+          <!-- Tiles -->
+          <section class="tiles">
+            <!-- Campus Map -->
+            <article class="style1">
+              <span class="image">
+                <img src="images/pic01.jpg" alt="Campus Map" />
+              </span>
+              <a href="map480.html">
+                <h2>Campus Map</h2>
+                <div class="content">
+                  <p>Navigate CSUN with interactive maps showing key buildings, services, and paths.</p>
+                </div>
+              </a>
+            </article>
+
+            <!-- Dining -->
+            <article class="style2">
+              <span class="image">
+                <img src="images/pic02.jpg" alt="Dining Options" />
+              </span>
+              <a href="dining480.html">
+                <h2>Dining</h2>
+                <div class="content">
+                  <p>Explore on-campus and nearby dining, hours of operation, and housing-friendly spots.</p>
+                </div>
+              </a>
+            </article>
+
+            <!-- Clubs & Orgs -->
+            <article class="style3">
+              <span class="image">
+                <img src="images/pic03.jpg" alt="Student Clubs" />
+              </span>
+              <a href="clubs480.html">
+                <h2>Clubs &amp; Orgs</h2>
+                <div class="content">
+                  <p>Find student clubs, organizations, and communities to get involved with at CSUN.</p>
+                </div>
+              </a>
+            </article>
+
+            <!-- Careers -->
+            <article class="style4">
+              <span class="image">
+                <img src="images/pic04.jpg" alt="Careers" />
+              </span>
+              <a href="career480.html">
+                <h2>Careers</h2>
+                <div class="content">
+                  <p>Access career resources, internships, and job opportunities tailored for CSUN students.</p>
+                </div>
+              </a>
+            </article>
+
+            <!-- Student Dashboard -->
+            <article class="style5">
+              <span class="image">
+                <img src="images/pic05.jpg" alt="Student Dashboard" />
+              </span>
+              <a href="dashboard480.html">
+                <h2>Student Dashboard</h2>
+                <div class="content">
+                  <p>
+                    Access Canvas, Student Center, class enrollment, and your degree progress report.
+                  </p>
+                </div>
+              </a>
+            </article>
+
+            <!-- Account -->
+            <article class="style6">
+              <span class="image">
+                <img src="images/pic06.jpg" alt="Account" />
+              </span>
+              <a href="login.html">
+                <h2>My Account</h2>
+                <div class="content">
+                  <p>Log in or sign up to personalize your experience.</p>
+                </div>
+              </a>
+            </article>
+          </section>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer id="footer">
+        <div class="inner">
+          <section>
+            <h2>About This Project</h2>
+            <p>
+              This site is a CIT 480 Senior Design project built to streamline access to CSUN
+              campus resources for students.
+            </p>
+          </section>
+          <section>
+            <h2>Contact</h2>
+            <form method="post" action="#">
+              <div class="fields">
+                <div class="field half">
+                  <input type="text" name="name" id="name" placeholder="Name" />
+                </div>
+                <div class="field half">
+                  <input type="email" name="email" id="email" placeholder="Email" />
+                </div>
+                <div class="field">
+                  <textarea name="message" id="message" placeholder="Message"></textarea>
+                </div>
+              </div>
+              <ul class="actions">
+                <li><input type="submit" value="Send" class="primary" /></li>
+              </ul>
+            </form>
+          </section>
+          <ul class="copyright">
+            <li>&copy; CSUN Campus Resource Hub.</li>
+          </ul>
+        </div>
+      </footer>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+
+    <!-- AWS Amplify (for dynamic login/logout + welcome) -->
+    <script src="https://unpkg.com/aws-amplify@5.x/dist/aws-amplify.min.js"></script>
+    <script>
+      const { Amplify, Auth } = aws_amplify;
+
+      Amplify.configure({
+  Auth: {
+    region: "us-west-1",
+    userPoolId: "us-west-1_6ctTVtWp5",
+    userPoolWebClientId: "2g61h83ohkj63kbalblcmuu0gt"
+  },
+  API: {
+    endpoints: [
+      {
+        name: "csunhubapi",
+        endpoint: "https://2bbbazs3gc.execute-api.us-west-1.amazonaws.com/dev",
+        region: "us-west-1"
+      }
+    ]
+  }
+});
+
+
+      async function initIndex() {
+        const welcomeEl = document.getElementById("welcome");
+        const menuLogin = document.getElementById("menu-login");
+        const menuSignup = document.getElementById("menu-signup");
+        const menuLogout = document.getElementById("menu-logout");
+
+        try {
+          const user = await Auth.currentAuthenticatedUser();
+          const attrs = user.attributes || {};
+          const major = attrs["custom:major"] || "CSUN Student";
+          const year = attrs["custom:catalogYear"] || "";
+
+          welcomeEl.textContent =
+            `Welcome back, ${user.username} (${major}${year ? ", Catalog " + year : ""})`;
+
+          if (menuLogin) menuLogin.style.display = "none";
+          if (menuSignup) menuSignup.style.display = "none";
+          if (menuLogout) menuLogout.style.display = "";
+        } catch (err) {
+          // Not logged in
+          if (welcomeEl) welcomeEl.textContent = "";
+          if (menuLogin) menuLogin.style.display = "";
+          if (menuSignup) menuSignup.style.display = "";
+          if (menuLogout) menuLogout.style.display = "none";
+        }
+      }
+
+      async function logout() {
+        try {
+          await Auth.signOut();
+        } catch (e) {
+          console.error(e);
+        }
+        window.location.href = "login.html";
+      }
+
+      initIndex();
+    </script>
+  </body>
+</html>

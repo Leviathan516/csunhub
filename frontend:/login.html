@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Log In | CSUN Campus Resource Hub</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+  </head>
+  <body class="is-preload">
+    <div id="wrapper">
+      <header id="header">
+        <div class="inner">
+          <h1>CSUN Campus Resource Hub</h1>
+          <p>Log in to access your dashboard</p>
+        </div>
+      </header>
+
+      <div id="main">
+        <div class="inner">
+          <section>
+            <h2>Log In</h2>
+            <form id="loginForm">
+              <div class="fields">
+                <div class="field">
+                  <label for="username">Username</label>
+                  <input type="text" id="username" required />
+                </div>
+                <div class="field">
+                  <label for="password">Password</label>
+                  <input type="password" id="password" required />
+                </div>
+              </div>
+
+              <ul class="actions">
+                <li>
+                  <button type="button" class="primary" id="loginButton">Log In</button>
+                </li>
+              </ul>
+
+              <p id="message" style="margin-top: 1rem;"></p>
+
+              <p>
+                Need an account?
+                <a href="signup.html">Sign up here</a>.
+              </p>
+            </form>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <!-- Amplify -->
+    <script src="https://unpkg.com/aws-amplify@5.x/dist/aws-amplify.min.js"></script>
+    <script>
+      const { Amplify, Auth } = aws_amplify;
+
+      Amplify.configure({
+        Auth: {
+          region: "us-west-1",
+          userPoolId: "us-west-1_6ctTVtWp5",
+          userPoolWebClientId: "2g61h83ohkj63kbalblcmuu0gt"
+        }
+      });
+
+      const messageEl = document.getElementById("message");
+      const loginBtn = document.getElementById("loginButton");
+
+      loginBtn.addEventListener("click", async () => {
+        messageEl.textContent = "";
+
+        const username = document.getElementById("username").value.trim();
+        const password = document.getElementById("password").value;
+
+        if (!username || !password) {
+          messageEl.textContent = "Please enter username and password.";
+          return;
+        }
+
+        try {
+          const user = await Auth.signIn(username, password);
+          console.log("Login success:", user);
+          // Go to dashboard once logged in
+          window.location.href = "dashboard480.html";
+        } catch (err) {
+          console.error("Login error:", err);
+          messageEl.textContent = err.message || "Error logging in.";
+        }
+      });
+    </script>
+  </body>
+</html>

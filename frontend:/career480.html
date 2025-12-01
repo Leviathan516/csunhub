@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSUN Career Page</title>
+  <link rel="stylesheet" href="../css/style480.css">
+
+  <style>
+    /* Page-specific compact styling */
+    main {
+      text-align: center;
+      padding: 30px;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    h1 {
+      color: #d22030;
+      margin-bottom: 10px;
+    }
+
+    .job-wrapper {
+      text-align: left;
+      max-width: 700px;
+      margin: 0 auto 40px auto;
+    }
+
+    .job-wrapper h2 {
+      color: #d22030;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .major-title {
+      margin: 18px 0 6px;
+      font-size: 1.15rem;
+      font-weight: bold;
+      color: #d22030;
+    }
+
+    .job-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 10px 0;
+    }
+
+    .job-list li {
+      background: #fff;
+      border: 1px solid #ccc;
+      padding: 8px 10px;
+      margin-bottom: 6px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+    }
+
+    /* Calendar */
+    iframe {
+      width: 100%;
+      max-width: 900px;
+      height: 600px;
+      border: 0;
+      border-radius: 12px;
+      margin: 20px auto;
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR (unchanged) -->
+  <header>
+    <nav class="navbar">
+      <div class="title">Campus Resource Hub</div>
+      <ul class="nav-links">
+        <li><a href="home480.html">Home</a></li>
+        <li><a href="map480.html">Map</a></li>
+        <li><a href="dining480.html">Dining</a></li>
+        <li><a href="clubs480.html">Clubs</a></li>
+        <li><a href="career480.html">Careers</a></li>
+        <li class="dropdown">
+          <button class="dropdown-btn">Account ▾</button>
+          <div class="dropdown-content">
+            <a href="login.html">Login</a>
+            <a href="signup.html">Sign Up</a>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- PAGE CONTENT -->
+  <main>
+    <h1>Career Opportunities</h1>
+    <p>Find jobs, internships, and upcoming CSUN career events tailored to your major.</p>
+
+    <!-- JOB SECTION -->
+    <section class="job-wrapper">
+      <h2>Job Listings by Major</h2>
+
+      <!-- IT -->
+      <div class="major-title">Information Technology</div>
+      <ul class="job-list">
+        <li><strong>Helpdesk Technician</strong> — CSUN IT Dept</li>
+        <li><strong>Web Developer Assistant</strong> — Engineering College</li>
+        <li><strong>Cybersecurity Intern</strong> — IT Security Team</li>
+      </ul>
+
+      <!-- Law -->
+      <div class="major-title">Law / Pre-Law</div>
+      <ul class="job-list">
+        <li><strong>Legal Research Aide</strong> — Political Science Dept</li>
+        <li><strong>Court Clerk Assistant</strong> — LA County Courts</li>
+        <li><strong>Student Advocate</strong> — CSUN Legal Services</li>
+      </ul>
+
+      <!-- Psychology -->
+      <div class="major-title">Psychology</div>
+      <ul class="job-list">
+        <li><strong>Research Assistant</strong> — Psych Lab</li>
+        <li><strong>Peer Mentor</strong> — Student Counseling</li>
+        <li><strong>Behavior Technician</strong> — Off-Campus Partners</li>
+      </ul>
+
+      <!-- Business -->
+      <div class="major-title">Business / Marketing</div>
+      <ul class="job-list">
+        <li><strong>Marketing Assistant</strong> — CSUN Communications</li>
+        <li><strong>Finance Intern</strong> — Nazarian College</li>
+        <li><strong>Retail Supervisor Trainee</strong> — Campus Store</li>
+      </ul>
+
+      <!-- Engineering -->
+      <div class="major-title">Engineering</div>
+      <ul class="job-list">
+        <li><strong>Lab Technician</strong> — Engineering Labs</li>
+        <li><strong>CAD Assistant</strong> — Facilities Planning</li>
+        <li><strong>Robotics Intern</strong> — Tech Innovation Center</li>
+      </ul>
+    </section>
+
+    <!-- CALENDAR SECTION -->
+    <section>
+      <h2>📅 CSUN Career Events Calendar</h2>
+
+      <!-- This calendar ALWAYS loads inside iframe -->
+      <iframe 
+        src="https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&src=csun.edu_hqg7ibn6lg3rj5o8ep7j5gptq0%40group.calendar.google.com&color=%23B1365F&ctz=America%2FLos_Angeles">
+      </iframe>
+
+      <p>More events available at the 
+        <a href="https://www.csun.edu/career/events" target="_blank">CSUN Career Center</a>.
+      </p>
+    </section>
+
+  </main>
+</body>
+
+</html>
