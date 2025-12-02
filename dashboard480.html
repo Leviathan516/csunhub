@@ -1,0 +1,225 @@
+<!DOCTYPE HTML>
+<!--
+  CSUN Campus Resource Hub - Student Dashboard
+-->
+<html>
+  <head>
+    <title>Student Dashboard | CSUN Campus Resource Hub</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+  </head>
+
+  <body class="is-preload">
+    <!-- Wrapper -->
+    <div id="wrapper">
+      <!-- Header -->
+      <header id="header">
+        <div class="inner">
+          <!-- Logo -->
+          <a href="index.html" class="logo">
+            <span class="symbol">
+              <img src="images/CSUNlogo.png" alt="CSUN Logo" />
+            </span>
+            <span class="title">CSUN Campus Resource Hub</span>
+          </a>
+
+          <!-- Nav trigger -->
+          <nav>
+            <ul>
+              <li><a href="#menu">Menu</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+
+      <!-- Off-canvas Menu -->
+      <nav id="menu">
+        <h2>Menu</h2>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="dashboard480.html">Student Dashboard</a></li>
+          <li><a href="map480.html">Campus Map</a></li>
+          <li><a href="dining480.html">Dining</a></li>
+          <li><a href="clubs480.html">Clubs &amp; Orgs</a></li>
+          <li><a href="career480.html">Careers</a></li>
+          <li><a href="signup.html">Sign Up / Login</a></li>
+          <li><a href="#" onclick="logout()">Logout</a></li>
+        </ul>
+      </nav>
+
+      <!-- Main -->
+      <div id="main">
+        <div class="inner">
+          <header>
+            <h1>Student Dashboard</h1>
+            <p>
+              Quick access to Canvas and key CSUN student services: Student Center, class
+              enrollment, and degree progress.
+            </p>
+            <p id="welcome" style="font-weight: 600; margin-top: 0.75rem;"></p>
+          </header>
+
+          <!-- Dashboard cards -->
+          <section>
+            <div class="row">
+              <!-- Canvas Login -->
+              <div class="col-6 col-12-medium">
+                <section class="box">
+                  <span class="icon solid fa-chalkboard-teacher"></span>
+                  <h2>Canvas Login</h2>
+                  <p>Access your courses, assignments, discussions, and grades in Canvas.</p>
+                  <ul class="actions">
+                    <li>
+                      <a
+                        href="https://canvas.csun.edu"
+                        class="button primary"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Open Canvas
+                      </a>
+                    </li>
+                  </ul>
+                </section>
+              </div>
+
+              <!-- Student Center -->
+              <div class="col-6 col-12-medium">
+                <section class="box">
+                  <span class="icon solid fa-university"></span>
+                  <h2>Student Center</h2>
+                  <p>
+                    View your schedule, finances, holds, and personal information in the CSUN Student
+                    Center.
+                  </p>
+                  <ul class="actions">
+                    <li>
+                      <a
+                        href="https://cmsweb.csun.edu/psp/CNRPRD/EMPLOYEE/SA/c/SA_LEARNER_SERVICES.SSS_STUDENT_CENTER.GBL?"
+                        class="button primary"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Open Student Center
+                      </a>
+                    </li>
+                  </ul>
+                </section>
+              </div>
+
+              <!-- Find / Enroll in Classes -->
+              <div class="col-6 col-12-medium">
+                <section class="box">
+                  <span class="icon solid fa-search"></span>
+                  <h2>Find / Enroll in Classes</h2>
+                  <p>
+                    Search for classes, check availability, and enroll for upcoming terms through the
+                    CSUN portal.
+                  </p>
+                  <ul class="actions">
+                    <li>
+                      <a
+                        href="https://portal.csun.edu/student/student_homescreen/_/find_classes"
+                        class="button primary"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Find Classes
+                      </a>
+                    </li>
+                  </ul>
+                </section>
+              </div>
+
+              <!-- Degree Progress Report -->
+              <div class="col-6 col-12-medium">
+                <section class="box">
+                  <span class="icon solid fa-clipboard-check"></span>
+                  <h2>Degree Progress Report</h2>
+                  <p>
+                    Run your degree audit (uAchieve) to see completed requirements and what’s
+                    remaining for graduation.
+                  </p>
+                  <ul class="actions">
+                    <li>
+                      <a
+                        href="https://cmsweb.csun.edu/psp/CNRPRD/EMPLOYEE/SA/s/WEBLIB_NR_UACHV.ISCRIPT1.FieldFormula.IScript_Uachieve_Direct"
+                        class="button primary"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Open Degree Progress
+                      </a>
+                    </li>
+                  </ul>
+                </section>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer id="footer">
+        <div class="inner">
+          <section>
+            <h2>About This Dashboard</h2>
+            <p>
+              This student dashboard is part of the CIT 480 Senior Design project to make CSUN campus
+              resources easier to access.
+            </p>
+          </section>
+          <ul class="copyright">
+            <li>&copy; CSUN Campus Resource Hub.</li>
+          </ul>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Phantom Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+
+    <!-- Simple auth guard using localStorage (no AWS Amplify) -->
+    <script>
+      // Redirect to login if no auth token
+      const token = localStorage.getItem("authToken");
+      if (!token) {
+        window.location.href = "login.html";
+      }
+
+      function loadDashboard() {
+        const username = localStorage.getItem("username") || "Student";
+        const major = localStorage.getItem("major") || "";
+        const catalogYear = localStorage.getItem("catalogYear") || "";
+
+        const welcomeEl = document.getElementById("welcome");
+
+        let text = `Welcome, ${username}`;
+        if (major && catalogYear) {
+          text += ` (${major}, Catalog ${catalogYear})`;
+        } else if (major) {
+          text += ` (${major})`;
+        }
+
+        welcomeEl.textContent = text;
+      }
+
+      function logout() {
+        // Clear stored auth info and send back to login
+        localStorage.removeItem("authToken");
+        localStorage.removeItem("username");
+        localStorage.removeItem("major");
+        localStorage.removeItem("catalogYear");
+        window.location.href = "login.html";
+      }
+
+      loadDashboard();
+    </script>
+  </body>
+</html>

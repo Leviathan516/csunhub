@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSUN STUDENT RESOURCE HUB</title>
+  <link rel="stylesheet" href="../css/style480.css">
+</head>
+
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="title">Campus Resource Hub</div>
+      <ul class="nav-links">
+        <li><a href="home480.html">Home</a></li>
+        <li><a href="map480.html">Map</a></li>
+        <li><a href="dining480.html">Dining</a></li>
+        <li><a href="clubs480.html">Clubs</a></li>
+        <li><a href="career480.html">Careers</a></li>
+        <li class="dropdown">
+          <button class="dropdown-btn">Account ▾</button>
+          <div class="dropdown-content">
+            <a href="login.html">Login</a>
+            <a href="signup.html">Sign Up</a>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </header>
+  <main class="blog-container">
+    <h1>Top Places to Eat Near CSUN</h1>
+    <p>Looking for a good bite between classes? Here are some favorite popular spots on and around campus.</p>
+    <section class="where-heading">
+      <h2>SPOTS NEAR HOUSING</h2>
+    </section>
+
+    <section class="eat-spot">
+      <h3>G'mos</h3>
+      <img src="../images/arbor-grill.jpg" alt="Arbor Grill">
+      <p>
+        Located in Arbor Court, the <strong>Arbor Grill</strong> offers snacks, sandwiches, burgers, pizza, and salads.
+        It’s a convenient on-campus option when you don’t want to stray far.
+      </p>
+      <p><strong>Insider tip:</strong> It’s busiest right after classes, so try going just before or after peak times.
+      </p>
+    </section>
+
+    <section class="eat-spot">
+      <h3>Matador Food Court (On Campus)</h3>
+      <img src="../images/food-court.jpg" alt="Matador Food Court">
+      <p>
+        The <strong>Matador Food Court</strong> contains familiar favorites like Burger King, Subway, El Pollo Loco, and
+        Panda Express.
+        Ideal for groups where everyone wants something different.
+      </p>
+    </section>
+
+    <section class="eat-spot">
+      <h3>Freudian Sip (Campus)</h3>
+      <img src="../images/freudian-sip.jpg" alt="Freudian Sip café">
+      <p>
+        A CSUN-original café, <strong>Freudian Sip</strong> has multiple campus locations serving coffee, pastries,
+        sandwiches, and grab-and-go items.
+      </p>
+    </section>
+
+    <section class="eat-spot">
+      <h3>El Torito (Northridge)</h3>
+      <img src="../images/el-torito.jpg" alt="El Torito">
+      <p>
+        A short drive from campus, <strong>El Torito</strong> offers Mexican cuisine in a sit-down setting. Great for
+        group lunches or dinner.
+      </p>
+    </section>
+
+    <section class="eat-spot">
+      <h3>Black Angus Steakhouse (Northridge)</h3>
+      <img src="../images/black-angus.jpg" alt="Black Angus Steakhouse">
+      <p>
+        Known for its steaks and hearty meals, <strong>Black Angus</strong> is a solid pick when you're looking to
+        splurge a little.
+      </p>
+    </section>
+
+    <section class="eat-spot">
+      <h3>Emle’s</h3>
+      <img src="../images/emles.jpg" alt="Emle's Restaurant">
+      <p>
+        Among students’ go-to picks is <strong>Emle’s</strong> — affordable, wide menu, and good portions. A dependable
+        off-campus meal spot.
+      </p>
+    </section>
+
+    <section class="eat-spot">
+      <h3>My Hero Sandwiches</h3>
+      <img src="../images/my-hero.jpg" alt="My Hero Sandwiches">
+      <p>
+        This sandwich shop just off campus is often praised by students for being affordable and tasty.
+      </p>
+    </section>
+
+    <footer class="blog-footer">
+      <p>Written by the Campus Resource Team | Updated: <span id="last-updated"></span></p>
+    </footer>
+  </main>
+
+  <script>
+    // Add today's date to the footer
+    const today = new Date();
+    document.getElementById('last-updated').textContent = today.toLocaleDateString();
+  </script>
+</body>
+
+</html>

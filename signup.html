@@ -1,0 +1,137 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Sign Up | CSUN Campus Resource Hub</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+  </head>
+  <body class="is-preload">
+    <div id="wrapper">
+      <header id="header">
+        <div class="inner">
+          <h1>CSUN Campus Resource Hub</h1>
+          <p>Create your account</p>
+        </div>
+      </header>
+
+      <div id="main">
+        <div class="inner">
+          <section>
+            <h2>Sign Up</h2>
+            <form id="signupForm">
+              <div class="fields">
+                <div class="field">
+                  <label for="username">Username</label>
+                  <input type="text" id="username" required />
+                </div>
+                <div class="field">
+                  <label for="email">Email</label>
+                  <input type="email" id="email" required />
+                </div>
+                <div class="field">
+                  <label for="password">Password</label>
+                  <input type="password" id="password" required />
+                </div>
+                <div class="field">
+                  <label for="confirmPassword">Confirm Password</label>
+                  <input type="password" id="confirmPassword" required />
+                </div>
+                <div class="field">
+                  <label for="major">Major</label>
+                  <input
+                    type="text"
+                    id="major"
+                    placeholder="e.g., Computer Information Technology"
+                  />
+                </div>
+                <div class="field">
+                  <label for="catalogYear">Catalog Year</label>
+                  <input type="text" id="catalogYear" placeholder="e.g., 2024" />
+                </div>
+              </div>
+
+              <ul class="actions">
+                <li>
+                  <!-- IMPORTANT: type="button" so the form doesn't auto-submit -->
+                  <button type="button" class="primary" id="signupButton">Sign Up</button>
+                </li>
+              </ul>
+
+              <p id="message" style="margin-top: 1rem;"></p>
+
+              <p>
+                Already have an account?
+                <a href="login.html">Log in here</a>.
+              </p>
+            </form>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <!-- Render backend signup (no AWS Amplify) -->
+    <script>
+      const API_URL = "https://csunhub-backend.onrender.com";
+
+      const messageEl = document.getElementById("message");
+      const btn = document.getElementById("signupButton");
+
+      btn.addEventListener("click", async () => {
+        messageEl.textContent = "";
+
+        const username = document.getElementById("username").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+        const confirmPassword = document.getElementById("confirmPassword").value;
+        const major = document.getElementById("major").value.trim();
+        const catalogYear = document.getElementById("catalogYear").value.trim();
+
+        if (!username || !email || !password) {
+          messageEl.textContent = "Please fill in username, email, and password.";
+          return;
+        }
+        if (password !== confirmPassword) {
+          messageEl.textContent = "Passwords do not match.";
+          return;
+        }
+
+        try {
+          const res = await fetch(`${API_URL}/signup`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              username,
+              email,
+              password,
+              major,
+              catalogYear
+            })
+          });
+
+          const data = await res.json().catch(() => ({}));
+
+          if (!res.ok || data.success === false) {
+            throw new Error(data.message || "Sign-up failed.");
+          }
+
+          console.log("Sign-up result:", data);
+          messageEl.textContent =
+            data.message ||
+            "Account created! You can now log in with your username and password.";
+
+          // Optionally auto-redirect to login after a short delay:
+          setTimeout(() => {
+            window.location.href = "login.html";
+          }, 2000);
+        } catch (err) {
+          console.error("Sign-up error:", err);
+          messageEl.textContent = err.message || "Error creating account.";
+        }
+      });
+    </script>
+  </body>
+</html>
