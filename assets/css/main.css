@@ -1916,6 +1916,18 @@ input, select, textarea {
 		}
 
 /* Actions */
+	/* Signup page button layout fix */
+	#signupForm ul.actions {
+	  width: 100%;
+	}
+	
+	#signupForm ul.actions li {
+	  width: 100%;
+	}
+	
+	#signupForm ul.actions li button {
+	  width: 100%;
+	}
 
 	ul.actions {
 		display: -moz-flex;
