@@ -1916,19 +1916,7 @@ input, select, textarea {
 		}
 
 /* Actions */
-	/* Signup page button layout fix */
-	#signupForm ul.actions {
-	  width: 100%;
-	}
 	
-	#signupForm ul.actions li {
-	  width: 100%;
-	}
-	
-	#signupForm ul.actions li button {
-	  width: 100%;
-	}
-
 	ul.actions {
 		display: -moz-flex;
 		display: -webkit-flex;
@@ -3337,5 +3325,31 @@ input, select, textarea {
 			#wrapper > * > .inner {
 				padding: 0 1.25em;
 			}
+			/* Signup page layout fixes */
+#signupForm ul.actions {
+  width: 100%;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+#signupForm ul.actions li {
+  width: 100%;
+  padding: 0;
+}
+
+#signupForm ul.actions li button {
+  width: 100%;
+}
+
+/* "Already have an account?" text under button */
+#signupForm p#message {
+  margin-top: 1rem;
+}
+
+#signupForm p:last-of-type {
+  margin-top: 1rem;
+  text-align: center;    /* center the login text */
+}
+
 
 		}
