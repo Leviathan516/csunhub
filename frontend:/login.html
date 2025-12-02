@@ -50,18 +50,9 @@
       </div>
     </div>
 
-    <!-- Amplify -->
-    <script src="https://unpkg.com/aws-amplify@5.x/dist/aws-amplify.min.js"></script>
+    <!-- Render backend auth (no AWS Amplify) -->
     <script>
-      const { Amplify, Auth } = aws_amplify;
-
-      Amplify.configure({
-        Auth: {
-          region: "us-west-1",
-          userPoolId: "us-west-1_6ctTVtWp5",
-          userPoolWebClientId: "2g61h83ohkj63kbalblcmuu0gt"
-        }
-      });
+      const API_URL = "https://csunhub-backend.onrender.com";
 
       const messageEl = document.getElementById("message");
       const loginBtn = document.getElementById("loginButton");
@@ -73,13 +64,40 @@
         const password = document.getElementById("password").value;
 
         if (!username || !password) {
-          messageEl.textContent = "Please enter username and password.";
+          messageEl.textContent = "Please enter your username and password.";
           return;
         }
 
         try {
-          const user = await Auth.signIn(username, password);
-          console.log("Login success:", user);
+          const res = await fetch(`${API_URL}/login`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ username, password })
+          });
+
+          const data = await res.json().catch(() => ({}));
+
+          if (!res.ok || data.success === false) {
+            throw new Error(data.message || "Login failed.");
+          }
+
+          console.log("Login success:", data);
+
+          // Store auth info in localStorage
+          if (data.token) {
+            localStorage.setItem("authToken", data.token);
+          } else {
+            // fallback token so dashboard lock still works (you can remove later)
+            localStorage.setItem("authToken", "dummy-token");
+          }
+
+          // Optional profile info (if your backend returns it)
+          localStorage.setItem("username", data.username || username);
+          if (data.major) localStorage.setItem("major", data.major);
+          if (data.catalogYear) localStorage.setItem("catalogYear", data.catalogYear);
+
           // Go to dashboard once logged in
           window.location.href = "dashboard480.html";
         } catch (err) {

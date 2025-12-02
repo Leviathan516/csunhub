@@ -185,46 +185,38 @@
     <script src="assets/js/util.js"></script>
     <script src="assets/js/main.js"></script>
 
-    <!-- AWS Amplify (Cognito Auth) -->
-    <script src="https://unpkg.com/aws-amplify@5.x/dist/aws-amplify.min.js"></script>
+    <!-- Simple auth guard using localStorage (no AWS Amplify) -->
     <script>
-      const { Amplify, Auth } = aws_amplify;
-
-      Amplify.configure({
-  Auth: {
-    region: "us-west-1",
-    userPoolId: "us-west-1_6ctTVtWp5",
-    userPoolWebClientId: "2g61h83ohkj63kbalblcmuu0gt"
-  },
-  API: {
-    endpoints: [
-      {
-        name: "csunhubapi",
-        endpoint: "https://2bbbazs3gc.execute-api.us-west-1.amazonaws.com/dev",
-        region: "us-west-1"
+      // Redirect to login if no auth token
+      const token = localStorage.getItem("authToken");
+      if (!token) {
+        window.location.href = "login.html";
       }
-    ]
-  }
-});
 
-      async function loadDashboard() {
-        try {
-          const user = await Auth.currentAuthenticatedUser();
-          const attrs = user.attributes || {};
-          const major = attrs["custom:major"] || "Unknown major";
-          const year = attrs["custom:catalogYear"] || "N/A";
+      function loadDashboard() {
+        const username = localStorage.getItem("username") || "Student";
+        const major = localStorage.getItem("major") || "";
+        const catalogYear = localStorage.getItem("catalogYear") || "";
 
-          const welcomeEl = document.getElementById("welcome");
-          welcomeEl.textContent = `Welcome, ${user.username} (${major}, Catalog ${year})`;
-        } catch (err) {
-          // Not logged in → send back to signup/login
-          window.location.href = "signup.html";
+        const welcomeEl = document.getElementById("welcome");
+
+        let text = `Welcome, ${username}`;
+        if (major && catalogYear) {
+          text += ` (${major}, Catalog ${catalogYear})`;
+        } else if (major) {
+          text += ` (${major})`;
         }
+
+        welcomeEl.textContent = text;
       }
 
-      async function logout() {
-        await Auth.signOut();
-        window.location.href = "signup.html";
+      function logout() {
+        // Clear stored auth info and send back to login
+        localStorage.removeItem("authToken");
+        localStorage.removeItem("username");
+        localStorage.removeItem("major");
+        localStorage.removeItem("catalogYear");
+        window.location.href = "login.html";
       }
 
       loadDashboard();
