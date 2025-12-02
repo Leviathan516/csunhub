@@ -7,12 +7,30 @@
     <link rel="stylesheet" href="assets/css/main.css" />
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
     <style>
-  #signupButton {
+  /* Make the actions list and its item full width so the button can expand */
+  ul.actions {
+    padding-left: 0;
+  }
+
+  ul.actions > li {
+    display: block !important;
     width: 100% !important;
-    max-width: 100% !important;
+    margin: 0 !important;
+  }
+
+  /* Ensure the signup button is a block-level element and truly fills available width */
+  #signupButton {
+    display: block !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: none !important;
     background-color: #D22030 !important;  /* Hero Red */
     color: white !important;
     box-shadow: none !important;
+    border: none !important;
+    padding: 0.9rem 1rem !important;
+    text-align: center !important;
+    font-weight: 700 !important;
   }
 
   #signupButton:hover {
@@ -311,8 +329,4 @@
 
   </body>
 </html>
-
-
-
-
 
