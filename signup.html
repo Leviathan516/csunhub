@@ -6,57 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-    <style>
-/* Actions row: show button and login text side-by-side */
-ul.actions {
-  display: flex !important;
-  align-items: center;
-  gap: 1rem;
-  padding-left: 0;
-  margin: 0;
-}
-
-/* keep each li inline-sized and remove default spacing */
-ul.actions > li {
-  display: inline-flex !important;
-  align-items: center;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-/* Button styling: normal inline button that looks like your hero button */
-#signupButton {
-  display: inline-block !important;
-  box-sizing: border-box !important;
-  background-color: #D22030 !important;  /* Hero Red */
-  color: white !important;
-  box-shadow: none !important;
-  border: none !important;
-  padding: 0.6rem 0.9rem !important;
-  text-align: center !important;
-  font-weight: 700 !important;
-  cursor: pointer;
-}
-
-/* Hover color */
-#signupButton:hover {
-  background-color: #B61F2C !important;
-}
-
-/* Login text in actions row: remove paragraph default margins */
-.actions-login {
-  margin: 0;
-  color: #585858;
-  font-size: 0.95rem;
-}
-
-/* Make the login link a little less obtrusive */
-.actions-login a {
-  color: #585858;
-  border-bottom: dotted 1px rgba(88,88,88,0.3);
-}
-</style>
-
   </head>
   <body class="is-preload">
     <div id="wrapper">
@@ -89,42 +38,33 @@ ul.actions > li {
                   <label for="confirmPassword">Confirm Password</label>
                   <input type="password" id="confirmPassword" required />
                 </div>
-                <!-- Catalog Year Dropdown -->
-          <div class="field">
-            <label for="catalogYear">Catalog Year</label>
-            <select id="catalogYear" required>
-              <option value="">-- Select Catalog Year --</option>
-              <option>2025-2026</option>
-              <option>2024-2025</option>
-              <option>2023-2024</option>
-              <option>2022-2023</option>
-              <option>2021-2022</option>
-            </select>
-          </div>
-          
-          <!-- Major Dropdown -->
-          <div class="field">
-            <label for="major">Major</label>
-            <select id="major" required>
-              <option value="">-- Select Major --</option>
-              <!-- options omitted for brevity -->
-              <option>Urban Studies and Planning, B.A.</option>
-            </select>
-          </div>
+                <div class="field">
+                  <label for="major">Major</label>
+                  <input
+                    type="text"
+                    id="major"
+                    placeholder="e.g., Computer Information Technology"
+                  />
+                </div>
+                <div class="field">
+                  <label for="catalogYear">Catalog Year</label>
+                  <input type="text" id="catalogYear" placeholder="e.g., 2024" />
+                </div>
+              </div>
 
-              <!-- Actions row: Sign Up button + login prompt placed side-by-side -->
               <ul class="actions">
                 <li>
-                  <!-- type="button" so the form doesn't auto-submit -->
+                  <!-- IMPORTANT: type="button" so the form doesn't auto-submit -->
                   <button type="button" class="primary" id="signupButton">Sign Up</button>
-                </li>
-                <li>
-                  <p class="actions-login">Already have an account? <a href="login.html">Log in here</a>.</p>
                 </li>
               </ul>
 
               <p id="message" style="margin-top: 1rem;"></p>
 
+              <p>
+                Already have an account?
+                <a href="login.html">Log in here</a>.
+              </p>
             </form>
           </section>
         </div>
@@ -181,6 +121,7 @@ ul.actions > li {
 
       console.log("Sign-up success:", data);
 
+      // Optional: store user info if backend sends password/major/year back
       if (data.token) localStorage.setItem("authToken", data.token);
       if (data.username) localStorage.setItem("username", data.username);
       if (data.major) localStorage.setItem("major", data.major);
@@ -201,3 +142,7 @@ ul.actions > li {
 
   </body>
 </html>
+
+  </body>
+</html>
+
