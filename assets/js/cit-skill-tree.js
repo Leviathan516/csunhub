@@ -8,7 +8,8 @@
 })();
 
 // 1) DEFINE YOUR COURSES + PREREQS
-const courses = [
+const CIT_ROADMAPS = {
+  "2023-2024": [
   { id: "CIT101",  name: "CIT 101/L – Info Tech Fundamentals",                    prereqs: [] },
   { id: "MATH103/L",  name: "MATH 103/L - Math for Business",                     prereqs: [] },
   { id: "MATH140",  name: "MATH 140 - Introductory Statistics",                   prereqs: [] },
