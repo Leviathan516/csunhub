@@ -38,19 +38,176 @@
                   <label for="confirmPassword">Confirm Password</label>
                   <input type="password" id="confirmPassword" required />
                 </div>
-                <div class="field">
-                  <label for="major">Major</label>
-                  <input
-                    type="text"
-                    id="major"
-                    placeholder="e.g., Computer Information Technology"
-                  />
-                </div>
+                <!-- Catalog Year Dropdown -->
                 <div class="field">
                   <label for="catalogYear">Catalog Year</label>
-                  <input type="text" id="catalogYear" placeholder="e.g., 2024" />
+                  <select id="catalogYear" required>
+                    <option value="">-- Select Catalog Year --</option>
+                    <option>2025-2026</option>
+                    <option>2024-2025</option>
+                    <option>2023-2024</option>
+                    <option>2022-2023</option>
+                    <option>2021-2022</option>
+                  </select>
                 </div>
-              </div>
+                
+                <!-- Major Dropdown -->
+                <div class="field">
+                  <label for="major">Major</label>
+                  <select id="major" required>
+                    <option value="">-- Select Major --</option>
+                    <option>Accountancy, B.S.: Professional Accountancy Option</option>
+                    <option>Accountancy, B.S.: Information Systems Option</option>
+                    <option>Africana Studies, B.A.: African and African-American Social Sciences Option</option>
+                    <option>Africana Studies, B.A.: African and African-American Humanities and Cultural Studies Option</option>
+                    <option>Africana Studies, B.A.: African-American Urban Education Option</option>
+                    <option>Anthropology, B.A.</option>
+                    <option>Art, B.A.</option>
+                    <option>Asian American Studies, B.A.: Standard Major Option</option>
+                    <option>Asian American Studies, B.A.: Double Major Option</option>
+                    <option>Biochemistry, B.S.</option>
+                    <option>Biology, B.A.</option>
+                    <option>Biology, B.S.: Cell and Molecular Biology Option</option>
+                    <option>Biology, B.S.: Ecology and Evolutionary Biology Option</option>
+                    <option>Biology, B.S.: Microbiology Option</option>
+                    <option>Biology, B.S.: Biotechnology/Medical Technology Option</option>
+                    <option>Biology, B.S.: Marine Biology Option</option>
+                    <option>Business Administration, B.S.: Business Analytics Option</option>
+                    <option>Business Administration, B.S.: Business Law Option</option>
+                    <option>Business Administration, B.S.: Financial Analysis Option</option>
+                    <option>Business Administration, B.S.: Financial Planning Option</option>
+                    <option>Business Administration, B.S.: Global Supply Chain Management Option</option>
+                    <option>Business Administration, B.S.: Management Option</option>
+                    <option>Business Administration, B.S.: Marketing Option</option>
+                    <option>Business Administration, B.S.: Real Estate Option</option>
+                    <option>Business Administration, B.S.: Risk Management and Insurance Option</option>
+                    <option>Business Administration, B.S.: Systems and Operations Management Option</option>
+                    <option>Central American Studies, B.A.: Standard Major Option</option>
+                    <option>Central American Studies, B.A.: Double Major Option</option>
+                    <option>Chemistry, B.A.</option>
+                    <option>Chemistry, B.S.</option>
+                    <option>Chicano and Chicana Studies, B.A.: Single Major Option</option>
+                    <option>Chicano and Chicana Studies, B.A.: Double Major Option</option>
+                    <option>Chicano and Chicana Studies, B.A.: Chicana/o Studies Social Science Subject Matter Waiver Program Option</option>
+                    <option>Child and Adolescent Development, B.A.: Applied Developmental Science Option</option>
+                    <option>Child and Adolescent Development, B.A.: Early Childhood Development Option</option>
+                    <option>Cinema and Television Arts, B.A.: Entertainment Media Management Option</option>
+                    <option>Cinema and Television Arts, B.A.: Film Production Option</option>
+                    <option>Cinema and Television Arts, B.A.: Media Theory and Criticism Option</option>
+                    <option>Cinema and Television Arts, B.A.: Emerging Media Production Option</option>
+                    <option>Cinema and Television Arts, B.A.: Screenwriting Option</option>
+                    <option>Cinema and Television Arts, B.A.: Television Production Option</option>
+                    <option>Civil Engineering, B.S.</option>
+                    <option>Communication Studies, B.A.</option>
+                    <option>Communicative Disorders, B.A.</option>
+                    <option>Computer Engineering, B.S.</option>
+                    <option>Computer Information Technology, B.S.</option>
+                    <option>Computer Science, B.S.</option>
+                    <option>Construction Management, B.S.</option>
+                    <option>Consumer Sciences, B.S.: Consumer Affairs Option</option>
+                    <option>Consumer Sciences, B.S.: Family and Consumer Sciences Option</option>
+                    <option>Criminology and Justice Studies, B.A.</option>
+                    <option>Dance, B.A.</option>
+                    <option>Deaf Studies, B.A.</option>
+                    <option>Economics, B.A.</option>
+                    <option>Electrical Engineering, B.S.</option>
+                    <option>Engineering Management Technology, B.S.</option>
+                    <option>English, B.A.: Literature Option</option>
+                    <option>English, B.A.: Creative Writing Option</option>
+                    <option>English, B.A.: Subject Matter Program for the Single Subject Credential Option</option>
+                    <option>English, B.A.: FYI English Subject Matter Program</option>
+                    <option>English, B.A.: JYI English Subject Matter Program</option>
+                    <option>English, B.A.: Honors Option</option>
+                    <option>Environmental and Occupational Health, B.S.</option>
+                    <option>Environmental and Occupational Health, B.S.: Industrial Hygiene Option</option>
+                    <option>Environmental Science, B.A.</option>
+                    <option>Family and Consumer Sciences, B.S.: Family Studies Option</option>
+                    <option>Fashion Design and Merchandising, B.S.: Fashion Design and Production Option</option>
+                    <option>Fashion Design and Merchandising, B.S.: Fashion Merchandising Option</option>
+                    <option>Fashion Design and Merchandising, B.S.: Textiles Option</option>
+                    <option>Gender and Women’s Studies, B.A.</option>
+                    <option>Gender and Women’s Studies, B.A.: Double Major Option</option>
+                    <option>Geographic Information Science, B.S.</option>
+                    <option>Geography and Environmental Studies, B.S.</option>
+                    <option>Geology, B.S.: Geology Option</option>
+                    <option>Geology, B.S.: Geophysics Option</option>
+                    <option>Health Administration, B.S.</option>
+                    <option>History, B.A.</option>
+                    <option>History, B.A.: FYI Program Option</option>
+                    <option>History, B.A.: JYI Program Option</option>
+                    <option>Information Systems, B.S.: Business Systems Option</option>
+                    <option>Information Systems, B.S.: Software Technology Option</option>
+                    <option>Information Systems, B.S.: Computer Information Technology Option</option>
+                    <option>Information Systems, B.S.: Health Systems Option</option>
+                    <option>Interdisciplinary Studies, B.A.</option>
+                    <option>Interior Design, B.S.</option>
+                    <option>Jewish Studies, B.A.</option>
+                    <option>Journalism, B.A.</option>
+                    <option>Journalism, B.A.: Broadcast Option</option>
+                    <option>Journalism, B.A.: Public Relations Option</option>
+                    <option>Kinesiology, B.S.: Exercise Science Option</option>
+                    <option>Kinesiology, B.S.: Dance Option</option>
+                    <option>Kinesiology, B.S.: Sport Studies Option</option>
+                    <option>Kinesiology, B.S.: Applied Fitness/Conditioning Option</option>
+                    <option>Kinesiology, B.S.: Physical Education Option</option>
+                    <option>Languages and Cultures, B.A.: Armenian Option</option>
+                    <option>Languages and Cultures, B.A.: French Option</option>
+                    <option>Languages and Cultures, B.A.: Italian Option</option>
+                    <option>Languages and Cultures, B.A.: Japanese Option</option>
+                    <option>Liberal Studies, B.A.: Pre-Credential Program</option>
+                    <option>Liberal Studies, B.A.: ITEP Junior Option</option>
+                    <option>Liberal Studies, B.A.: ITEP Freshman Option</option>
+                    <option>Linguistics, B.A.</option>
+                    <option>Manufacturing Systems Engineering, B.S.</option>
+                    <option>Mathematics, B.A.: General Option</option>
+                    <option>Mathematics, B.A.: Secondary Teaching Option</option>
+                    <option>Mathematics, B.S.: Mathematics Option</option>
+                    <option>Mathematics, B.S.: Statistics Option</option>
+                    <option>Mathematics, B.S.: Applied Math Sciences Option</option>
+                    <option>Mechanical Engineering, B.S.</option>
+                    <option>Music, B.A.: Directed Studies Option</option>
+                    <option>Music, B.A.: Music Industry Option</option>
+                    <option>Music, B.A.: Pre-Teaching Option</option>
+                    <option>Music, B.A.: Music Therapy Option</option>
+                    <option>Music, B.M.: Jazz Studies Option</option>
+                    <option>Music, B.M.: Composition/Media Writing Option</option>
+                    <option>Music, B.M.: Vocal Arts Option</option>
+                    <option>Music, B.M.: Keyboard Option</option>
+                    <option>Music, B.M.: Percussion Option</option>
+                    <option>Music, B.M.: Winds Option</option>
+                    <option>Music, B.M.: Strings Option</option>
+                    <option>Nursing, B.S.: Accelerated Option</option>
+                    <option>Nursing, B.S.: RN to BSN Option</option>
+                    <option>Nutrition, Dietetics and Food Science, B.S.: Nutrition and Dietetics Option</option>
+                    <option>Nutrition, Dietetics and Food Science, B.S.: Food Science Option</option>
+                    <option>Philosophy, B.A.</option>
+                    <option>Philosophy, B.A.: Double Major Option</option>
+                    <option>Physics, B.A.</option>
+                    <option>Physics, B.S.: Physics Option</option>
+                    <option>Physics, B.S.: Astrophysics Option</option>
+                    <option>Political Science, B.A.: Politics and Government Option</option>
+                    <option>Political Science, B.A.: Public Policy and Management Option</option>
+                    <option>Political Science, B.A.: Law and Society Option</option>
+                    <option>Psychology, B.A.</option>
+                    <option>Psychology, B.A.: Honors Option</option>
+                    <option>Public Health, B.S.</option>
+                    <option>Public Sector Management, B.A.</option>
+                    <option>Radiologic Sciences, B.S.</option>
+                    <option>Religious Studies, B.A.</option>
+                    <option>Religious Studies, B.A.: Double Major Option</option>
+                    <option>Sociology, B.A.</option>
+                    <option>Spanish, B.A.: Literature Option</option>
+                    <option>Spanish, B.A.: Language and Culture Option</option>
+                    <option>Spanish, B.A.: Hispanic Linguistics Option</option>
+                    <option>Spanish, B.A.: Translation and Interpretation Option</option>
+                    <option>Theatre, B.A.: Theatre Arts Option</option>
+                    <option>Theatre, B.A.: Acting and Directing Option</option>
+                    <option>Theatre, B.A.: Design and Production Option</option>
+                    <option>Tourism, Hospitality, and Recreation Management, B.S.</option>
+                    <option>Urban Studies and Planning, B.A.</option>
+                  </select>
+                </div>
+
 
               <ul class="actions">
                 <li>
@@ -145,4 +302,5 @@
 
   </body>
 </html>
+
 
