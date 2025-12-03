@@ -26,7 +26,7 @@ const courses = [
   { id: "CIT210",  name: "CIT 210/L – Deploy & Manage OS",                        prereqs: ["COMP122","CIT101"] },
   { id: "CIT270",  name: "CIT 270/L – Integrative Programming",                   prereqs: ["CIT160","COMP182"] },
   { id: "CIT360",  name: "CIT 360/L – Sys Admin & Management",                    prereqs: ["CIT210","CIT270"] },
-  { id: "COMP424", name: "COMP 182/L – Data Structures",                          prereqs: ["CIT360"] },
+  { id: "COMP424", name: "COMP 182/L – Data Structures",                          prereqs: ["CIT360","IS435"] },
   { id: "COMP484", name: "COMP 182/L – Data Structures",                          prereqs: ["CIT360"] },
   { id: "COMP485", name: "COMP 182/L – Data Structures",                          prereqs: ["CIT360"] },
   { id: "CIT480",  name: "CIT 480/L – Sys Design & Implement I",                  prereqs: ["CIT360","IS451"] },
