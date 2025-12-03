@@ -181,19 +181,12 @@
       })();
 
       // --- SKILL TREE SETUP ---
-      const courses = [
-        { id: "CIT101",  name: "CIT 101/L – Info Tech Fundamentals",    prereqs: [] },
-        { id: "CIT160",  name: "CIT 160/L – Internet Tech",             prereqs: ["CIT101"] },
-        { id: "COMP110", name: "COMP 110/L – Algorithms",               prereqs: ["CIT101"] },
-        { id: "COMP122", name: "COMP 122/L – Arch & Assembly",          prereqs: ["COMP110"] },
-        { id: "COMP182", name: "COMP 182/L – Data Structures",          prereqs: ["COMP122"] },
-        { id: "CIT210",  name: "CIT 210/L – Deploy & Manage OS",        prereqs: ["CIT160","COMP110"] },
-        { id: "CIT270",  name: "CIT 270/L – Integrative Programming",   prereqs: ["COMP182"] },
-        { id: "CIT360",  name: "CIT 360/L – Sys Admin & Management",    prereqs: ["CIT210","CIT270"] },
-        { id: "CIT480",  name: "CIT 480/L – Sys Design & Implement I",  prereqs: ["CIT360"] },
-        { id: "CIT481",  name: "CIT 481/L – Sys Design & Implement II", prereqs: ["CIT480"] }
-        // Add IS 212, IS 312, IS 431, IS 435, IS 441, etc. here with their prereqs
-      ];
+     // Read catalog year from localStorage (set at login/signup)
+      const userCatalogYear = localStorage.getItem("catalogYear") || "2023-2024";
+      
+      // Pick the right roadmap; fall back if we don't have that year
+      const courses = CIT_ROADMAPS[userCatalogYear] || CIT_ROADMAPS["2023-2024"];
+
 
       function getUsername() {
         return localStorage.getItem("username") || "guest";
