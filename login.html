@@ -99,7 +99,9 @@
           if (data.catalogYear) localStorage.setItem("catalogYear", data.catalogYear);
 
           // Go to dashboard once logged in
-          window.location.href = "dashboard480.html";
+          const params = new URLSearchParams(window.location.search);
+          const redirect = params.get("redirect") || "dashboard480.html";
+          window.location.href = redirect;
         } catch (err) {
           console.error("Login error:", err);
           messageEl.textContent = err.message || "Error logging in.";
