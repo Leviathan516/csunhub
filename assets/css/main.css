@@ -3342,9 +3342,13 @@ input, select, textarea {
   display: block;
 }
 
-/* Fix login text positioning */
+/* Fix text alignment below Sign Up button */
 #signupForm p:last-of-type {
-  text-align: center;
-  margin-top: 1rem;
+  display: block !important;
+  width: 100% !important;
+  margin-top: 1.5rem !important;
+  padding-left: 0 !important;
+  text-align: center !important;
+  position: relative !important;
 }
 		}
