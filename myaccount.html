@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="assets/css/main.css" />
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 
-    <!-- Page-specific styling for the skill tree -->
+    <!-- Skill tree styling -->
     <style>
       #cit-skill-tree-section {
         margin-top: 2rem;
@@ -45,6 +45,7 @@
         flex-direction: column;
         gap: 6px;
         transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+        color: #f9fafb;
       }
 
       .course.unlocked {
@@ -66,7 +67,6 @@
         font-weight: 600;
         font-size: 0.95rem;
         line-height: 1.2;
-        color: #f9fafb;
       }
 
       .course-prereqs {
@@ -135,7 +135,7 @@
         <div class="inner">
           <h1>My Account</h1>
           <p>Track your CIT major like a game-style skill tree.</p>
-          <h2 id="welcome" style="margin-top: 0.75rem;"></h2>
+          <h2 id="welcome" style="margin-top: 0.75rem; text-transform: uppercase;"></h2>
         </div>
       </header>
 
@@ -148,15 +148,16 @@
               Complete earlier courses to unlock the next ones in your major.
             </small>
 
+            <!-- IMPORTANT: this is where JS will inject cards -->
             <div id="tree"></div>
           </section>
         </div>
       </div>
     </div>
 
-    <!-- JS: auth gate + skill tree logic -->
+    <!-- Skill tree JS -->
     <script>
-      // --- LOGIN REQUIRED: if not logged in, send to login with redirect back here ---
+      // Require login
       (function requireLogin() {
         const token = localStorage.getItem("authToken");
         if (!token) {
@@ -166,49 +167,69 @@
         }
       })();
 
-      // --- WELCOME TEXT ---
+      // Welcome text
       (function loadWelcome() {
         const username = localStorage.getItem("username") || "Student";
-        const major = localStorage.getItem("major") || "CSUN Student";
-        const catalogYear = localStorage.getItem("catalogYear") || "";
+        const major = localStorage.getItem("major") || "Computer Information Technology, B.S.";
+        const catalogYear = localStorage.getItem("catalogYear") || "Catalog 2023–2024";
         const welcomeEl = document.getElementById("welcome");
-
-        let text = `Welcome, ${username} (${major}`;
-        if (catalogYear) text += `, Catalog ${catalogYear}`;
-        text += ")";
-
-        if (welcomeEl) welcomeEl.textContent = text;
+        welcomeEl.textContent = `Welcome, ${username} (${major}, ${catalogYear})`;
       })();
 
-      // --- SKILL TREE SETUP ---
-     // Read catalog year from localStorage (set at login/signup)
-      const userCatalogYear = localStorage.getItem("catalogYear") || "2023-2024";
-      
-      // Pick the right roadmap; fall back if we don't have that year
-      const courses = CIT_ROADMAPS[userCatalogYear] || CIT_ROADMAPS["2023-2024"];
+      // Courses (AND-only prereqs)
+      const courses = [
+        { id: "CIT101",   name: "CIT 101/L – Info Tech Fundamentals",          prereqs: [] },
+        { id: "MATH103/L",name: "MATH 103/L - Math for Business",              prereqs: [] },
+        { id: "MATH140",  name: "MATH 140 - Introductory Statistics",          prereqs: [] },
+        { id: "CIT160",   name: "CIT 160/L – Internet Tech",                   prereqs: [] },
+        { id: "GE-A2",    name: "GE Basic Skills: A2 Written Communication",   prereqs: [] },
 
+        { id: "COMP110",  name: "COMP 110/L – Algorithms",                     prereqs: ["MATH103/L"] },
 
+        { id: "IS312",  name: "IS 312 - Systems and Technologies for Managers",        prereqs: ["CIT160","CIT101"] },
+        { id: "IS431",  name: "IS 431 - Systems Analysis and Design",                  prereqs: ["IS312"] },
+        { id: "IS435",  name: "IS 435 - Business Data Networks and Cybersecurity",     prereqs: ["IS312"] },
+        { id: "IS441",  name: "IS 441 - Database Management Systems",                  prereqs: ["IS312"] },
+        { id: "IS451",  name: "IS 451 - Enterprise Systems and Project Management",    prereqs: ["IS431","IS435"] },
+
+        { id: "COMP122", name: "COMP 122/L – Arch & Assembly",                 prereqs: ["COMP110"] },
+        { id: "COMP182", name: "COMP 182/L – Data Structures",                 prereqs: ["COMP110"] },
+        { id: "CIT210",  name: "CIT 210/L – Deploy & Manage OS",               prereqs: ["COMP122","CIT101"] },
+        { id: "CIT270",  name: "CIT 270/L – Integrative Programming",          prereqs: ["CIT160","COMP182"] },
+        { id: "CIT360",  name: "CIT 360/L – Sys Admin & Management",           prereqs: ["CIT210","CIT270"] },
+
+        { id: "COMP424", name: "COMP 424 – Systems Security",                  prereqs: ["CIT360","IS435"] },
+        { id: "COMP484", name: "COMP 484 – Web Engineering",                   prereqs: ["CIT360"] },
+        { id: "COMP485", name: "COMP 485 – Human Computer Interaction",        prereqs: ["CIT360","COMP424","COMP484"] },
+
+        { id: "CIT480",  name: "CIT 480/L – Sys Design & Implement I",         prereqs: ["CIT360","IS451"] },
+        { id: "CIT481",  name: "CIT 481/L – Sys Design & Implement II",        prereqs: ["CIT480"] }
+      ];
+
+      // Per-user storage key
       function getUsername() {
         return localStorage.getItem("username") || "guest";
       }
-
       function getStorageKey() {
         const username = getUsername();
         return `cit_skill_tree_completed_${username}`;
       }
 
+      // Load/save progress
       const completedSet = new Set(
         JSON.parse(localStorage.getItem(getStorageKey()) || "[]")
       );
-
       function saveProgress() {
         localStorage.setItem(getStorageKey(), JSON.stringify([...completedSet]));
       }
 
+      // Is course unlocked? (AND-only)
       function isUnlocked(course) {
-        return course.prereqs.every(id => completedSet.has(id));
+        const prereqs = course.prereqs || [];
+        return prereqs.every(id => completedSet.has(id));
       }
 
+      // Render tree
       function renderTree() {
         const treeEl = document.getElementById("tree");
         if (!treeEl) return;
@@ -231,20 +252,23 @@
 
           const prereqText = document.createElement("div");
           prereqText.className = "course-prereqs";
-          prereqText.textContent =
-            course.prereqs.length === 0
-              ? "Prereqs: None (starting node)"
-              : "Prereqs: " + course.prereqs.join(", ");
+          if (!course.prereqs || course.prereqs.length === 0) {
+            prereqText.textContent = "Prereqs: None (starting node)";
+          } else {
+            prereqText.textContent = "Prereqs: " + course.prereqs.join(", ");
+          }
 
           const statusPill = document.createElement("div");
           statusPill.className = "status-pill";
-
           const dot = document.createElement("span");
           dot.className = "status-dot";
 
           const statusLabel = document.createElement("span");
-          statusLabel.textContent =
-            completed ? "Completed" : unlocked ? "Unlocked" : "Locked";
+          statusLabel.textContent = completed
+            ? "Completed"
+            : unlocked
+            ? "Unlocked"
+            : "Locked";
 
           statusPill.appendChild(dot);
           statusPill.appendChild(statusLabel);
@@ -287,3 +311,4 @@
     </script>
   </body>
 </html>
+
