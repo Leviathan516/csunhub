@@ -10,25 +10,28 @@
 // 1) DEFINE YOUR COURSES + PREREQS
 const courses = [
   { id: "CIT101",  name: "CIT 101/L – Info Tech Fundamentals",                    prereqs: [] },
-  { id: "COMP110",  name: "COMP 110 – Algorithms",                                prereqs: [] },
   { id: "MATH103/L",  name: "MATH 103/L - Math for Business",                     prereqs: [] },
   { id: "MATH140",  name: "MATH 140 - Introductory Statistics",                   prereqs: [] },
   { id: "CIT160",  name: "CIT 160/L – Internet Tech",                             prereqs: [] },
   { id: "GE-A2",  name: "GE Basic Skills: A2 Written Communication",              prereqs: [] },
+  
   { id: "IS312",  name: "IS 312 - Systems and Technologies for Managers",         prereqs: ["CIT160","CIT101"] },
   { id: "IS431",  name: "IS 431 - Systems Analysis and Design",                   prereqs: ["IS312"] },
   { id: "IS435",  name: "IS 435 - Business Data Networks and Cybersecurity",      prereqs: ["IS312"] },
   { id: "IS441",  name: "IS 441 - Database Management Systems",                   prereqs: ["IS312"] },
   { id: "IS451",  name: "IS 451 - Enterprise Systems and Project Management",     prereqs: ["IS431","IS435"] },
+  
   { id: "COMP110", name: "COMP 110/L – Algorithms",                               prereqs: ["MATH103/L"] },
   { id: "COMP122", name: "COMP 122/L – Arch & Assembly",                          prereqs: ["COMP110"] },
   { id: "COMP182", name: "COMP 182/L – Data Structures",                          prereqs: ["COMP110"] },
+  
   { id: "CIT210",  name: "CIT 210/L – Deploy & Manage OS",                        prereqs: ["COMP122","CIT101"] },
   { id: "CIT270",  name: "CIT 270/L – Integrative Programming",                   prereqs: ["CIT160","COMP182"] },
   { id: "CIT360",  name: "CIT 360/L – Sys Admin & Management",                    prereqs: ["CIT210","CIT270"] },
-  { id: "COMP424", name: "COMP 182/L – Data Structures",                          prereqs: ["CIT360","IS435"] },
-  { id: "COMP484", name: "COMP 182/L – Data Structures",                          prereqs: ["CIT360"] },
-  { id: "COMP485", name: "COMP 182/L – Data Structures",                          prereqs: ["CIT360"] },
+  
+  { id: "COMP424", name: "COMP 424 – ",                                           prereqs: ["CIT360","IS435"] },
+  { id: "COMP484/L", name: "COMP 484/L – ",                                       prereqs: ["CIT360"] },
+  { id: "COMP485", name: "COMP 485 – ",                                           prereqs: ["CIT360"] },
   { id: "CIT480",  name: "CIT 480/L – Sys Design & Implement I",                  prereqs: ["CIT360","IS451"] },
   { id: "CIT481",  name: "CIT 481/L – Sys Design & Implement II",                 prereqs: ["CIT480"] }
   
