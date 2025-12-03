@@ -1,0 +1,296 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>My Account | CSUN Campus Resource Hub</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+
+    <!-- Page-specific styling for the skill tree -->
+    <style>
+      #cit-skill-tree-section {
+        margin-top: 2rem;
+      }
+
+      #cit-skill-tree-section h2 {
+        text-align: center;
+        margin-bottom: 0.25rem;
+      }
+
+      #cit-skill-tree-section .legend {
+        display: block;
+        text-align: center;
+        margin-bottom: 16px;
+        color: #9ca3af;
+        font-size: 0.8rem;
+      }
+
+      #tree {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 16px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .course {
+        border-radius: 12px;
+        padding: 12px 14px;
+        border: 1px solid #1f2937;
+        background: #111827;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.45);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+      }
+
+      .course.unlocked {
+        border-color: #22c55e;
+        box-shadow: 0 0 0 1px rgba(34,197,94,0.3);
+      }
+
+      .course.locked {
+        opacity: 0.4;
+        border-style: dashed;
+      }
+
+      .course.completed {
+        border-color: #38bdf8;
+        background: linear-gradient(135deg, #0f172a, #082f49);
+      }
+
+      .course-title {
+        font-weight: 600;
+        font-size: 0.95rem;
+        line-height: 1.2;
+        color: #f9fafb;
+      }
+
+      .course-prereqs {
+        font-size: 0.75rem;
+        color: #9ca3af;
+      }
+
+      .status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 2px 8px;
+        border-radius: 999px;
+        font-size: 0.75rem;
+        background: #020617;
+        border: 1px solid #1f2937;
+        align-self: flex-start;
+      }
+
+      .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: #4b5563;
+      }
+
+      .course.unlocked .status-dot {
+        background: #22c55e;
+      }
+
+      .course.completed .status-dot {
+        background: #38bdf8;
+      }
+
+      button.complete-btn {
+        margin-top: 4px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        border: none;
+        cursor: pointer;
+        font-size: 0.75rem;
+        font-weight: 500;
+      }
+
+      .complete-btn.complete {
+        background: #22c55e;
+        color: #022c22;
+      }
+
+      .complete-btn.undo {
+        background: #6b7280;
+        color: #f9fafb;
+      }
+
+      .course.locked button {
+        cursor: not-allowed;
+        opacity: 0.6;
+      }
+    </style>
+  </head>
+
+  <body class="is-preload">
+    <div id="wrapper">
+      <!-- Header -->
+      <header id="header">
+        <div class="inner">
+          <h1>My Account</h1>
+          <p>Track your CIT major like a game-style skill tree.</p>
+          <h2 id="welcome" style="margin-top: 0.75rem;"></h2>
+        </div>
+      </header>
+
+      <!-- Main -->
+      <div id="main">
+        <div class="inner">
+          <section id="cit-skill-tree-section">
+            <h2>CIT Major Skill Tree</h2>
+            <small class="legend">
+              Complete earlier courses to unlock the next ones in your major.
+            </small>
+
+            <div id="tree"></div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <!-- JS: auth gate + skill tree logic -->
+    <script>
+      // --- LOGIN REQUIRED: if not logged in, send to login with redirect back here ---
+      (function requireLogin() {
+        const token = localStorage.getItem("authToken");
+        if (!token) {
+          const params = new URLSearchParams();
+          params.set("redirect", "myaccount.html");
+          window.location.href = "login.html?" + params.toString();
+        }
+      })();
+
+      // --- WELCOME TEXT ---
+      (function loadWelcome() {
+        const username = localStorage.getItem("username") || "Student";
+        const major = localStorage.getItem("major") || "CSUN Student";
+        const catalogYear = localStorage.getItem("catalogYear") || "";
+        const welcomeEl = document.getElementById("welcome");
+
+        let text = `Welcome, ${username} (${major}`;
+        if (catalogYear) text += `, Catalog ${catalogYear}`;
+        text += ")";
+
+        if (welcomeEl) welcomeEl.textContent = text;
+      })();
+
+      // --- SKILL TREE SETUP ---
+      const courses = [
+        { id: "CIT101",  name: "CIT 101/L – Info Tech Fundamentals",    prereqs: [] },
+        { id: "CIT160",  name: "CIT 160/L – Internet Tech",             prereqs: ["CIT101"] },
+        { id: "COMP110", name: "COMP 110/L – Algorithms",               prereqs: ["CIT101"] },
+        { id: "COMP122", name: "COMP 122/L – Arch & Assembly",          prereqs: ["COMP110"] },
+        { id: "COMP182", name: "COMP 182/L – Data Structures",          prereqs: ["COMP122"] },
+        { id: "CIT210",  name: "CIT 210/L – Deploy & Manage OS",        prereqs: ["CIT160","COMP110"] },
+        { id: "CIT270",  name: "CIT 270/L – Integrative Programming",   prereqs: ["COMP182"] },
+        { id: "CIT360",  name: "CIT 360/L – Sys Admin & Management",    prereqs: ["CIT210","CIT270"] },
+        { id: "CIT480",  name: "CIT 480/L – Sys Design & Implement I",  prereqs: ["CIT360"] },
+        { id: "CIT481",  name: "CIT 481/L – Sys Design & Implement II", prereqs: ["CIT480"] }
+        // Add IS 212, IS 312, IS 431, IS 435, IS 441, etc. here with their prereqs
+      ];
+
+      function getUsername() {
+        return localStorage.getItem("username") || "guest";
+      }
+
+      function getStorageKey() {
+        const username = getUsername();
+        return `cit_skill_tree_completed_${username}`;
+      }
+
+      const completedSet = new Set(
+        JSON.parse(localStorage.getItem(getStorageKey()) || "[]")
+      );
+
+      function saveProgress() {
+        localStorage.setItem(getStorageKey(), JSON.stringify([...completedSet]));
+      }
+
+      function isUnlocked(course) {
+        return course.prereqs.every(id => completedSet.has(id));
+      }
+
+      function renderTree() {
+        const treeEl = document.getElementById("tree");
+        if (!treeEl) return;
+
+        treeEl.innerHTML = "";
+
+        courses.forEach(course => {
+          const unlocked = isUnlocked(course);
+          const completed = completedSet.has(course.id);
+
+          const card = document.createElement("div");
+          card.classList.add("course");
+          if (completed) card.classList.add("completed");
+          else if (unlocked) card.classList.add("unlocked");
+          else card.classList.add("locked");
+
+          const title = document.createElement("div");
+          title.className = "course-title";
+          title.textContent = course.name;
+
+          const prereqText = document.createElement("div");
+          prereqText.className = "course-prereqs";
+          prereqText.textContent =
+            course.prereqs.length === 0
+              ? "Prereqs: None (starting node)"
+              : "Prereqs: " + course.prereqs.join(", ");
+
+          const statusPill = document.createElement("div");
+          statusPill.className = "status-pill";
+
+          const dot = document.createElement("span");
+          dot.className = "status-dot";
+
+          const statusLabel = document.createElement("span");
+          statusLabel.textContent =
+            completed ? "Completed" : unlocked ? "Unlocked" : "Locked";
+
+          statusPill.appendChild(dot);
+          statusPill.appendChild(statusLabel);
+
+          const btn = document.createElement("button");
+          btn.className = "complete-btn";
+          if (completed) {
+            btn.classList.add("undo");
+            btn.textContent = "Mark as not taken";
+          } else {
+            btn.classList.add("complete");
+            btn.textContent = "Mark as completed";
+          }
+
+          if (!unlocked && !completed) {
+            btn.disabled = true;
+          }
+
+          btn.addEventListener("click", () => {
+            if (!unlocked && !completed) return;
+            if (completed) {
+              completedSet.delete(course.id);
+            } else {
+              completedSet.add(course.id);
+            }
+            saveProgress();
+            renderTree();
+          });
+
+          card.appendChild(title);
+          card.appendChild(prereqText);
+          card.appendChild(statusPill);
+          card.appendChild(btn);
+
+          treeEl.appendChild(card);
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", renderTree);
+    </script>
+  </body>
+</html>
