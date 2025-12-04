@@ -6,45 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-  
-
-  <body class="is-preload">
-    <!-- Wrapper -->
-    <div id="wrapper">
-      <!-- Header -->
-      <header id="header">
-        <div class="inner">
-          <!-- Logo -->
-          <a href="index.html" class="logo">
-            <span class="symbol">
-              <img src="images/CSUNlogo.png" alt="CSUN Logo" />
-            </span>
-            <span class="title">CSUN Campus Resource Hub</span>
-          </a>
-
-          <!-- Nav trigger -->
-          <nav>
-            <ul>
-              <li><a href="#menu">Menu</a></li>
-            </ul>
-          </nav>
-        </div>
-      </header>
-
-      <!-- Off-canvas Menu -->
-      <nav id="menu">
-        <h2>Menu</h2>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="dashboard480.html">Student Dashboard</a></li>
-          <li><a href="map480.html">Campus Map</a></li>
-          <li><a href="dining480.html">Dining</a></li>
-          <li><a href="clubs480.html">Clubs &amp; Orgs</a></li>
-          <li><a href="career480.html">Careers</a></li>
-          <li><a href="signup.html">Sign Up / Login</a></li>
-          <li><a href="#" onclick="logout()">Logout</a></li>
-        </ul>
-      </nav>
 
     <!-- Skill tree styling -->
     <style>
@@ -84,7 +45,7 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        padding-bottom: 20px
+        padding-bottom: 20px;
         gap: 6px;
         transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
         color: #f9fafb;
@@ -172,26 +133,70 @@
     </style>
   </head>
 
+  <body class="is-preload">
+    <!-- Wrapper -->
+    <div id="wrapper">
+      <!-- Header -->
+      <header id="header">
+        <div class="inner">
+          <!-- Logo -->
+          <a href="index.html" class="logo">
+            <span class="symbol">
+              <img src="images/CSUNlogo.png" alt="CSUN Logo" />
+            </span>
+            <span class="title">CSUN Campus Resource Hub</span>
+          </a>
+
+          <!-- Nav trigger -->
+          <nav>
+            <ul>
+              <li><a href="#menu">Menu</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+
+      <!-- Off-canvas Menu -->
+      <nav id="menu">
+        <h2>Menu</h2>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="dashboard480.html">Student Dashboard</a></li>
+          <li><a href="map480.html">Campus Map</a></li>
+          <li><a href="dining480.html">Dining</a></li>
+          <li><a href="clubs480.html">Clubs &amp; Orgs</a></li>
+          <li><a href="career480.html">Careers</a></li>
+          <li><a href="signup.html">Sign Up / Login</a></li>
+          <li><a href="#" onclick="logout()">Logout</a></li>
+        </ul>
+      </nav>
+
       <!-- Main -->
       <div id="main">
-      <div class="inner">
-    
-        <section>
-          <h1>My Account</h1>
-          <p>Track your major like a skill tree. Pass a class, level up until you prestige!</p>
-          <h2 id="welcome" style="margin-top: 0.75rem; text-transform: uppercase;"></h2>
-        </section>
-    
-        <section id="cit-skill-tree-section">
-          <h2>CIT Major Skill Tree</h2>
-          <small class="legend">
-            Complete earlier courses to unlock the next ones in your major.
-          </small>
-          <div id="tree"></div>
-        </section>
-    
+        <div class="inner">
+          <section>
+            <h1>My Account</h1>
+            <p>Track your major like a skill tree. Pass a class, level up until you prestige! I mean Graduate!</p>
+            <h2 id="welcome" style="margin-top: 0.75rem; text-transform: uppercase;"></h2>
+          </section>
+
+          <section id="cit-skill-tree-section">
+            <h2>CIT Major Skill Tree</h2>
+            <small class="legend">
+              Complete earlier courses to unlock the next ones in your major.
+            </small>
+            <div id="tree"></div>
+          </section>
+        </div>
       </div>
     </div>
+
+    <!-- Template JS that powers the nav menu -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
 
     <!-- Skill tree JS -->
     <script>
@@ -214,7 +219,6 @@
         welcomeEl.textContent = `Welcome, ${username} (${major}, ${catalogYear})`;
       })();
 
-      // Courses (AND-only prereqs)
       const courses = [
         { id: "CIT101",   name: "CIT 101/L – Info Tech Fundamentals",          prereqs: [] },
         { id: "MATH103/L",name: "MATH 103/L - Math for Business",              prereqs: [] },
@@ -244,7 +248,6 @@
         { id: "CIT481",  name: "CIT 481/L – Sys Design & Implement II",        prereqs: ["CIT480"] }
       ];
 
-      // Per-user storage key
       function getUsername() {
         return localStorage.getItem("username") || "guest";
       }
@@ -253,7 +256,6 @@
         return `cit_skill_tree_completed_${username}`;
       }
 
-      // Load/save progress
       const completedSet = new Set(
         JSON.parse(localStorage.getItem(getStorageKey()) || "[]")
       );
@@ -261,13 +263,11 @@
         localStorage.setItem(getStorageKey(), JSON.stringify([...completedSet]));
       }
 
-      // Is course unlocked? (AND-only)
       function isUnlocked(course) {
         const prereqs = course.prereqs || [];
         return prereqs.every(id => completedSet.has(id));
       }
 
-      // Render tree
       function renderTree() {
         const treeEl = document.getElementById("tree");
         if (!treeEl) return;
@@ -349,4 +349,3 @@
     </script>
   </body>
 </html>
-
