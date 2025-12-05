@@ -271,77 +271,77 @@ Fri–Sun 11:30 AM–11:00 PM`,
     },
     {
       "position": {
-        "lat": 34.24196605393645, 
+        "lat": 34.24196605393645,
         "lng": -118.53079831502039
       },
       "title": "Bookstein Hall"
     },
     {
       "position": {
-        "lat": 34.238877942612916, 
+        "lat": 34.238877942612916,
         "lng": -118.53071557556179
       },
       "title": "Jerome Richfield Hall"
     },
     {
       "position": {
-        "lat": 34.24124184294615, 
+        "lat": 34.24124184294615,
         "lng": -118.52888268905467
       },
       "title": "Jacaranda Hall"
     },
     {
       "position": {
-        "lat": 34.240131811867286, 
+        "lat": 34.240131811867286,
         "lng": -118.52703814672604
       },
       "title": "University Student Union (USU)"
     },
     {
       "position": {
-        "lat": 34.23822992981255, 
+        "lat": 34.23822992981255,
         "lng": -118.53102437556188
       },
       "title": "Sierra Hall"
     },
     {
       "position": {
-        "lat": 34.23895590358568, 
+        "lat": 34.23895590358568,
         "lng": -118.53021073323313
       },
       "title": "Sierra Tower"
     },
     {
       "position": {
-        "lat": 34.237747282009735, 
+        "lat": 34.237747282009735,
         "lng": -118.53026034672615
       },
       "title": "Manzanita Hall"
     },
     {
       "position": {
-        "lat": 34.240363381181886, 
+        "lat": 34.240363381181886,
         "lng": -118.531318433233
       },
       "title": "Bayramian Hall"
     },
     {
       "position": {
-        "lat": 34.2398696201719, 
+        "lat": 34.2398696201719,
         "lng": -118.53208961789045
       },
       "title": "University Hall"
     },
     {
       "position": {
-        "lat": 34.24062352779417, 
+        "lat": 34.24062352779417,
         "lng": -118.52823257556173
       },
       "title": "Sequoia Hall"
     },
     {
       "position": {
-        "lat": 34.239082991108205, 
+        "lat": 34.239082991108205,
         "lng": -118.52800655002395
       },
       "title": "Citrus Hall"
@@ -355,14 +355,14 @@ Fri–Sun 11:30 AM–11:00 PM`,
     },
     {
       "position": {
-        "lat": 34.23832473242764, 
+        "lat": 34.23832473242764,
         "lng": -118.52819760116141
       },
       "title": "Live Oak Hall"
     },
     {
       "position": {
-        "lat": 34.24194971907548, 
+        "lat": 34.24194971907548,
         "lng": -118.52680484672598
       },
       "title": "Redwood Hall"
@@ -411,14 +411,14 @@ Fri–Sun 11:30 AM–11:00 PM`,
     },
     {
       "position": {
-        "lat": 34.23743119113274, 
+        "lat": 34.23743119113274,
         "lng": -118.52818173323318
       },
       "title": "Bookstore / Campus Store Complex"
     },
     {
       "position": {
-        "lat": 34.239912350736546, 
+        "lat": 34.239912350736546,
         "lng": -118.52497424857565
       },
       "title": "Student Recreation Center (SRC)"
@@ -528,15 +528,26 @@ async function initMap() {
   parkingMarkers = createMarkers(locations.parking, '#2196F3'); // Blue
   buildingMarkers = createMarkers(locations.buildings, '#4CAF50'); // Green
 
-  // Add event listeners to buttons
+  // event listeners for buttons
   document.getElementById('food-btn').addEventListener('click', () => toggleLayer(foodMarkers, 'food-btn'));
   document.getElementById('parking-btn').addEventListener('click', () => toggleLayer(parkingMarkers, 'parking-btn'));
   document.getElementById('buildings-btn').addEventListener('click', () => toggleLayer(buildingMarkers, 'buildings-btn'));
 
-  // Initially show the food layer
-  toggleLayer(foodMarkers, 'food-btn');
-}
+  function toggleLayer(markers, buttonId) {
+    const allMarkers = [foodMarkers, parkingMarkers, buildingMarkers];
+    const allButtons = document.querySelectorAll('#controls .button');
+    allMarkers.forEach(markerArray => {
+      markerArray.forEach(marker => marker.map = null);
+    });
 
+    allButtons.forEach(button => button.classList.remove('primary'));
+    markers.forEach(marker => {
+      marker.map = map;
+    });
+
+    document.getElementById(buttonId).classList.add('primary');
+  }
+}
 function createMarkers(places, color) {
   const markers = [];
   for (const place of places) {
