@@ -13,45 +13,6 @@
   </head>
   <body class="is-preload">
 
-    <header>
-  <nav class="navbar">
-    <div class="title">Campus Resource Hub</div>
-    <ul class="nav-links">
-      <li><a href="home480.html">Home</a></li>
-      <li><a href="map480.html">Map</a></li>
-      <li><a href="dining480.html">Dining</a></li>
-      <li><a href="clubs480.html">Clubs</a></li>
-      <li><a href="career480.html">Careers</a></li>
-      <li class="dropdown">
-        <button class="dropdown-btn">Account ▾</button>
-        <div class="dropdown-content">
-          <a href="login.html">Login</a>
-          <a href="signup.html">Sign Up</a>
-        </div>
-      </li>
-    </ul>
-  </nav>
-
-  <script>
-    // dropdown toggle logic
-    document.addEventListener("DOMContentLoaded", () => {
-      const btn = document.querySelector(".dropdown-btn");
-      const menu = document.querySelector(".dropdown-content");
-
-      btn.addEventListener("click", () => {
-        menu.classList.toggle("show");
-      });
-
-      // close dropdown when clicking outside
-      window.addEventListener("click", (e) => {
-        if (!btn.contains(e.target)) {
-          menu.classList.remove("show");
-        }
-      });
-    });
-  </script>
-</header>
-
     <!-- Wrapper -->
     <div id="wrapper">
 
