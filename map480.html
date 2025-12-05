@@ -1,209 +1,130 @@
-<!DOCTYPE HTML>
-<!--
-  CSUN Campus Resource Hub - Campus Map
--->
+<!doctype html>
 <html lang="en">
-  <head>
-    <title>Campus Map | CSUN Campus Resource Hub</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <!-- Phantom main stylesheet -->
-    <link rel="stylesheet" href="assets/css/main.css" />
-    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 
-    <!-- Map-specific styling -->
-    <style>
-      .map-layout {
-        display: grid;
-        grid-template-columns: minmax(0, 2.5fr) minmax(260px, 1fr);
-        gap: 2rem;
-        align-items: flex-start;
-      }
+<head>
+  <title>Campus Map | CSUN Campus Resource Hub</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <noscript>
+    <link rel="stylesheet" href="assets/css/noscript.css">
+  </noscript>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    #map {
+      width: 100%;
+      height: 60vh;
+      border-radius: 8px;
+    }
 
-      @media (max-width: 900px) {
-        .map-layout {
-          grid-template-columns: 1fr;
-        }
-      }
+    #controls {
+      margin-top: 1rem;
+    }
 
-      #map {
-        width: 100%;
-        min-height: 450px;
-        border-radius: 1rem;
-        overflow: hidden;
-        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12);
-      }
+    .control-button {
+      margin-right: .5rem;
+    }
+  </style>
+</head>
 
-      #controls {
-        background: #ffffff;
-        border-radius: 1rem;
-        padding: 1.25rem 1.5rem;
-        box-shadow: 0 10px 25px rgba(15, 23, 42, 0.18);
-      }
+<body>
+  <!-- Wrapper -->
+  <div id="wrapper">
 
-      #controls h3 {
-        margin: 0 0 0.75rem 0;
-        text-transform: uppercase;
-        letter-spacing: 0.15em;
-        font-size: 0.75rem;
-      }
+    <!-- Header -->
+    <header id="header">
+      <div class="inner">
 
-      .control-button {
-        display: block;
-        width: 100%;
-        margin-bottom: auto;
-        border-radius: 999px;
-        border: 1px solid #d1d5db;
-        padding: 0.55rem 0.9rem;
-        font-size: 0.85rem;
-        text-align: center;
-        cursor: pointer;
-        background: #f9fafb;
-        transition: background 0.15s ease, border-color 0.15s ease,
-          transform 0.08s ease;
-      }
+        <!-- Logo -->
+        <a href="index.html" class="logo">
+          <!-- Put your CSUN logo file in /images as CSUNlogo.png, or change this path -->
+          <span class="symbol">
+            <img src="images/CSUNlogo.png" alt="CSUN Logo" />
+          </span>
+          <span class="title">CSUN Campus Resource Hub</span>
+        </a>
 
-      .control-button:last-child {
-        margin-bottom: 0;
-      }
+        <!-- Nav trigger -->
+        <nav>
+          <ul>
+            <li><a href="#menu">Menu</a></li>
+          </ul>
+        </nav>
 
-      .control-button:hover {
-        transform: translateY(-1px);
-      }
+      </div>
+    </header>
 
-      .control-button.active {
-        background: #d22030; /* CSUN Hero Red */
-        color: #ffffff;
-        border-color: #b11b27;
-      }
-    </style>
-  </head>
+    <!-- Off-canvas Menu -->
+    <nav id="menu">
+      <h2>Menu</h2>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <!-- Existing 480 pages -->
+        <li><a href="home480.html">Student Dashboard</a></li>
+        <li><a href="map480.html">Campus Map</a></li>
+        <li><a href="dining480.html">Dining</a></li>
+        <li><a href="clubs480.html">Clubs &amp; Orgs</a></li>
+        <li><a href="career480.html">Careers</a></li>
+        <!-- Account links -->
+        <li><a href="login.html">Login</a></li>
+        <li><a href="signup.html">Sign Up</a></li>
+      </ul>
+    </nav>
 
-  <body class="is-preload">
-    <!-- Wrapper -->
-    <div id="wrapper">
-      <!-- Header -->
-      <header id="header">
-        <div class="inner">
-          <!-- Logo -->
-          <a href="index.html" class="logo">
-            <span class="symbol">
-              <img src="images/CSUNlogo.png" alt="CSUN Logo" />
-            </span>
-            <span class="title">CSUN Campus Resource Hub</span>
-          </a>
+    <div id="main">
+      <div class="inner">
+        <header>
+          <h1>Campus Map</h1>
+          <p>Toggle layers to explore food, parking, and buildings.</p>
+        </header>
 
-          <!-- Nav trigger -->
-          <nav>
-            <ul>
-              <li><a href="#menu">Menu</a></li>
-            </ul>
-          </nav>
-        </div>
-      </header>
-
-      <!-- Off-canvas Menu -->
-      <nav id="menu">
-        <h2>Menu</h2>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="dashboard480.html">Student Dashboard</a></li>
-          <li><a href="map480.html">Campus Map</a></li>
-          <li><a href="dining480.html">Dining</a></li>
-          <li><a href="clubs480.html">Clubs &amp; Orgs</a></li>
-          <li><a href="career480.html">Careers</a></li>
-          <li><a href="signup.html">Sign Up / Login</a></li>
-          <li><a href="#" onclick="logout()">Logout</a></li>
-        </ul>
-      </nav>
-
-      <!-- Main -->
-      <div id="main">
-        <div class="inner">
-          <header>
-            <h1>CSUN Campus Map</h1>
-            <p>
-              Explore food, parking, and academic buildings around CSUN using
-              interactive map layers.
-            </p>
-          </header>
-
-          <section class="map-layout">
-            <!-- Map -->
-            <div id="map"></div>
-
-            <!-- Layer controls -->
-            <div id="controls">
-              <h3>Map Layers</h3>
-              <button id="food-btn" class="control-button active">Food</button>
-              <button id="parking-btn" class="control-button">Parking</button>
-              <button id="buildings-btn" class="control-button">Buildings</button>
-            </div>
-          </section>
-        </div>
+        <section class="box">
+          <div id="map"></div>
+          <div id="controls">
+            <h3>Map Layers</h3>
+            <button id="food-btn" class="button small primary">Food</button>
+            <button id="parking-btn" class="button small">Parking</button>
+            <button id="buildings-btn" class="button small">Buildings</button>
+          </div>
+        </section>
       </div>
     </div>
 
-    <!-- Phantom Scripts -->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/browser.min.js"></script>
-    <script src="assets/js/breakpoints.min.js"></script>
-    <script src="assets/js/util.js"></script>
-    <script src="assets/js/main.js"></script>
+    <footer id="footer">
+      <div class="inner">
+        <ul class="copyright">
+          <li>© CSUN Campus Resource Hub.</li>
+        </ul>
+      </div>
+    </footer>
+  </div>
 
-    <!-- Simple logout helper (used in the menu) -->
-    <script>
-      function logout() {
-        localStorage.removeItem("authToken");
-        localStorage.removeItem("username");
-        localStorage.removeItem("major");
-        localStorage.removeItem("catalogYear");
-        window.location.href = "login.html";
-      }
-    </script>
+  <nav id="menu">
+    <div class="inner">
+      <h2>Menu</h2>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="home480.html">Student Dashboard</a></li>
+        <li><a href="map480.html">Campus Map</a></li>
+        <li><a href="dining480.html">Dining</a></li>
+        <li><a href="clubs480.html">Clubs &amp; Orgs</a></li>
+        <li><a href="career480.html">Careers</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="signup.html">Sign Up</a></li>
+      </ul>
+    </div>
+    <a class="close" href="#menu">Close</a>
+  </nav>
 
-    <!-- Google Maps JS + your existing map script -->
-    <script>
-      (g => {
-        var h, a, k,
-          p = "The Google Maps JavaScript API",
-          c = "google",
-          l = "importLibrary",
-          q = "__ib__",
-          m = document,
-          b = window;
-        b = b[c] || (b[c] = {});
-        var d = b.maps || (b.maps = {}),
-          r = new Set(),
-          e = new URLSearchParams(),
-          u = () =>
-            h ||
-            (h = new Promise(async (f, n) => {
-              await (a = m.createElement("script"));
-              e.set("libraries", [...r] + "");
-              for (k in g)
-                e.set(
-                  k.replace(/[A-Z]/g, t => "_" + t[0].toLowerCase()),
-                  g[k]
-                );
-              e.set("callback", c + ".maps." + q);
-              a.src = `https://maps.googleapis.com/maps/api/js?` + e;
-              d[q] = f;
-              a.onerror = () => (h = n(Error(p + " could not load.")));
-              a.nonce = m.querySelector("script[nonce]")?.nonce || "";
-              m.head.append(a);
-            }));
-        d[l]
-          ? console.warn(p + " only loads once. Ignoring:", g)
-          : (d[l] = (f, ...n) =>
-              r.add(f) && u().then(() => d[l](f, ...n)));
-      })({
-        key: "AIzaSyACsNTRbOcToaiZYPhVnR1qm44VV4EtmJs",
-        v: "weekly"
-      });
-    </script>
-    <script src="../js/mapscript.js"></script>
-  </body>
+  <!-- Google Maps loader -->
+  <script>(g => { var h, a, k, p = "The Google Maps JavaScript API", c = "google", l = "importLibrary", q = "__ib__", m = document, b = window; b = b[c] || (b[c] = {}); var d = b.maps || (b.maps = {}), r = new Set, e = new URLSearchParams, u = () => h || (h = new Promise(async (f, n) => { await (a = m.createElement("script")); e.set("libraries", [...r] + ""); for (k in g) e.set(k.replace(/[A-Z]/g, t => "_" + t.toLowerCase()), g[k]); e.set("callback", c + ".maps." + q); a.src = `https://maps.${c}apis.com/maps/api/js?` + e; d[q] = f; a.onerror = () => h = n(Error(p + " could not load.")); a.nonce = m.querySelector("script[nonce]")?.nonce || ""; m.head.append(a) })); d[l] ? console.warn(p + " only loads once. Ignoring:", g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)) })({ key: "AIzaSyACsNTRbOcToaiZYPhVnR1qm44VV4EtmJs", v: "weekly" });</script>
+  <script src="js/mapscript.js"></script>
+
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/browser.min.js"></script>
+  <script src="assets/js/breakpoints.min.js"></script>
+  <script src="assets/js/util.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+
 </html>
-
-
