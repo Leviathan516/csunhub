@@ -216,7 +216,7 @@
   (function loadWelcome() {
     const username = localStorage.getItem("username") || "Student";
     const major = localStorage.getItem("major") || "Computer Information Technology, B.S.";
-    const catalogYear = localStorage.getItem("catalogYear") || "2023-2024";
+    const catalogYear = localStorage.getItem("catalogYear") || "2023-2024".trim();
 
     const welcomeEl = document.getElementById("welcome");
     welcomeEl.textContent = `Welcome, ${username} (${major}, Catalog ${catalogYear})`;
