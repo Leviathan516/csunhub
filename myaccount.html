@@ -198,193 +198,156 @@
     <script src="assets/js/util.js"></script>
     <script src="assets/js/main.js"></script>
 
-        <!-- Skill tree JS -->
-       <!-- Skill tree JS -->
     <script>
-      const API_URL = "https://csunhub-backend.onrender.com";
-
-      // Require login
-      (function requireLogin() {
-        const token = localStorage.getItem("authToken");
-        if (!token) {
-          const params = new URLSearchParams();
-          params.set("redirect", "myaccount.html");
-          window.location.href = "login.html?" + params.toString();
-        }
-      })();
-
-      // Welcome text
-      (function loadWelcome() {
-        const username = localStorage.getItem("username") || "Student";
-        const major =
-          localStorage.getItem("major") ||
-          "Computer Information Technology, B.S.";
-        const catalogYear =
-          localStorage.getItem("catalogYear") || "2023-2024";
-
-        const welcomeEl = document.getElementById("welcome");
-        welcomeEl.textContent = `Welcome, ${username} (${major}, Catalog ${catalogYear})`;
-      })();
-
-      // No fallback — starts empty until backend loads it
       let courses = [];
-
+      const API_URL = "https://csunhub-backend.onrender.com";
+      
+      /* Utility: get username-specific localStorage key */
       function getUsername() {
         return localStorage.getItem("username") || "guest";
       }
-
+      
       function getStorageKey() {
-        const username = getUsername();
-        return `cit_skill_tree_completed_${username}`;
+        return `cit_skill_tree_completed_${getUsername()}`;
       }
-
+      
+      /* Completed course set */
       const completedSet = new Set(
         JSON.parse(localStorage.getItem(getStorageKey()) || "[]")
       );
-
+      
+      /* Save progress to localStorage */
       function saveProgress() {
-        localStorage.setItem(
-          getStorageKey(),
-          JSON.stringify([...completedSet])
-        );
+        localStorage.setItem(getStorageKey(), JSON.stringify([...completedSet]));
       }
-
+      
+      /* Check if a course is unlocked */
       function isUnlocked(course) {
         const prereqs = course.prereqs || [];
         return prereqs.every((id) => completedSet.has(id));
       }
-
-      // Load catalog from backend
-      async function loadCoursesForUser() {
-        let major = (localStorage.getItem("major") || "").trim();
-        const catalogYear =
-          (localStorage.getItem("catalogYear") || "").trim();
-
-        // Normalize older accounts or variations
-        if (!major || major === "CIT") {
-          major = "Computer Information Technology, B.S.";
+      
+      /* Toggle course completion */
+      function toggleComplete(id) {
+        if (completedSet.has(id)) {
+          completedSet.delete(id);
+        } else {
+          completedSet.add(id);
         }
-
-        if (!catalogYear) {
-          console.error("Missing catalogYear in localStorage.");
-          courses = [];
-          return renderTree();
-        }
-
-        try {
-          const res = await fetch(
-            `${API_URL}/catalog?major=${encodeURIComponent(
-              major
-            )}&year=${encodeURIComponent(catalogYear)}`
-          );
-
-          const data = await res.json().catch(() => ({}));
-
-          if (!res.ok || !data || !Array.isArray(data.courses)) {
-            throw new Error(data.message || "Invalid catalog response");
-          }
-
-          let remoteCourses = data.courses;
-
-          // Parse JSON string if needed
-          if (typeof remoteCourses === "string") {
-            remoteCourses = JSON.parse(remoteCourses);
-          }
-
-          if (!Array.isArray(remoteCourses)) {
-            throw new Error("Catalog returned but is not an array");
-          }
-
-          courses = remoteCourses;
-        } catch (err) {
-          console.error("Failed to load catalog from backend:", err);
-          courses = []; // NO FALLBACK — EMPTY
-        }
-
+        saveProgress();
         renderTree();
       }
-
-      function renderTree() {
-        const treeEl = document.getElementById("tree");
-        if (!treeEl) return;
-
-        treeEl.innerHTML = "";
-
-        if (!courses.length) {
-          treeEl.innerHTML =
-            "<p style='text-align:center; color:#aaa;'>No catalog found for your assigned catalog year.</p>";
-          return;
+      
+      /* Create a course card (converted from SkillNode.tsx) */
+      function createCourseCard(course) {
+        const card = document.createElement("div");
+        card.className = "course";
+      
+        const locked = !isUnlocked(course);
+        const completed = completedSet.has(course.id);
+      
+        if (locked) card.classList.add("locked");
+        if (!locked) card.classList.add("unlocked");
+        if (completed) card.classList.add("completed");
+      
+        /* Title */
+        const title = document.createElement("div");
+        title.className = "course-title";
+        title.textContent = `${course.id}: ${course.name}`;
+        card.appendChild(title);
+      
+        /* Prereqs */
+        const prereqEl = document.createElement("div");
+        prereqEl.className = "course-prereqs";
+        prereqEl.textContent =
+          course.prereqs && course.prereqs.length > 0
+            ? `Prereqs: ${course.prereqs.join(", ")}`
+            : "No prerequisites";
+        card.appendChild(prereqEl);
+      
+        /* Status pill */
+        const pill = document.createElement("div");
+        pill.className = "status-pill";
+      
+        const dot = document.createElement("div");
+        dot.className = "status-dot";
+        pill.appendChild(dot);
+      
+        let label = "Locked";
+        if (completed) label = "Completed";
+        else if (!locked) label = "Unlocked";
+      
+        pill.append(label);
+        card.appendChild(pill);
+      
+        /* Button */
+        const btn = document.createElement("button");
+        btn.className = "complete-btn";
+      
+        if (completed) {
+          btn.classList.add("undo");
+          btn.textContent = "Undo Completion";
+        } else {
+          btn.classList.add("complete");
+          btn.textContent = locked ? "Locked" : "Mark Completed";
         }
-
+      
+        // Only allow clicking if unlocked
+        if (!locked) {
+          btn.addEventListener("click", () => toggleComplete(course.id));
+        } else {
+          btn.disabled = true;
+        }
+      
+        card.appendChild(btn);
+      
+        return card;
+      }
+      
+      /* Render the whole skill tree (converted from SkillTree.tsx) */
+      function renderTree() {
+        const tree = document.getElementById("tree");
+        if (!tree) return;
+      
+        tree.innerHTML = ""; // Clear old tree
+      
         courses.forEach((course) => {
-          const unlocked = isUnlocked(course);
-          const completed = completedSet.has(course.id);
-
-          const card = document.createElement("div");
-          card.classList.add("course");
-          if (completed) card.classList.add("completed");
-          else if (unlocked) card.classList.add("unlocked");
-          else card.classList.add("locked");
-
-          const title = document.createElement("div");
-          title.className = "course-title";
-          title.textContent = course.name;
-
-          const prereqText = document.createElement("div");
-          prereqText.className = "course-prereqs";
-          prereqText.textContent =
-            !course.prereqs || course.prereqs.length === 0
-              ? "Prereqs: None (starting node)"
-              : "Prereqs: " + course.prereqs.join(", ");
-
-          const statusPill = document.createElement("div");
-          statusPill.className = "status-pill";
-
-          const dot = document.createElement("span");
-          dot.className = "status-dot";
-
-          const statusLabel = document.createElement("span");
-          statusLabel.textContent = completed
-            ? "Completed"
-            : unlocked
-            ? "Unlocked"
-            : "Locked";
-
-          statusPill.appendChild(dot);
-          statusPill.appendChild(statusLabel);
-
-          const btn = document.createElement("button");
-          btn.className = "complete-btn";
-          btn.textContent = completed ? "Congrats!" : "Completed";
-          btn.classList.add(completed ? "undo" : "complete");
-
-          if (!unlocked && !completed) {
-            btn.disabled = true;
-          }
-
-          btn.addEventListener("click", () => {
-            if (!unlocked && !completed) return;
-
-            if (completed) {
-              completedSet.delete(course.id);
-            } else {
-              completedSet.add(course.id);
-            }
-
-            saveProgress();
-            renderTree();
-          });
-
-          card.appendChild(title);
-          card.appendChild(prereqText);
-          card.appendChild(statusPill);
-          card.appendChild(btn);
-
-          treeEl.appendChild(card);
+          const card = createCourseCard(course);
+          tree.appendChild(card);
         });
       }
-
-      document.addEventListener("DOMContentLoaded", loadCoursesForUser);
-    </script>
+      
+      /* Load catalog from backend just like original TSX version */
+      async function loadCoursesForUser() {
+        const major = localStorage.getItem("major") || "Computer Information Technology, B.S.";
+        const catalogYear = localStorage.getItem("catalogYear") || "2023-2024";
+      
+        try {
+          const res = await fetch(
+            `${API_URL}/catalog?major=${encodeURIComponent(major)}&year=${encodeURIComponent(catalogYear)}`
+          );
+          const data = await res.json().catch(() => ({}));
+      
+          if (!res.ok || !Array.isArray(data.courses)) {
+            throw new Error(data.message || "Invalid catalog response");
+          }
+      
+          let list = data.courses;
+          if (typeof list === "string") {
+            list = JSON.parse(list);
+          }
+      
+          courses = list;
+          renderTree();
+        } catch (err) {
+          console.error("Failed to load courses:", err);
+          courses = [];
+          renderTree();
+        }
+      }
+      
+      loadCoursesForUser();
+      
+   </script>
   </body>
 </html>
