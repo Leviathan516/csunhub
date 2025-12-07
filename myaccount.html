@@ -22,7 +22,7 @@
         display: block;
         text-align: center;
         margin-bottom: 16px;
-        color: #9ca3af;
+        color: #000000;
         font-size: 0.8rem;
       }
 
@@ -37,9 +37,9 @@
       .course {
         border-radius: 12px;
         padding: 12px 14px;
-        border: 1px solid #1f2937;
-        background: #111827;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.45);
+        border: 1px solid #000000;
+        background: #ffffff;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
         position: relative;
         height: 240px;
         display: flex;
@@ -48,12 +48,11 @@
         padding-bottom: 20px;
         gap: 6px;
         transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
-        color: #f9fafb;
+        color: #000000;
       }
 
       .course.unlocked {
-        border-color: #22c55e;
-        box-shadow: 0 0 0 1px rgba(34,197,94,0.3);
+        border-color: #000000;
       }
 
       .course.locked {
@@ -62,8 +61,7 @@
       }
 
       .course.completed {
-        border-color: #38bdf8;
-        background: linear-gradient(135deg, #0f172a, #082f49);
+        border-color: #000000;
       }
 
       .course-title {
@@ -75,7 +73,7 @@
 
       .course-prereqs {
         font-size: 0.75rem;
-        color: #9ca3af;
+        color: #000000;
       }
 
       .status-pill {
@@ -85,8 +83,8 @@
         padding: 2px 8px;
         border-radius: 999px;
         font-size: 0.75rem;
-        background: #020617;
-        border: 1px solid #1f2937;
+        background: #ffffff;
+        border: 1px solid #000000;
         align-self: flex-start;
       }
 
@@ -94,36 +92,13 @@
         width: 8px;
         height: 8px;
         border-radius: 999px;
-        background: #4b5563;
+        background: #000000;
       }
 
-      .course.unlocked .status-dot {
-        background: #22c55e;
-      }
-
-      .course.completed .status-dot {
-        background: #38bdf8;
-      }
-
+      /* Use global .button styles, only control layout */
       button.complete-btn {
         margin-top: auto;
         width: 100%;
-        padding: 6px 10px;
-        border-radius: 999px;
-        border: none;
-        cursor: pointer;
-        font-size: 0.75rem;
-        font-weight: 500;
-      }
-
-      .complete-btn.complete {
-        background: #22c55e;
-        color: #022c22;
-      }
-
-      .complete-btn.undo {
-        background: #6b7280;
-        color: #f9fafb;
       }
 
       .course.locked button {
@@ -198,7 +173,7 @@
     <script src="assets/js/util.js"></script>
     <script src="assets/js/main.js"></script>
 
-        <!-- Skill tree JS -->
+    <!-- Skill tree JS -->
     <script>
       const API_URL = "https://csunhub-backend.onrender.com";
 
@@ -215,11 +190,8 @@
       // Welcome text
       (function loadWelcome() {
         const username = localStorage.getItem("username") || "Student";
-        const major =
-          localStorage.getItem("major") ||
-          "Computer Information Technology, B.S.";
-        const catalogYear =
-          localStorage.getItem("catalogYear") || "2023-2024";
+        const major = localStorage.getItem("major") || "Computer Information Technology, B.S.";
+        const catalogYear = localStorage.getItem("catalogYear") || "2023-2024";
 
         const welcomeEl = document.getElementById("welcome");
         welcomeEl.textContent = `Welcome, ${username} (${major}, Catalog ${catalogYear})`;
@@ -242,10 +214,7 @@
       );
 
       function saveProgress() {
-        localStorage.setItem(
-          getStorageKey(),
-          JSON.stringify([...completedSet])
-        );
+        localStorage.setItem(getStorageKey(), JSON.stringify([...completedSet]));
       }
 
       function isUnlocked(course) {
@@ -253,28 +222,19 @@
         return prereqs.every((id) => completedSet.has(id));
       }
 
-      // Load catalog from backend
       async function loadCoursesForUser() {
-        let major = (localStorage.getItem("major") || "").trim();
-        const catalogYear =
-          (localStorage.getItem("catalogYear") || "").trim();
+        const major = (localStorage.getItem("major") || "").trim();
+        const catalogYear = (localStorage.getItem("catalogYear") || "").trim();
 
-        // Normalize older accounts or variations
-        if (!major || major === "CIT") {
-          major = "Computer Information Technology, B.S.";
-        }
-
-        if (!catalogYear) {
-          console.error("Missing catalogYear in localStorage.");
+        if (!major || !catalogYear) {
+          console.error("Missing major or catalogYear in localStorage.");
           courses = [];
           return renderTree();
         }
 
         try {
           const res = await fetch(
-            `${API_URL}/catalog?major=${encodeURIComponent(
-              major
-            )}&year=${encodeURIComponent(catalogYear)}`
+            `${API_URL}/catalog?major=${encodeURIComponent(major)}&year=${encodeURIComponent(catalogYear)}`
           );
 
           const data = await res.json().catch(() => ({}));
@@ -310,8 +270,7 @@
         treeEl.innerHTML = "";
 
         if (!courses.length) {
-          treeEl.innerHTML =
-            "<p style='text-align:center; color:#aaa;'>No catalog found for your assigned catalog year.</p>";
+          treeEl.innerHTML = "<p style='text-align:center;'>No catalog found for your assigned catalog year.</p>";
           return;
         }
 
@@ -353,9 +312,14 @@
           statusPill.appendChild(statusLabel);
 
           const btn = document.createElement("button");
-          btn.className = "complete-btn";
+          // Use same classes as map480 buttons
+          btn.className = "button small complete-btn";
           btn.textContent = completed ? "Congrats!" : "Completed";
-          btn.classList.add(completed ? "undo" : "complete");
+
+          // Completed courses get the filled red style (primary)
+          if (completed) {
+            btn.classList.add("primary");
+          }
 
           if (!unlocked && !completed) {
             btn.disabled = true;
