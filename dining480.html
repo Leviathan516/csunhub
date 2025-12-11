@@ -25,21 +25,24 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
 
-    .slideshow-container {
-      position: relative;
-      max-width: 800px;
-      margin: 0 auto 2.5rem;
-    }
+  .slideshow-container {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto 2.5rem;
+  height: 430px;              /* 🔐 FIXED HEIGHT – adjust if needed */
+  overflow: hidden;           /* hides any extra overflow */
+}
 
-    .slide {
-      display: none;
-      text-align: center;
-    }
+  .slide {
+  display: none;
+  text-align: center;
+}
 
-    .slide.active {
-      display: block;
-      animation: fade 0.8s ease-in-out;
-    }
+  .slide.active {
+  display: block;
+  animation: fade 0.8s ease-in-out;
+}
+
 
     @keyframes fade {
       from {
@@ -51,22 +54,22 @@
       }
     }
 
-    .prev,
-    .next {
-      cursor: pointer;
-      position: absolute;
-      top: 45%;
-      width: auto;
-      padding: 12px;
-      color: #fff;
-      font-weight: bold;
-      font-size: 22px;
-      border-radius: 50%;
-      background-color: rgba(0, 0, 0, 0.3);
-      user-select: none;
-      transition: 0.3s;
-    }
-
+  .prev,
+  .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;                   /* always center vertically */
+  transform: translateY(-50%);
+  width: auto;
+  padding: 12px;
+  color: #fff;
+  font-weight: bold;
+  font-size: 22px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.3);
+  user-select: none;
+  transition: 0.3s;
+}
     .prev:hover,
     .next:hover {
       background-color: rgba(0, 0, 0, 0.6);
@@ -612,6 +615,7 @@
 </body>
 
 <html>
+
 
 
 
