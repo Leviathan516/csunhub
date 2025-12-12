@@ -3638,7 +3638,7 @@ body.is-menu-visible #menu .close {
 }
 
 #careers-root {
-	max-width: 1000px;
+	max-width: 65-rem;
 	margin: 0 auto 3rem;
 	text-align: left;
 }
@@ -3675,9 +3675,9 @@ body.is-menu-visible #menu .close {
 
 /* Accordion container */
 .career-accordion {
-	display: flex;
-	flex-direction: column;
-	gap: 0.6rem;
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 0.75rem 1rem;
 }
 
 /* Individual job item */
@@ -3804,7 +3804,7 @@ body.is-menu-visible #menu .close {
 }
 
 /* Mobile tweaks */
-@media (max-width: 736px) {
+@media (max-width: 900px) {
 	#careers-root {
 		padding: 0 8px;
 	}
@@ -3815,5 +3815,9 @@ body.is-menu-visible #menu .close {
 
 	.career-item.is-open .career-item-body {
 		padding: 0.45rem 0.8rem 0.8rem;
+	}
+
+	.career-accordion {
+		grid-template-columns: 1fr;
 	}
 }
