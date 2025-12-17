@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
   </head>
   <body class="is-preload">
     <!-- Wrapper -->
@@ -52,8 +55,8 @@
             <form id="loginForm">
               <div class="fields">
                 <div class="field">
-                  <label for="username">Username</label>
-                  <input type="text" id="username" required />
+                  <label for="email">Email</label>
+                  <input type="email" id="email" required />
                 </div>
                 <div class="field">
                   <label for="password">Password</label>
@@ -79,9 +82,21 @@
       </div>
     </div>
 
-    <!-- Render backend auth (no AWS Amplify) -->
+    <!-- Firebase Initialization and Auth -->
     <script>
-      const API_URL = "https://csunhub-backend.onrender.com";
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "YOUR_API_KEY",
+        authDomain: "YOUR_AUTH_DOMAIN",
+        projectId: "YOUR_PROJECT_ID",
+        storageBucket: "YOUR_STORAGE_BUCKET",
+        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+        appId: "YOUR_APP_ID"
+      };
+
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      const auth = firebase.auth();
 
       const messageEl = document.getElementById("message");
       const loginBtn = document.getElementById("loginButton");
@@ -89,53 +104,43 @@
       loginBtn.addEventListener("click", async () => {
         messageEl.textContent = "";
 
-        const username = document.getElementById("username").value.trim();
+        const email = document.getElementById("email").value.trim();
         const password = document.getElementById("password").value;
 
-        if (!username || !password) {
-          messageEl.textContent = "Please enter your username and password.";
+        if (!email || !password) {
+          messageEl.textContent = "Please enter your email and password.";
           return;
         }
 
         try {
-          const res = await fetch(`${API_URL}/login`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ username, password })
-          });
+          const userCredential = await auth.signInWithEmailAndPassword(email, password);
+          const user = userCredential.user;
 
-          const data = await res.json().catch(() => ({}));
-
-          if (!res.ok || data.success === false) {
-            throw new Error(data.message || "Login failed.");
-          }
-
-          console.log("Login success:", data);
-
-          // Store auth info in localStorage
-          if (data.token) {
-            localStorage.setItem("authToken", data.token);
-          } else {
-            // fallback token so dashboard lock still works (you can remove later)
-            localStorage.setItem("authToken", "dummy-token");
-          }
-
-          // Optional profile info (if your backend returns it)
-          localStorage.setItem("username", data.username || username);
-          if (data.major) localStorage.setItem("major", data.major);
-          if (data.catalogYear) localStorage.setItem("catalogYear", data.catalogYear);
+          console.log("Login success:", user);
 
           // Go to dashboard once logged in
           const params = new URLSearchParams(window.location.search);
           const redirect = params.get("redirect") || "dashboard480.html";
           window.location.href = redirect;
-        } catch (err) {
-          console.error("Login error:", err);
-          messageEl.textContent = err.message || "Error logging in.";
+        } catch (error) {
+          console.error("Login error:", error);
+          messageEl.textContent = error.message;
         }
       });
+
+      function logout() {
+        auth.signOut().then(() => {
+          // Sign-out successful.
+          localStorage.removeItem("authToken");
+          localStorage.removeItem("username");
+          localStorage.removeItem("major");
+          localStorage.removeItem("catalogYear");
+          window.location.href = "login.html";
+        }).catch((error) => {
+          // An error happened.
+          console.error("Logout error:", error);
+        });
+      }
     </script>
   </body>
 </html>
