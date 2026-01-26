@@ -9,6 +9,7 @@
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
     <!-- Skill tree styling -->
     <style>
@@ -131,6 +132,7 @@
       const firebaseConfig = {
         apiKey: "AIzaSyClTeS_q66bYQkVEOcSoc-TY3VX4QRKeho",
         authDomain: "csunhub.firebaseapp.com",
+        databaseURL: "https://csunhub-default-rtdb.firebaseio.com/",
         projectId: "csunhub",
         storageBucket: "csunhub.appspot.com",
         messagingSenderId: "310029268686",
@@ -141,6 +143,7 @@
       // Initialize Firebase
       firebase.initializeApp(firebaseConfig);
       const auth = firebase.auth();
+      const db = firebase.database();
 
       let currentUser = null;
 
@@ -185,7 +188,9 @@
       let completedSet = new Set();
 
       function saveProgress(user) {
-        localStorage.setItem(getStorageKey(user), JSON.stringify([...completedSet]));
+        db.ref('users/' + user.uid).set({
+            completedCourses: [...completedSet]
+        });
       }
 
       function isUnlocked(course) {
@@ -194,7 +199,13 @@
       }
 
       async function loadCoursesForUser(user) {
-        completedSet = new Set(JSON.parse(localStorage.getItem(getStorageKey(user)) || "[]"));
+        const snapshot = await db.ref('users/' + user.uid).once('value');
+        const data = snapshot.val();
+        if (data && data.completedCourses) {
+            completedSet = new Set(data.completedCourses);
+        } else {
+            completedSet = new Set();
+        }
 
         // You may want to fetch major and catalog year from a database associated with the user
         let major = "Computer Information Technology, B.S.";
