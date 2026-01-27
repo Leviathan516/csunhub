@@ -201,6 +201,24 @@
         return prereqs.every((id) => completedSet.has(id));
       }
 
+      function sortCoursesForDisplay(list) {
+  return [...list].sort((a, b) => {
+    const aStarter = a.starter === true;
+    const bStarter = b.starter === true;
+
+    // 1) starters first
+    if (aStarter !== bStarter) return aStarter ? -1 : 1;
+
+    // 2) unlocked before locked
+    const aUnlocked = isUnlocked(a);
+    const bUnlocked = isUnlocked(b);
+    if (aUnlocked !== bUnlocked) return aUnlocked ? -1 : 1;
+
+    // 3) alphabetical fallback
+    return (a.id || "").localeCompare(b.id || "");
+  });
+}
+
       async function loadCoursesForUser(user) {
   // ----- A) Load user progress -----
   const userSnap = await db.ref("users/" + user.uid).once("value");
@@ -244,7 +262,7 @@
           return;
         }
 
-        courses.forEach((course) => {
+        sortCoursesForDisplay(courses).forEach((course) => {
           const unlocked = isUnlocked(course);
           const completed = completedSet.has(course.id);
 
