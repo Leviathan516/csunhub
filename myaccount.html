@@ -201,10 +201,19 @@
         return prereqs.every((id) => completedSet.has(id));
       }
 
-      function sortCoursesForDisplay(list) {
+     function sortCoursesForDisplay(list) {
   return [...list].sort((a, b) => {
     const aStarter = a.starter === true;
     const bStarter = b.starter === true;
+    if (aStarter !== bStarter) return aStarter ? -1 : 1;
+
+    const ta = Number.isFinite(a.tier) ? a.tier : 999;
+    const tb = Number.isFinite(b.tier) ? b.tier : 999;
+    if (ta !== tb) return ta - tb;
+
+    return (a.id || "").localeCompare(b.id || "");
+  });
+}
 
     // 1) starters first
     if (aStarter !== bStarter) return aStarter ? -1 : 1;
