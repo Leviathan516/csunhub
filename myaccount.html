@@ -188,7 +188,10 @@
      function saveProgress(user) {
   const completedObj = {};
   completedSet.forEach((id) => (completedObj[id] = true));
-  return db.ref("users/" + user.uid).update({ completedCourses: completedObj });
+
+  // update so you don't overwrite other user fields later
+  return db.ref("users/" + user.uid).update({
+    completedCourses: completedObj
 }
 
 
