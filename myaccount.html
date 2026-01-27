@@ -196,11 +196,11 @@
           }
           
           
-               function isUnlocked(course) {
-            if (completedSet.has(course.id)) return true;
+            function isUnlocked(course) {
+                if (completedSet.has(course.id)) return true;
           
             const prereqs = course.prereqs || [];
-            if (prereqs.length === 0) return course.starter === true;
+              if (prereqs.length === 0) return course.starter === true;
           
             return prereqs.every((id) => completedSet.has(id));
           }
@@ -208,13 +208,13 @@
           
                function sortCoursesForDisplay(list) {
             return [...list].sort((a, b) => {
-              const aStarter = a.starter === true;
-              const bStarter = b.starter === true;
-              if (aStarter !== bStarter) return aStarter ? -1 : 1;
+                const aStarter = a.starter === true;
+                const bStarter = b.starter === true;
+                  if (aStarter !== bStarter) return aStarter ? -1 : 1;
           
-              const ta = Number.isFinite(a.tier) ? a.tier : 999;
-              const tb = Number.isFinite(b.tier) ? b.tier : 999;
-              if (ta !== tb) return ta - tb;
+                const ta = Number.isFinite(a.tier) ? a.tier : 999;
+                const tb = Number.isFinite(b.tier) ? b.tier : 999;
+                  if (ta !== tb) return ta - tb;
           
               return (a.id || "").localeCompare(b.id || "");
             });
@@ -227,8 +227,10 @@
             const userData = userSnap.val() || {};
           
             // completedCourses stored as map: { "CIT101": true, ... }
-            const completedObj = userData.completedCourses || {};
-            completedSet = new Set(Object.keys(completedObj));
+            const completedRaw = userData.completedCourses || {};
+              if (Array.isArray(completedRaw)) completedSet = new Set(completedRaw);
+              else completedSet = new Set(Object.keys(completedRaw));
+
           
             // ----- B) Pick major + year (match your DB) -----
             const catalogYear = userData.catalogYear || "2023-2024";
@@ -256,81 +258,78 @@
 
 
         function renderTree() {
-          const treeEl = document.getElementById("tree");
-          if (!treeEl) return;
-  
-          treeEl.innerHTML = "";
-  
-          if (!courses.length) {
-            treeEl.innerHTML =
-              "<p style='text-align:center; color:#aaa;'>No catalog found for your assigned catalog year.</p>";
-            return;
-          }
+  const treeEl = document.getElementById("tree");
+  if (!treeEl) return;
 
-        sortCoursesForDisplay(courses).forEach((course) => {
-          const unlocked = isUnlocked(course);
-          const completed = completedSet.has(course.id);
+  treeEl.innerHTML = "";
 
-          const card = document.createElement("div");
-          card.classList.add("course");
-          if (completed) card.classList.add("completed");
-          else if (unlocked) card.classList.add("unlocked");
-          else card.classList.add("locked");
+  if (!courses.length) {
+    treeEl.innerHTML =
+      "<p style='text-align:center; color:#aaa;'>No catalog found for your assigned catalog year.</p>";
+    return;
+  }
 
-          const title = document.createElement("div");
-          title.className = "course-title";
-          title.textContent = course.name;
+  sortCoursesForDisplay(courses).forEach((course) => {
+    const unlocked = isUnlocked(course);
+    const completed = completedSet.has(course.id);
 
-          const prereqText = document.createElement("div");
-          prereqText.className = "course-prereqs";
-          prereqText.textContent =
-            !course.prereqs || course.prereqs.length === 0
-              ? "Prereqs: None (starting node)"
-              : "Prereqs: " + course.prereqs.join(", ");
+    const card = document.createElement("div");
+    card.classList.add("course");
+    if (completed) card.classList.add("completed");
+    else if (unlocked) card.classList.add("unlocked");
+    else card.classList.add("locked");
 
-          const statusPill = document.createElement("div");
-          statusPill.className = "status-pill";
+    const title = document.createElement("div");
+    title.className = "course-title";
+    title.textContent = course.name;
 
-          const dot = document.createElement("span");
-          dot.className = "status-dot";
+    const prereqText = document.createElement("div");
+    prereqText.className = "course-prereqs";
+    prereqText.textContent =
+      !course.prereqs || course.prereqs.length === 0
+        ? "Prereqs: None (starting node)"
+        : "Prereqs: " + course.prereqs.join(", ");
 
-          const statusLabel = document.createElement("span");
-          statusLabel.textContent = completed ? "Completed" : unlocked ? "Unlocked" : "Locked";
+    const statusPill = document.createElement("div");
+    statusPill.className = "status-pill";
 
-          statusPill.appendChild(dot);
-          statusPill.appendChild(statusLabel);
+    const dot = document.createElement("span");
+    dot.className = "status-dot";
 
-          const btn = document.createElement("button");
-          btn.className = "complete-btn";
-          btn.textContent = completed ? "Congrats!" : "Completed";
-          btn.classList.add(completed ? "undo" : "complete");
+    const statusLabel = document.createElement("span");
+    statusLabel.textContent = completed ? "Completed" : unlocked ? "Unlocked" : "Locked";
 
-          if (!unlocked && !completed) btn.disabled = true;
+    statusPill.appendChild(dot);
+    statusPill.appendChild(statusLabel);
 
-                    btn.addEventListener("click", async () => {
-            const nowUnlocked = isUnlocked(course);
-            const nowCompleted = completedSet.has(course.id);
-          
-            if (!nowUnlocked && !nowCompleted) return;
-          
-            if (nowCompleted) completedSet.delete(course.id);
-            else completedSet.add(course.id);
-          
-            await saveProgress(currentUser);
-            renderTree();
-          });
+    const btn = document.createElement("button");
+    btn.className = "complete-btn";
+    btn.textContent = completed ? "Congrats!" : "Completed";
+    btn.classList.add(completed ? "undo" : "complete");
 
+    if (!unlocked && !completed) btn.disabled = true;
 
-          });
+    btn.addEventListener("click", async () => {
+      const nowUnlocked = isUnlocked(course);
+      const nowCompleted = completedSet.has(course.id);
 
-          card.appendChild(title);
-          card.appendChild(prereqText);
-          card.appendChild(statusPill);
-          card.appendChild(btn);
+      if (!nowUnlocked && !nowCompleted) return;
 
-          treeEl.appendChild(card);
-        });
-      }
+      if (nowCompleted) completedSet.delete(course.id);
+      else completedSet.add(course.id);
+
+      await saveProgress(currentUser);
+      renderTree();
+    });
+
+    // ✅ Append everything INSIDE the forEach
+    card.appendChild(title);
+    card.appendChild(prereqText);
+    card.appendChild(statusPill);
+    card.appendChild(btn);
+    treeEl.appendChild(card);
+  });
+        }
     </script>
   </body>
 </html>
