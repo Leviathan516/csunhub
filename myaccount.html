@@ -127,149 +127,145 @@
     <script src="assets/js/util.js"></script>
     <script src="assets/js/main.js"></script>
 
-    <script>
-      // Your web app's Firebase configuration
-      const firebaseConfig = {
-        apiKey: "AIzaSyClTeS_q66bYQkVEOcSoc-TY3VX4QRKeho",
-        authDomain: "csunhub.firebaseapp.com",
-        databaseURL: "https://csunhub-default-rtdb.firebaseio.com/",
-        projectId: "csunhub",
-        storageBucket: "csunhub.appspot.com",
-        messagingSenderId: "310029268686",
-        appId: "1:310029268686:web:f2ce71516f1f82e166829f",
-        measurementId: "G-ZEM4D9Y5XB"
-      };
-
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-      const auth = firebase.auth();
-      const db = firebase.database();
-
-      let currentUser = null;
-
-      auth.onAuthStateChanged(user => {
-        if (user) {
-          // User is signed in.
-          currentUser = user;
-          loadWelcome(user);
-          loadCoursesForUser(user);
-        } else {
-          // No user is signed in. Redirect to login.
-          const params = new URLSearchParams();
-          params.set("redirect", "myaccount.html");
-          window.location.href = "login.html?" + params.toString();
-        }
-      });
-
-      function getStorageKey(user) {
-        return `cit_skill_tree_completed_${user.uid}`;
-      }
-
-      function logout() {
-        auth.signOut().then(() => {
-          // Sign-out successful.
-          window.location.href = "login.html";
-        }).catch((error) => {
-          // An error happened.
-          console.error("Logout error:", error);
-        });
-      }
-
-      // Welcome text
-      function loadWelcome(user) {
-        const welcomeEl = document.getElementById("welcome");
-        welcomeEl.textContent = `Welcome, ${user.email}`;
-      }
-
-      // No fallback — starts empty until backend loads it
-      let courses = [];
-      let completedSet = new Set();
-
-     function saveProgress(user) {
-  const completedObj = {};
-  completedSet.forEach((id) => (completedObj[id] = true));
-
-  // update so you don't overwrite other user fields later
-  return db.ref("users/" + user.uid).update({
-    completedCourses: completedObj
-  });
-}
-
-
-      function isUnlocked(course) {
-        const prereqs = course.prereqs || [];
-        return prereqs.every((id) => completedSet.has(id));
-      }
-
-     function sortCoursesForDisplay(list) {
-  return [...list].sort((a, b) => {
-    const aStarter = a.starter === true;
-    const bStarter = b.starter === true;
-    if (aStarter !== bStarter) return aStarter ? -1 : 1;
-
-    const ta = Number.isFinite(a.tier) ? a.tier : 999;
-    const tb = Number.isFinite(b.tier) ? b.tier : 999;
-    if (ta !== tb) return ta - tb;
-
-    return (a.id || "").localeCompare(b.id || "");
-  });
-}
-
-    // 1) starters first
-    if (aStarter !== bStarter) return aStarter ? -1 : 1;
-
-    // 2) unlocked before locked
-    const aUnlocked = isUnlocked(a);
-    const bUnlocked = isUnlocked(b);
-    if (aUnlocked !== bUnlocked) return aUnlocked ? -1 : 1;
-
-    // 3) alphabetical fallback
-    return (a.id || "").localeCompare(b.id || "");
-  });
-}
-
-      async function loadCoursesForUser(user) {
-  // ----- A) Load user progress -----
-  const userSnap = await db.ref("users/" + user.uid).once("value");
-  const userData = userSnap.val() || {};
-
-  // completedCourses stored as map: { "CIT101": true, ... }
-  const completedObj = userData.completedCourses || {};
-  completedSet = new Set(Object.keys(completedObj));
-
-  // ----- B) Pick major + year (match your DB) -----
-  const catalogYear = userData.catalogYear || "2023-2024";
-  const majorId = userData.majorId || "CIT";
-
-  // ----- C) Load catalog courses (OBJECT) -----
-  const coursesSnap = await db
-    .ref(`catalogs/${catalogYear}/${majorId}/courses`)
-    .once("value");
-
-  const coursesObj = coursesSnap.val() || {};
-
-  // Convert object -> array for your renderTree()
-  courses = Object.keys(coursesObj).map((key) => ({
-    id: coursesObj[key].id || key,
-    name: coursesObj[key].name || key,
-    prereqs: Array.isArray(coursesObj[key].prereqs) ? coursesObj[key].prereqs : []
-  }));
-
-  renderTree();
-}
+              <script>
+                // Your web app's Firebase configuration
+                const firebaseConfig = {
+                  apiKey: "AIzaSyClTeS_q66bYQkVEOcSoc-TY3VX4QRKeho",
+                  authDomain: "csunhub.firebaseapp.com",
+                  databaseURL: "https://csunhub-default-rtdb.firebaseio.com/",
+                  projectId: "csunhub",
+                  storageBucket: "csunhub.appspot.com",
+                  messagingSenderId: "310029268686",
+                  appId: "1:310029268686:web:f2ce71516f1f82e166829f",
+                  measurementId: "G-ZEM4D9Y5XB"
+                };
+          
+                // Initialize Firebase
+                firebase.initializeApp(firebaseConfig);
+                const auth = firebase.auth();
+                const db = firebase.database();
+          
+                let currentUser = null;
+          
+                auth.onAuthStateChanged(user => {
+                  if (user) {
+                    // User is signed in.
+                    currentUser = user;
+                    loadWelcome(user);
+                    loadCoursesForUser(user);
+                  } else {
+                    // No user is signed in. Redirect to login.
+                    const params = new URLSearchParams();
+                    params.set("redirect", "myaccount.html");
+                    window.location.href = "login.html?" + params.toString();
+                  }
+                });
+          
+                function getStorageKey(user) {
+                  return `cit_skill_tree_completed_${user.uid}`;
+                }
+          
+                function logout() {
+                  auth.signOut().then(() => {
+                    // Sign-out successful.
+                    window.location.href = "login.html";
+                  }).catch((error) => {
+                    // An error happened.
+                    console.error("Logout error:", error);
+                  });
+                }
+          
+                // Welcome text
+                function loadWelcome(user) {
+                  const welcomeEl = document.getElementById("welcome");
+                  welcomeEl.textContent = `Welcome, ${user.email}`;
+                }
+          
+                // No fallback — starts empty until backend loads it
+                let courses = [];
+                let completedSet = new Set();
+          
+               function saveProgress(user) {
+            const completedObj = {};
+            completedSet.forEach((id) => (completedObj[id] = true));
+          
+            // update so you don't overwrite other user fields later
+            return db.ref("users/" + user.uid).update({
+              completedCourses: completedObj
+            });
+          }
+          
+          
+               function isUnlocked(course) {
+            if (completedSet.has(course.id)) return true;
+          
+            const prereqs = course.prereqs || [];
+            if (prereqs.length === 0) return course.starter === true;
+          
+            return prereqs.every((id) => completedSet.has(id));
+          }
+          
+          
+               function sortCoursesForDisplay(list) {
+            return [...list].sort((a, b) => {
+              const aStarter = a.starter === true;
+              const bStarter = b.starter === true;
+              if (aStarter !== bStarter) return aStarter ? -1 : 1;
+          
+              const ta = Number.isFinite(a.tier) ? a.tier : 999;
+              const tb = Number.isFinite(b.tier) ? b.tier : 999;
+              if (ta !== tb) return ta - tb;
+          
+              return (a.id || "").localeCompare(b.id || "");
+            });
+          }
+          
+          
+                async function loadCoursesForUser(user) {
+            // ----- A) Load user progress -----
+            const userSnap = await db.ref("users/" + user.uid).once("value");
+            const userData = userSnap.val() || {};
+          
+            // completedCourses stored as map: { "CIT101": true, ... }
+            const completedObj = userData.completedCourses || {};
+            completedSet = new Set(Object.keys(completedObj));
+          
+            // ----- B) Pick major + year (match your DB) -----
+            const catalogYear = userData.catalogYear || "2023-2024";
+            const majorId = userData.majorId || "CIT";
+          
+            // ----- C) Load catalog courses (OBJECT) -----
+            const coursesSnap = await db
+              .ref(`catalogs/${catalogYear}/${majorId}/courses`)
+              .once("value");
+          
+            const coursesObj = coursesSnap.val() || {};
+          
+            // Convert object -> array for your renderTree()
+            courses = Object.keys(coursesObj).map((key) => ({
+            id: coursesObj[key].id || key,
+            name: coursesObj[key].name || key,
+            prereqs: Array.isArray(coursesObj[key].prereqs) ? coursesObj[key].prereqs : [],
+            starter: coursesObj[key].starter === true,
+            tier: Number.isFinite(coursesObj[key].tier) ? coursesObj[key].tier : undefined
+          }));
+          
+          
+            renderTree();
+          }
 
 
-      function renderTree() {
-        const treeEl = document.getElementById("tree");
-        if (!treeEl) return;
-
-        treeEl.innerHTML = "";
-
-        if (!courses.length) {
-          treeEl.innerHTML =
-            "<p style='text-align:center; color:#aaa;'>No catalog found for your assigned catalog year.</p>";
-          return;
-        }
+        function renderTree() {
+          const treeEl = document.getElementById("tree");
+          if (!treeEl) return;
+  
+          treeEl.innerHTML = "";
+  
+          if (!courses.length) {
+            treeEl.innerHTML =
+              "<p style='text-align:center; color:#aaa;'>No catalog found for your assigned catalog year.</p>";
+            return;
+          }
 
         sortCoursesForDisplay(courses).forEach((course) => {
           const unlocked = isUnlocked(course);
@@ -311,21 +307,19 @@
 
           if (!unlocked && !completed) btn.disabled = true;
 
-          btn.addEventListener("click", () => {
-            if (!unlocked && !completed) return;
-
-            if (completed) completedSet.delete(course.id);
+                    btn.addEventListener("click", async () => {
+            const nowUnlocked = isUnlocked(course);
+            const nowCompleted = completedSet.has(course.id);
+          
+            if (!nowUnlocked && !nowCompleted) return;
+          
+            if (nowCompleted) completedSet.delete(course.id);
             else completedSet.add(course.id);
+          
+            await saveProgress(currentUser);
+            renderTree();
+          });
 
-            btn.addEventListener("click", async () => {
-  if (!unlocked && !completed) return;
-
-  if (completed) completedSet.delete(course.id);
-  else completedSet.add(course.id);
-
-  await saveProgress(currentUser);   // wait for DB write
-  renderTree();                      // now UI is consistent
-});
 
           });
 
