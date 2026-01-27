@@ -99,7 +99,7 @@
           <li><a href="career480.html">Careers</a></li>
           <li><a href="signup.html">Sign Up / Login</a></li>
 
-          <!-- ✅ prevent jump + call logout -->
+          <!-- prevent jump + call logout -->
           <li><a href="#" onclick="logout(); return false;">Logout</a></li>
         </ul>
       </nav>
@@ -290,8 +290,16 @@
             if (completed) completedSet.delete(course.id);
             else completedSet.add(course.id);
 
-            saveProgress(currentUser);
-            renderTree();
+            btn.addEventListener("click", async () => {
+  if (!unlocked && !completed) return;
+
+  if (completed) completedSet.delete(course.id);
+  else completedSet.add(course.id);
+
+  await saveProgress(currentUser);   // wait for DB write
+  renderTree();                      // now UI is consistent
+});
+
           });
 
           card.appendChild(title);
