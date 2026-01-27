@@ -188,10 +188,15 @@
       let completedSet = new Set();
 
       function saveProgress(user) {
-        db.ref('users/' + user.uid).set({
-            completedCourses: [...completedSet]
-        });
-      }
+  const completedObj = {};
+  completedSet.forEach((id) => (completedObj[id] = true));
+
+  // update so you don't overwrite other user fields later
+  return db.ref("users/" + user.uid).update({
+    completedCourses: completedObj
+  });
+}
+
 
       function isUnlocked(course) {
         const prereqs = course.prereqs || [];
@@ -199,67 +204,35 @@
       }
 
       async function loadCoursesForUser(user) {
-        // 1. Load user's completed courses
-        const userSnapshot = await db.ref('users/' + user.uid).once('value');
-        const userData = userSnapshot.val();
-        if (userData && userData.completedCourses) {
-            completedSet = new Set(userData.completedCourses);
-        } else {
-            completedSet = new Set();
-        }
+  // ----- A) Load user progress -----
+  const userSnap = await db.ref("users/" + user.uid).once("value");
+  const userData = userSnap.val() || {};
 
-        // 2. Define user's major and catalog year (hardcoded for now)
-        let major = "Computer Information Technology, B.S.";
-        let catalogYear = "2023-2024";
+  // completedCourses stored as map: { "CIT101": true, ... }
+  const completedObj = userData.completedCourses || {};
+  completedSet = new Set(Object.keys(completedObj));
 
-        // 3. Create a database reference for the course catalog
-        const catalogRef = db.ref(`catalog/${encodeURIComponent(major)}/${encodeURIComponent(catalogYear)}`);
+  // ----- B) Pick major + year (match your DB) -----
+  const catalogYear = userData.catalogYear || "2023-2024";
+  const majorId = userData.majorId || "CIT";
 
-        try {
-            // 4. Try to load catalog from Firebase
-            const catalogSnapshot = await catalogRef.once('value');
-            const cachedCourses = catalogSnapshot.val();
+  // ----- C) Load catalog courses (OBJECT) -----
+  const coursesSnap = await db
+    .ref(`catalogs/${catalogYear}/${majorId}/courses`)
+    .once("value");
 
-            if (cachedCourses && Array.isArray(cachedCourses)) {
-                // 4a. If cached, use it
-                console.log("Loading catalog from Firebase cache.");
-                courses = cachedCourses;
-            } else {
-                // 4b. If not cached, fetch from API
-                console.log("Fetching catalog from API...");
-                const res = await fetch(
-                    `${API_URL}/catalog?major=${encodeURIComponent(major)}&year=${encodeURIComponent(catalogYear)}`
-                );
+  const coursesObj = coursesSnap.val() || {};
 
-                const data = await res.json().catch(() => ({}));
+  // Convert object -> array for your renderTree()
+  courses = Object.keys(coursesObj).map((key) => ({
+    id: coursesObj[key].id || key,
+    name: coursesObj[key].name || key,
+    prereqs: Array.isArray(coursesObj[key].prereqs) ? coursesObj[key].prereqs : []
+  }));
 
-                if (!res.ok || !data || !Array.isArray(data.courses)) {
-                    throw new Error(data.message || "Invalid catalog response from API");
-                }
+  renderTree();
+}
 
-                let remoteCourses = data.courses;
-
-                if (typeof remoteCourses === 'string') {
-                    remoteCourses = JSON.parse(remoteCourses);
-                }
-
-                if (!Array.isArray(remoteCourses)) {
-                    throw new Error("API catalog data is not an array");
-                }
-                
-                console.log("Storing fetched catalog in Firebase cache.");
-                // Store the fetched courses in Firebase for next time
-                await catalogRef.set(remoteCourses);
-                courses = remoteCourses;
-            }
-        } catch (err) {
-            console.error("Failed to load course catalog:", err);
-            courses = []; // Set to empty on any error
-        }
-
-        // 5. Render the skill tree
-        renderTree();
-      }
 
       function renderTree() {
         const treeEl = document.getElementById("tree");
