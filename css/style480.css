@@ -175,7 +175,6 @@ input.valid {
 }
 
 /*Map Fix*/
-/* Prevent global img rules from resizing map tiles */
 .leaflet-container img.leaflet-tile {
   max-width: none !important;
   max-height: none !important;
@@ -184,8 +183,6 @@ input.valid {
 #map {
   height: calc(100vh - 80px);
 }
-
-/* or a fixed value like 600px */
 
 html,
 body {
@@ -259,8 +256,8 @@ select,
   width: 100%; /* fills the container */
   height: auto;
   border-radius: 12px;
-  max-height: 450px; /* optional: limit height so images stay proportional */
-  object-fit: cover; /* makes image cover box nicely */
+  max-height: 450px; /* limit height so images stay proportional */
+  object-fit: cover; 
 
 }
 
@@ -270,7 +267,7 @@ select,
   position: absolute;
   top: 45%;
   padding: 10px 16px;
-  font-size: 26px; /* slightly bigger arrows */
+  font-size: 26px; 
   background: rgba(0,0,0,0.5);
   color: white;
   border-radius: 6px;
@@ -286,13 +283,13 @@ select,
   text-align: center;
   color: #d22030;
   text-shadow: 2px 2px 5px gray;
-  font-size: 36px; /* Bigger main header */
+  font-size: 36px; 
   margin-bottom: 10px;
 }
 
 .dining-section h2 {
   text-align: center;
-  font-size: 28px; /* Bigger subsection headers */
+  font-size: 28px; 
   margin-top: 30px;
   margin-bottom: 25px;
   color: black;
@@ -303,28 +300,27 @@ select,
 .dining-section p {
   text-align: center;
   font-size: 16px;
-  text-decoration: none;   /* remove underline */
+  text-decoration: none;  
 }
 
 .dining-section p a {
-  text-decoration: none;   /* remove underline */
-  color: #2a2a2a;          /* dark text color */
+  text-decoration: none;   
+  color: #2a2a2a;          
 }
 
 .dining-section p a:hover {
-  color: #d22030;          /* change color on hover */
-  text-decoration: underline; /* optional */
+  color: #d22030;          
+  text-decoration: underline; 
 }
 
 .slideshow-container h3 a {
-  text-decoration: none;   /* remove underline */
-  color: #2a2a2a;          /* dark text color */
+  text-decoration: none;  
+  color: #2a2a2a;        
 }
 
 .slideshow-container h3 a:hover {
-  color: #d22030;          /* change color on hover */
-  text-decoration: underline; /* optional */
-}
+  color: #d22030;          
+  text-decoration: underline; 
 /*End of Dining Page Settings*/
 
 /*Google Map Stuff */
