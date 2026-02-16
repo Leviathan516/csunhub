@@ -67,6 +67,11 @@ body {
 
 /* Dropdown menu */
 .dropdown {
+  /*
+WHERE: Used in slideshow navigation arrows (.prev and .next).
+WHAT: The position property controls how an element is positioned on the page.
+HOW: I use position: absolute to place navigation arrows over the slideshow images.
+*/
   position: relative;
   z-index: 1000;
 }
@@ -95,6 +100,11 @@ body {
   background-color: white;
   min-width: 150px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  /*
+WHERE: Used on slideshow cards, buttons, and containers in style480.css.
+WHAT: border-radius rounds the corners of an element.
+HOW: I use it to create a softer, modern card-style design instead of sharp rectangular edges.
+*/
   border-radius: 6px;
   padding: 10px 0;
 }
@@ -156,6 +166,11 @@ input:focus {
   border-color: #d22030;
   /* CSUN red */
   outline: none;
+  /*
+WHERE: Applied to slideshow containers and content cards.
+WHAT: box-shadow adds a shadow effect around elements.
+HOW: I use it to create depth and visual separation between sections and the page background.
+*/
   box-shadow: 0 0 5px rgba(210, 32, 48, 0.3);
 }
 
