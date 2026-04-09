@@ -45,6 +45,45 @@
       .topbar-nav a { color: var(--tb-muted); text-decoration: none; border-bottom: none; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 500; padding: 0.4rem 0.85rem; border-radius: 6px; transition: color 0.2s, background 0.2s; letter-spacing: 0.02em; }
       .topbar-nav a:hover { color: var(--tb-text) !important; background: var(--tb-surface); border-bottom: none; }
       .topbar-right { display: flex; align-items: center; gap: 0.85rem; }
+      .topbar-right {
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+      }
+
+      #welcome-pill {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 0.78rem;
+        color: var(--tb-muted);
+        background: var(--tb-surface);
+        border: 1px solid var(--tb-border);
+        padding: 0.3rem 0.85rem;
+        border-radius: 99px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 220px;
+      }
+
+      .btn-logout {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: var(--red) !important;
+        background: var(--red-dim);
+        border: 1px solid var(--red-glow);
+        padding: 0.35rem 0.9rem;
+        border-radius: 6px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background 0.2s, box-shadow 0.2s;
+      }
+
+      .btn-logout:hover {
+        background: rgba(210,32,48,0.28);
+        box-shadow: 0 0 12px var(--red-glow);
+        border-bottom: none;
+      }
       @media screen and (max-width: 736px) { .topbar { padding: 0 1rem; } .topbar-nav { display: none; } }
     </style>
   </head>
