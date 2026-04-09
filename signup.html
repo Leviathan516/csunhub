@@ -1,330 +1,479 @@
 <!DOCTYPE HTML>
-<html>
-  <head>
-    <title>Sign Up | CSUN Campus Resource Hub</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="assets/css/main.css" />
-    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-  </head>
-   <body class="is-preload">
-    <!-- Wrapper -->
-    <div id="wrapper">
-      <!-- Header -->
-      <header id="header">
-        <div class="inner">
-          <!-- Logo -->
-          <a href="index.html" class="logo">
-            <span class="symbol">
-              <img src="images/CSUNlogo.png" alt="CSUN Logo" />
-            </span>
-            <span class="title">CSUN Campus Resource Hub</span>
-          </a>
+<html lang="en">
+<head>
+  <title>Sign Up | CSUN Campus Resource Hub</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-          <!-- Nav trigger -->
-          <nav>
-            <ul>
-              <li><a href="#menu">Menu</a></li>
-            </ul>
-          </nav>
-        </div>
-      </header>
+    :root {
+      --red:      #d22030;
+      --red-dim:  rgba(210,32,48,0.18);
+      --red-glow: rgba(210,32,48,0.4);
+      --bg:       #0b0d0f;
+      --surface:  rgba(255,255,255,0.045);
+      --border:   rgba(255,255,255,0.09);
+      --text:     #e8eaed;
+      --muted:    rgba(232,234,237,0.5);
+      --input-bg: rgba(255,255,255,0.05);
+    }
 
-      <!-- Off-canvas Menu -->
-      <nav id="menu">
-        <h2>Menu</h2>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="dashboard480.html">Student Dashboard</a></li>
-          <li><a href="map480.html">Campus Map</a></li>
-          <li><a href="dining480.html">Dining</a></li>
-          <li><a href="clubs480.html">Clubs &amp; Orgs</a></li>
-          <li><a href="career480.html">Careers</a></li>
-          <li><a href="signup.html">Sign Up / Login</a></li>
-          <li><a href="#" onclick="logout()">Logout</a></li>
-        </ul>
-      </nav>
+    html, body { height: 100%; }
 
-    <div id="wrapper">
-      <header id="header">
-        <div class="inner">
-          <h1>CSUN Campus Resource Hub</h1>
-          <p>Create your account</p>
-        </div>
-      </header>
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      padding: 3rem 1.5rem 4rem;
+    }
 
-      <div id="main">
-        <div class="inner">
-          <section>
-            <h2>Sign Up</h2>
-            <form id="signupForm">
-              <div class="fields">
-                <div class="field">
-                  <label for="username">Username</label>
-                  <input type="text" id="username" required />
-                </div>
-                <div class="field">
-                  <label for="email">Email</label>
-                  <input type="email" id="email" required />
-                </div>
-                <div class="field">
-                  <label for="password">Password</label>
-                  <input type="password" id="password" required />
-                </div>
-                <div class="field">
-                  <label for="confirmPassword">Confirm Password</label>
-                  <input type="password" id="confirmPassword" required />
-                </div>
-                <!-- Catalog Year Dropdown -->
-                <div class="field">
-                  <label for="catalogYear">Catalog Year</label>
-                  <select id="catalogYear" required>
-                    <option value="">-- Select Catalog Year --</option>
-                    <option>2025-2026</option>
-                    <option>2023-2024</option>
-                    <option>2022-2023</option>
-                    <option>2021-2022</option>
-                  </select>
-                </div>
-                
-                <!-- Major Dropdown -->
-                <div class="field">
-                  <label for="major">Major</label>
-                  <select id="major" required>
-                    <option value="">-- Select Major --</option>
-                    <option>Accountancy, B.S.: Professional Accountancy Option</option>
-                    <option>Accountancy, B.S.: Information Systems Option</option>
-                    <option>Africana Studies, B.A.: African and African-American Social Sciences Option</option>
-                    <option>Africana Studies, B.A.: African and African-American Humanities and Cultural Studies Option</option>
-                    <option>Africana Studies, B.A.: African-American Urban Education Option</option>
-                    <option>Anthropology, B.A.</option>
-                    <option>Art, B.A.</option>
-                    <option>Asian American Studies, B.A.: Standard Major Option</option>
-                    <option>Asian American Studies, B.A.: Double Major Option</option>
-                    <option>Biochemistry, B.S.</option>
-                    <option>Biology, B.A.</option>
-                    <option>Biology, B.S.: Cell and Molecular Biology Option</option>
-                    <option>Biology, B.S.: Ecology and Evolutionary Biology Option</option>
-                    <option>Biology, B.S.: Microbiology Option</option>
-                    <option>Biology, B.S.: Biotechnology/Medical Technology Option</option>
-                    <option>Biology, B.S.: Marine Biology Option</option>
-                    <option>Business Administration, B.S.: Business Analytics Option</option>
-                    <option>Business Administration, B.S.: Business Law Option</option>
-                    <option>Business Administration, B.S.: Financial Analysis Option</option>
-                    <option>Business Administration, B.S.: Financial Planning Option</option>
-                    <option>Business Administration, B.S.: Global Supply Chain Management Option</option>
-                    <option>Business Administration, B.S.: Management Option</option>
-                    <option>Business Administration, B.S.: Marketing Option</option>
-                    <option>Business Administration, B.S.: Real Estate Option</option>
-                    <option>Business Administration, B.S.: Risk Management and Insurance Option</option>
-                    <option>Business Administration, B.S.: Systems and Operations Management Option</option>
-                    <option>Central American Studies, B.A.: Standard Major Option</option>
-                    <option>Central American Studies, B.A.: Double Major Option</option>
-                    <option>Chemistry, B.A.</option>
-                    <option>Chemistry, B.S.</option>
-                    <option>Chicano and Chicana Studies, B.A.: Single Major Option</option>
-                    <option>Chicano and Chicana Studies, B.A.: Double Major Option</option>
-                    <option>Chicano and Chicana Studies, B.A.: Chicana/o Studies Social Science Subject Matter Waiver Program Option</option>
-                    <option>Child and Adolescent Development, B.A.: Applied Developmental Science Option</option>
-                    <option>Child and Adolescent Development, B.A.: Early Childhood Development Option</option>
-                    <option>Cinema and Television Arts, B.A.: Entertainment Media Management Option</option>
-                    <option>Cinema and Television Arts, B.A.: Film Production Option</option>
-                    <option>Cinema and Television Arts, B.A.: Media Theory and Criticism Option</option>
-                    <option>Cinema and Television Arts, B.A.: Emerging Media Production Option</option>
-                    <option>Cinema and Television Arts, B.A.: Screenwriting Option</option>
-                    <option>Cinema and Television Arts, B.A.: Television Production Option</option>
-                    <option>Civil Engineering, B.S.</option>
-                    <option>Communication Studies, B.A.</option>
-                    <option>Communicative Disorders, B.A.</option>
-                    <option>Computer Engineering, B.S.</option>
-                    <option>Computer Information Technology, B.S.</option>
-                    <option>Computer Science, B.S.</option>
-                    <option>Construction Management, B.S.</option>
-                    <option>Consumer Sciences, B.S.: Consumer Affairs Option</option>
-                    <option>Consumer Sciences, B.S.: Family and Consumer Sciences Option</option>
-                    <option>Criminology and Justice Studies, B.A.</option>
-                    <option>Dance, B.A.</option>
-                    <option>Deaf Studies, B.A.</option>
-                    <option>Economics, B.A.</option>
-                    <option>Electrical Engineering, B.S.</option>
-                    <option>Engineering Management Technology, B.S.</option>
-                    <option>English, B.A.: Literature Option</option>
-                    <option>English, B.A.: Creative Writing Option</option>
-                    <option>English, B.A.: Subject Matter Program for the Single Subject Credential Option</option>
-                    <option>English, B.A.: FYI English Subject Matter Program</option>
-                    <option>English, B.A.: JYI English Subject Matter Program</option>
-                    <option>English, B.A.: Honors Option</option>
-                    <option>Environmental and Occupational Health, B.S.</option>
-                    <option>Environmental and Occupational Health, B.S.: Industrial Hygiene Option</option>
-                    <option>Environmental Science, B.A.</option>
-                    <option>Family and Consumer Sciences, B.S.: Family Studies Option</option>
-                    <option>Fashion Design and Merchandising, B.S.: Fashion Design and Production Option</option>
-                    <option>Fashion Design and Merchandising, B.S.: Fashion Merchandising Option</option>
-                    <option>Fashion Design and Merchandising, B.S.: Textiles Option</option>
-                    <option>Gender and Women’s Studies, B.A.</option>
-                    <option>Gender and Women’s Studies, B.A.: Double Major Option</option>
-                    <option>Geographic Information Science, B.S.</option>
-                    <option>Geography and Environmental Studies, B.S.</option>
-                    <option>Geology, B.S.: Geology Option</option>
-                    <option>Geology, B.S.: Geophysics Option</option>
-                    <option>Health Administration, B.S.</option>
-                    <option>History, B.A.</option>
-                    <option>History, B.A.: FYI Program Option</option>
-                    <option>History, B.A.: JYI Program Option</option>
-                    <option>Information Systems, B.S.: Business Systems Option</option>
-                    <option>Information Systems, B.S.: Software Technology Option</option>
-                    <option>Information Systems, B.S.: Computer Information Technology Option</option>
-                    <option>Information Systems, B.S.: Health Systems Option</option>
-                    <option>Interdisciplinary Studies, B.A.</option>
-                    <option>Interior Design, B.S.</option>
-                    <option>Jewish Studies, B.A.</option>
-                    <option>Journalism, B.A.</option>
-                    <option>Journalism, B.A.: Broadcast Option</option>sv
-                    <option>Journalism, B.A.: Public Relations Option</option>
-                    <option>Kinesiology, B.S.: Exercise Science Option</option>
-                    <option>Kinesiology, B.S.: Dance Option</option>
-                    <option>Kinesiology, B.S.: Sport Studies Option</option>
-                    <option>Kinesiology, B.S.: Applied Fitness/Conditioning Option</option>
-                    <option>Kinesiology, B.S.: Physical Education Option</option>
-                    <option>Languages and Cultures, B.A.: Armenian Option</option>
-                    <option>Languages and Cultures, B.A.: French Option</option>
-                    <option>Languages and Cultures, B.A.: Italian Option</option>
-                    <option>Languages and Cultures, B.A.: Japanese Option</option>
-                    <option>Liberal Studies, B.A.: Pre-Credential Program</option>
-                    <option>Liberal Studies, B.A.: ITEP Junior Option</option>
-                    <option>Liberal Studies, B.A.: ITEP Freshman Option</option>
-                    <option>Linguistics, B.A.</option>
-                    <option>Manufacturing Systems Engineering, B.S.</option>
-                    <option>Mathematics, B.A.: General Option</option>
-                    <option>Mathematics, B.A.: Secondary Teaching Option</option>
-                    <option>Mathematics, B.S.: Mathematics Option</option>
-                    <option>Mathematics, B.S.: Statistics Option</option>
-                    <option>Mathematics, B.S.: Applied Math Sciences Option</option>
-                    <option>Mechanical Engineering, B.S.</option>
-                    <option>Music, B.A.: Directed Studies Option</option>so
-                    <option>Music, B.A.: Music Industry Option</option>
-                    <option>Music, B.A.: Pre-Teaching Option</option>
-                    <option>Music, B.A.: Music Therapy Option</option>
-                    <option>Music, B.M.: Jazz Studies Option</option>
-                    <option>Music, B.M.: Composition/Media Writing Option</option>
-                    <option>Music, B.M.: Vocal Arts Option</option>
-                    <option>Music, B.M.: Keyboard Option</option>
-                    <option>Music, B.M.: Percussion Option</option>
-                    <option>Music, B.M.: Winds Option</option>
-                    <option>Music, B.M.: Strings Option</option>
-                    <option>Nursing, B.S.: Accelerated Option</option>
-                    <option>Nursing, B.S.: RN to BSN Option</option>
-                    <option>Nutrition, Dietetics and Food Science, B.S.: Nutrition and Dietetics Option</option>
-                    <option>Nutrition, Dietetics and Food Science, B.S.: Food Science Option</option>
-                    <option>Philosophy, B.A.</option>
-                    <option>Philosophy, B.A.: Double Major Option</option>
-                    <option>Physics, B.A.</option>
-                    <option>Physics, B.S.: Physics Option</option>
-                    <option>Physics, B.S.: Astrophysics Option</option>
-                    <option>Political Science, B.A.: Politics and Government Option</option>s
-                    <option>Political Science, B.A.: Public Policy and Management Option</option>
-                    <option>Political Science, B.A.: Law and Society Option</option>
-                    <option>Psychology, B.A.</option>
-                    <option>Psychology, B.A.: Honors Option</option>
-                    <option>Public Health, B.S.</option>
-                    <option>Public Sector Management, B.A.</option>
-                    <option>Radiologic Sciences, B.S.</option>
-                    <option>Religious Studies, B.A.</option>
-                    <option>Religious Studies, B.A.: Double Major Option</option>
-                    <option>Sociology, B.A.</option>
-                    <option>Spanish, B.A.: Literature Option</option>
-                    <option>Spanish, B.A.: Language and Culture Option</option>
-                    <option>Spanish, B.A.: Hispanic Linguistics Option</option>
-                    <option>Spanish, B.A.: Translation and Interpretation Option</option>s
-                    <option>Theatre, B.A.: Theatre Arts Option</option>
-                    <option>Theatre, B.A.: Acting and Directing Option</option>
-                    <option>Theatre, B.A.: Design and Production Option</option>
-                    <option>Tourism, Hospitality, and Recreation Management, B.S.</option>
-                    <option>Urban Studies and Planning, B.A.</option>
-                  </select>
-                </div>
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 55% at 20% 0%, rgba(210,32,48,0.13) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 45% at 85% 100%, rgba(210,32,48,0.08) 0%, transparent 55%);
+      pointer-events: none;
+      z-index: 0;
+    }
 
+    .auth-card {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 480px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2.5rem 2.25rem 2.25rem;
+      backdrop-filter: blur(20px);
+      animation: fadeUp 0.45s ease both;
+    }
 
-              <ul class="actions">
-                <li>
-                  <!-- IMPORTANT: type="button" so the form doesn't auto-submit -->
-                  <button type="button" class="primary" id="signupButton">Sign Up</button>
-                </li>
-              </ul>
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
 
-              <p id="message" style="margin-top: 1rem;"></p>
+    .auth-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 2rem;
+      text-decoration: none;
+    }
 
-              <p>
-                Already have an account?
-                <a href="login.html">Log in here</a>.
-              </p>
-            </form>
-          </section>
-        </div>
+    .auth-logo img { width: 28px; height: 28px; object-fit: contain; }
+
+    .auth-logo span {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: 0.01em;
+    }
+
+    .auth-heading {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.35rem;
+    }
+
+    .auth-sub {
+      font-size: 0.875rem;
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+
+    /* Two-column grid for some fields */
+    .fields-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 1rem;
+    }
+
+    .field { margin-bottom: 1.1rem; }
+    .field.full { grid-column: 1 / -1; }
+
+    label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.45rem;
+    }
+
+    input[type="email"],
+    input[type="password"],
+    input[type="text"],
+    select {
+      width: 100%;
+      background: var(--input-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.92rem;
+      padding: 0.75rem 1rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    input::placeholder { color: rgba(232,234,237,0.25); }
+
+    input:focus, select:focus {
+      border-color: rgba(210,32,48,0.6);
+      box-shadow: 0 0 0 3px rgba(210,32,48,0.12);
+    }
+
+    /* Custom select arrow */
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      padding-right: 2.5rem;
+      cursor: pointer;
+    }
+
+    select option { background: #1a1d21; color: var(--text); }
+
+    .btn-primary {
+      width: 100%;
+      margin-top: 0.75rem;
+      padding: 0.85rem 1rem;
+      background: var(--red);
+      border: none;
+      border-radius: 10px;
+      color: #fff;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+    }
+
+    .btn-primary:hover {
+      background: #b8182a;
+      box-shadow: 0 0 22px var(--red-glow);
+    }
+
+    .btn-primary:active { transform: scale(0.98); }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    #message {
+      font-size: 0.82rem;
+      margin-top: 1rem;
+      min-height: 1.2em;
+      color: #f87171;
+      text-align: center;
+    }
+
+    #message.success { color: #4ade80; }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 1.75rem 0;
+    }
+
+    .auth-footer {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .auth-footer a {
+      color: var(--text);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.2s;
+    }
+
+    .auth-footer a:hover { color: var(--red); }
+
+    @media (max-width: 480px) {
+      .fields-grid { grid-template-columns: 1fr; }
+      .field.full { grid-column: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="auth-card">
+    <a href="index.html" class="auth-logo">
+      <img src="images/CSUNlogo.png" alt="CSUN" />
+      <span>CSUN Hub</span>
+    </a>
+
+    <h1 class="auth-heading">Create account.</h1>
+    <p class="auth-sub">Join the CSUN Campus Resource Hub</p>
+
+    <div class="fields-grid">
+
+      <div class="field full">
+        <label for="username">Username</label>
+        <input type="text" id="username" placeholder="matador123" required />
       </div>
-    </div>
-    
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
 
-    <script>
-      // Your web app's Firebase configuration
-      const firebaseConfig = {
-        apiKey: "AIzaSyClTeS_q66bYQkVEOcSoc-TY3VX4QRKeho",
-        authDomain: "csunhub.firebaseapp.com",
-        projectId: "csunhub",
-        storageBucket: "csunhub.appspot.com",
-        messagingSenderId: "310029268686",
-        appId: "1:310029268686:web:f2ce71516f1f82e166829f",
-        measurementId: "G-ZEM4D9Y5XB"
-      };
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-    </script>
+      <div class="field full">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="you@my.csun.edu" required />
+      </div>
 
-    <script>
-      const signupButton = document.getElementById('signupButton');
-      const messageEl = document.getElementById('message');
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="••••••••" required />
+      </div>
 
-      signupButton.addEventListener('click', async () => {
-        const username = document.getElementById('username').value;
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-        const confirmPassword = document.getElementById('confirmPassword').value;
-        const major = document.getElementById("major").value.trim();
-        const catalogYear = document.getElementById("catalogYear").value.trim();
+      <div class="field">
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" id="confirmPassword" placeholder="••••••••" required />
+      </div>
 
-        if (!email || !password) {
-          messageEl.textContent = 'Please enter a valid email and password.';
-          return;
-        }
+      <div class="field">
+        <label for="catalogYear">Catalog Year</label>
+        <select id="catalogYear" required>
+          <option value="">Select year</option>
+          <option>2025-2026</option>
+          <option>2023-2024</option>
+          <option>2022-2023</option>
+          <option>2021-2022</option>
+        </select>
+      </div>
 
-        if (password !== confirmPassword) {
-          messageEl.textContent = "Passwords do not match.";
-          return;
-        }
-        
-        try {
-          const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
-          const user = userCredential.user;
+      <div class="field">
+        <label for="major">Major</label>
+        <select id="major" required>
+          <option value="">Select major</option>
+          <option>Accountancy, B.S.: Professional Accountancy Option</option>
+          <option>Accountancy, B.S.: Information Systems Option</option>
+          <option>Africana Studies, B.A.: African and African-American Social Sciences Option</option>
+          <option>Africana Studies, B.A.: African and African-American Humanities and Cultural Studies Option</option>
+          <option>Africana Studies, B.A.: African-American Urban Education Option</option>
+          <option>Anthropology, B.A.</option>
+          <option>Art, B.A.</option>
+          <option>Asian American Studies, B.A.: Standard Major Option</option>
+          <option>Asian American Studies, B.A.: Double Major Option</option>
+          <option>Biochemistry, B.S.</option>
+          <option>Biology, B.A.</option>
+          <option>Biology, B.S.: Cell and Molecular Biology Option</option>
+          <option>Biology, B.S.: Ecology and Evolutionary Biology Option</option>
+          <option>Biology, B.S.: Microbiology Option</option>
+          <option>Biology, B.S.: Biotechnology/Medical Technology Option</option>
+          <option>Biology, B.S.: Marine Biology Option</option>
+          <option>Business Administration, B.S.: Business Analytics Option</option>
+          <option>Business Administration, B.S.: Business Law Option</option>
+          <option>Business Administration, B.S.: Financial Analysis Option</option>
+          <option>Business Administration, B.S.: Financial Planning Option</option>
+          <option>Business Administration, B.S.: Global Supply Chain Management Option</option>
+          <option>Business Administration, B.S.: Management Option</option>
+          <option>Business Administration, B.S.: Marketing Option</option>
+          <option>Business Administration, B.S.: Real Estate Option</option>
+          <option>Business Administration, B.S.: Risk Management and Insurance Option</option>
+          <option>Business Administration, B.S.: Systems and Operations Management Option</option>
+          <option>Central American Studies, B.A.: Standard Major Option</option>
+          <option>Central American Studies, B.A.: Double Major Option</option>
+          <option>Chemistry, B.A.</option>
+          <option>Chemistry, B.S.</option>
+          <option>Chicano and Chicana Studies, B.A.: Single Major Option</option>
+          <option>Chicano and Chicana Studies, B.A.: Double Major Option</option>
+          <option>Child and Adolescent Development, B.A.: Applied Developmental Science Option</option>
+          <option>Child and Adolescent Development, B.A.: Early Childhood Development Option</option>
+          <option>Cinema and Television Arts, B.A.: Entertainment Media Management Option</option>
+          <option>Cinema and Television Arts, B.A.: Film Production Option</option>
+          <option>Cinema and Television Arts, B.A.: Media Theory and Criticism Option</option>
+          <option>Cinema and Television Arts, B.A.: Emerging Media Production Option</option>
+          <option>Cinema and Television Arts, B.A.: Screenwriting Option</option>
+          <option>Cinema and Television Arts, B.A.: Television Production Option</option>
+          <option>Civil Engineering, B.S.</option>
+          <option>Communication Studies, B.A.</option>
+          <option>Communicative Disorders, B.A.</option>
+          <option>Computer Engineering, B.S.</option>
+          <option>Computer Information Technology, B.S.</option>
+          <option>Computer Science, B.S.</option>
+          <option>Construction Management, B.S.</option>
+          <option>Consumer Sciences, B.S.: Consumer Affairs Option</option>
+          <option>Consumer Sciences, B.S.: Family and Consumer Sciences Option</option>
+          <option>Criminology and Justice Studies, B.A.</option>
+          <option>Dance, B.A.</option>
+          <option>Deaf Studies, B.A.</option>
+          <option>Economics, B.A.</option>
+          <option>Electrical Engineering, B.S.</option>
+          <option>Engineering Management Technology, B.S.</option>
+          <option>English, B.A.: Literature Option</option>
+          <option>English, B.A.: Creative Writing Option</option>
+          <option>English, B.A.: Subject Matter Program for the Single Subject Credential Option</option>
+          <option>Environmental and Occupational Health, B.S.</option>
+          <option>Environmental Science, B.A.</option>
+          <option>Family and Consumer Sciences, B.S.: Family Studies Option</option>
+          <option>Fashion Design and Merchandising, B.S.: Fashion Design and Production Option</option>
+          <option>Fashion Design and Merchandising, B.S.: Fashion Merchandising Option</option>
+          <option>Fashion Design and Merchandising, B.S.: Textiles Option</option>
+          <option>Gender and Women's Studies, B.A.</option>
+          <option>Geographic Information Science, B.S.</option>
+          <option>Geography and Environmental Studies, B.S.</option>
+          <option>Geology, B.S.: Geology Option</option>
+          <option>Geology, B.S.: Geophysics Option</option>
+          <option>Health Administration, B.S.</option>
+          <option>History, B.A.</option>
+          <option>Information Systems, B.S.: Business Systems Option</option>
+          <option>Information Systems, B.S.: Software Technology Option</option>
+          <option>Information Systems, B.S.: Computer Information Technology Option</option>
+          <option>Information Systems, B.S.: Health Systems Option</option>
+          <option>Interdisciplinary Studies, B.A.</option>
+          <option>Interior Design, B.S.</option>
+          <option>Jewish Studies, B.A.</option>
+          <option>Journalism, B.A.</option>
+          <option>Journalism, B.A.: Broadcast Option</option>
+          <option>Journalism, B.A.: Public Relations Option</option>
+          <option>Kinesiology, B.S.: Exercise Science Option</option>
+          <option>Kinesiology, B.S.: Dance Option</option>
+          <option>Kinesiology, B.S.: Sport Studies Option</option>
+          <option>Kinesiology, B.S.: Applied Fitness/Conditioning Option</option>
+          <option>Kinesiology, B.S.: Physical Education Option</option>
+          <option>Languages and Cultures, B.A.: Armenian Option</option>
+          <option>Languages and Cultures, B.A.: French Option</option>
+          <option>Languages and Cultures, B.A.: Italian Option</option>
+          <option>Languages and Cultures, B.A.: Japanese Option</option>
+          <option>Liberal Studies, B.A.: Pre-Credential Program</option>
+          <option>Linguistics, B.A.</option>
+          <option>Manufacturing Systems Engineering, B.S.</option>
+          <option>Mathematics, B.A.: General Option</option>
+          <option>Mathematics, B.A.: Secondary Teaching Option</option>
+          <option>Mathematics, B.S.: Mathematics Option</option>
+          <option>Mathematics, B.S.: Statistics Option</option>
+          <option>Mathematics, B.S.: Applied Math Sciences Option</option>
+          <option>Mechanical Engineering, B.S.</option>
+          <option>Music, B.A.: Directed Studies Option</option>
+          <option>Music, B.A.: Music Industry Option</option>
+          <option>Music, B.A.: Pre-Teaching Option</option>
+          <option>Music, B.A.: Music Therapy Option</option>
+          <option>Music, B.M.: Jazz Studies Option</option>
+          <option>Music, B.M.: Composition/Media Writing Option</option>
+          <option>Music, B.M.: Vocal Arts Option</option>
+          <option>Music, B.M.: Keyboard Option</option>
+          <option>Music, B.M.: Percussion Option</option>
+          <option>Music, B.M.: Winds Option</option>
+          <option>Music, B.M.: Strings Option</option>
+          <option>Nursing, B.S.: Accelerated Option</option>
+          <option>Nursing, B.S.: RN to BSN Option</option>
+          <option>Nutrition, Dietetics and Food Science, B.S.: Nutrition and Dietetics Option</option>
+          <option>Nutrition, Dietetics and Food Science, B.S.: Food Science Option</option>
+          <option>Philosophy, B.A.</option>
+          <option>Physics, B.A.</option>
+          <option>Physics, B.S.: Physics Option</option>
+          <option>Physics, B.S.: Astrophysics Option</option>
+          <option>Political Science, B.A.: Politics and Government Option</option>
+          <option>Political Science, B.A.: Public Policy and Management Option</option>
+          <option>Political Science, B.A.: Law and Society Option</option>
+          <option>Psychology, B.A.</option>
+          <option>Public Health, B.S.</option>
+          <option>Public Sector Management, B.A.</option>
+          <option>Radiologic Sciences, B.S.</option>
+          <option>Religious Studies, B.A.</option>
+          <option>Sociology, B.A.</option>
+          <option>Spanish, B.A.: Literature Option</option>
+          <option>Spanish, B.A.: Language and Culture Option</option>
+          <option>Spanish, B.A.: Hispanic Linguistics Option</option>
+          <option>Spanish, B.A.: Translation and Interpretation Option</option>
+          <option>Theatre, B.A.: Theatre Arts Option</option>
+          <option>Theatre, B.A.: Acting and Directing Option</option>
+          <option>Theatre, B.A.: Design and Production Option</option>
+          <option>Tourism, Hospitality, and Recreation Management, B.S.</option>
+          <option>Urban Studies and Planning, B.A.</option>
+          <option>Computer Information Technology, B.S.</option>
+        </select>
+      </div>
 
-          // You can now store the additional user information (username, major, catalog year) in your database.
-          // For this example, we'll just log it to the console.
-          console.log('User created:', user.uid);
-          console.log('Username:', username);
-          console.log('Major:', major);
-          console.log('Catalog Year:', catalogYear);
+    </div><!-- /.fields-grid -->
 
-          messageEl.textContent = 'Sign up successful! You can now log in.';
-          // Redirect to login page after a short delay
-          setTimeout(() => {
-            window.location.href = 'login.html';
-          }, 2000);
+    <button class="btn-primary" id="signupButton">Create Account</button>
 
-        } catch (error) {
-          messageEl.textContent = error.message;
-        }
-      });
-    </script>
-  </body>
+    <p id="message"></p>
+
+    <div class="divider"></div>
+
+    <p class="auth-footer">
+      Already have an account? <a href="login.html">Log in here</a>
+    </p>
+  </div>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyClTeS_q66bYQkVEOcSoc-TY3VX4QRKeho",
+      authDomain: "csunhub.firebaseapp.com",
+      projectId: "csunhub",
+      storageBucket: "csunhub.appspot.com",
+      messagingSenderId: "310029268686",
+      appId: "1:310029268686:web:f2ce71516f1f82e166829f",
+      measurementId: "G-ZEM4D9Y5XB"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+
+    const signupButton = document.getElementById('signupButton');
+    const messageEl    = document.getElementById('message');
+
+    signupButton.addEventListener('click', async () => {
+      messageEl.textContent = '';
+      messageEl.className   = '';
+
+      const username        = document.getElementById('username').value.trim();
+      const email           = document.getElementById('email').value.trim();
+      const password        = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      const major           = document.getElementById('major').value.trim();
+      const catalogYear     = document.getElementById('catalogYear').value.trim();
+
+      if (!email || !password) {
+        messageEl.textContent = 'Please enter a valid email and password.';
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        messageEl.textContent = 'Passwords do not match.';
+        return;
+      }
+
+      signupButton.disabled     = true;
+      signupButton.textContent  = 'Creating account…';
+
+      try {
+        const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
+        const user = userCredential.user;
+
+        console.log('User created:', user.uid, { username, major, catalogYear });
+
+        messageEl.className   = 'success';
+        messageEl.textContent = 'Account created! Redirecting to login…';
+
+        setTimeout(() => { window.location.href = 'login.html'; }, 2000);
+      } catch (error) {
+        messageEl.textContent     = error.message;
+        signupButton.disabled     = false;
+        signupButton.textContent  = 'Create Account';
+      }
+    });
+  </script>
+</body>
 </html>
