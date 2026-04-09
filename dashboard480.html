@@ -1,11 +1,7 @@
 <!DOCTYPE HTML>
-<!--
-  CSUN Campus Resource Hub - Student Dashboard
--->
 <html>
   <head>
-    <title>Student Dashboard | CSUN Campus Resource Hub</title>
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <title>Major Skill Tree | CSUN Campus Resource Hub</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
@@ -13,15 +9,124 @@
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <!-- Skill tree styling -->
+    <style>
+      #cit-skill-tree-section { margin-top: 2rem; }
+      #cit-skill-tree-section h2 { text-align: center; margin-bottom: 0.25rem; }
+      #cit-skill-tree-section .legend {
+        display: block; text-align: center; margin-bottom: 16px;
+        color: #9ca3af; font-size: 0.8rem;
+      }
+      #tree {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 16px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .course {
+        border-radius: 12px;
+        padding: 12px 14px;
+        border: 1px solid #1f2937;
+        background: #111827;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.45);
+        position: relative;
+        height: 240px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding-bottom: 20px;
+        gap: 6px;
+        transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+        color: #f9fafb;
+      }
+      .course.unlocked { border-color: #22c55e; box-shadow: 0 0 0 1px rgba(34,197,94,0.3); }
+      .course.locked { opacity: 0.4; border-style: dashed; }
+      .course.completed { border-color: #38bdf8; background: linear-gradient(135deg, #0f172a, #082f49); }
+      .course-title { min-height: 48px; font-weight: 600; font-size: 0.95rem; line-height: 1.2; }
+      .course-prereqs { font-size: 0.75rem; color: #9ca3af; }
+      .status-pill {
+        display: inline-flex; align-items: center; gap: 6px;
+        padding: 2px 8px; border-radius: 999px;
+        font-size: 0.75rem; background: #020617; border: 1px solid #1f2937;
+        align-self: flex-start;
+      }
+      .status-dot { width: 8px; height: 8px; border-radius: 999px; background: #4b5563; }
+      .course.unlocked .status-dot { background: #22c55e; }
+      .course.completed .status-dot { background: #38bdf8; }
+      button.complete-btn {
+        margin-top: auto; width: 100%;
+        padding: 6px 10px; border-radius: 999px;
+        border: none; cursor: pointer;
+        font-size: 0.75rem; font-weight: 500;
+      }
+      .complete-btn.complete { background: #22c55e; color: #022c22; }
+      .complete-btn.undo { background: #6b7280; color: #f9fafb; }
+      .course.locked button { cursor: not-allowed; opacity: 0.6; }
+    </style>
+  
+    <!-- Google Fonts for topbar -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --red:       #d22030;
+        --red-dim:   rgba(210,32,48,0.18);
+        --red-glow:  rgba(210,32,48,0.35);
+        --tb-bg:     rgba(11,13,15,0.88);
+        --tb-border: rgba(255,255,255,0.08);
+        --tb-text:   #e8eaed;
+        --tb-muted:  rgba(232,234,237,0.5);
+        --tb-surface:rgba(255,255,255,0.045);
+      }
+      #header { display: none !important; }
+      #menu   { display: none !important; }
+      body { padding-top: 64px; } #main { padding-top: 2.5rem; }
+      .topbar {
+        position: fixed; top: 0; left: 0; right: 0; z-index: 10000;
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 0 2.5rem; height: 64px;
+        background: var(--tb-bg);
+        backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+        border-bottom: 1px solid var(--tb-border);
+      }
+      .topbar-logo { display: flex; align-items: center; gap: 0.65rem; text-decoration: none; border-bottom: none; }
+      .topbar-logo img { width: 32px; height: 32px; object-fit: contain; }
+      .topbar-logo span { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 800; color: var(--tb-text); letter-spacing: 0.01em; }
+      .topbar-nav { display: flex; align-items: center; gap: 0.25rem; }
+      .topbar-nav a { color: var(--tb-muted); text-decoration: none; border-bottom: none; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 500; padding: 0.4rem 0.85rem; border-radius: 6px; transition: color 0.2s, background 0.2s; letter-spacing: 0.02em; }
+      .topbar-nav a:hover { color: var(--tb-text) !important; background: var(--tb-surface); border-bottom: none; }
+      .topbar-right { display: flex; align-items: center; gap: 0.85rem; }
+      @media screen and (max-width: 736px) { .topbar { padding: 0 1rem; } .topbar-nav { display: none; } }
+    </style>
   </head>
 
   <body class="is-preload">
-    <!-- Wrapper -->
+    <!-- ── New Topbar ── -->
+    <header class="topbar">
+      <a href="index.html" class="topbar-logo">
+        <img src="images/CSUNlogo.png" alt="CSUN Logo" />
+        <span>CSUN Hub</span>
+      </a>
+      <nav class="topbar-nav">
+        <a href="index.html">Home</a>
+        <a href="dashboard480.html">Dashboard</a>
+        <a href="map480.html">Map</a>
+        <a href="dining480.html">Dining</a>
+        <a href="clubs480.html">Clubs</a>
+        <a href="career480.html">Careers</a>
+        <a href="myaccount.html">Skill Tree</a>
+        <a href="signup.html">Sign Up</a>
+      </nav>
+      <div class="topbar-right"></div>
+    </header>
     <div id="wrapper">
-      <!-- Header -->
+
       <header id="header">
         <div class="inner">
-          <!-- Logo -->
           <a href="index.html" class="logo">
             <span class="symbol">
               <img src="images/CSUNlogo.png" alt="CSUN Logo" />
@@ -29,7 +134,6 @@
             <span class="title">CSUN Campus Resource Hub</span>
           </a>
 
-          <!-- Nav trigger -->
           <nav>
             <ul>
               <li><a href="#menu">Menu</a></li>
@@ -38,7 +142,6 @@
         </div>
       </header>
 
-      <!-- Off-canvas Menu -->
       <nav id="menu">
         <h2>Menu</h2>
         <ul>
@@ -49,197 +152,238 @@
           <li><a href="clubs480.html">Clubs &amp; Orgs</a></li>
           <li><a href="career480.html">Careers</a></li>
           <li><a href="signup.html">Sign Up / Login</a></li>
-          <li><a href="#" onclick="logout()">Logout</a></li>
+
+          <!-- prevent jump + call logout -->
+          <li><a href="#" onclick="logout(); return false;">Logout</a></li>
         </ul>
       </nav>
 
-      <!-- Main -->
       <div id="main">
         <div class="inner">
-          <header>
-            <h1>Student Dashboard</h1>
-            <p>
-              Quick access to Canvas and key CSUN student services: Student Center, class
-              enrollment, and degree progress.
-            </p>
-            <p id="welcome" style="font-weight: 600; margin-top: 0.75rem;"></p>
-          </header>
-
-          <!-- Dashboard cards -->
           <section>
-            <div class="row">
-              <!-- Canvas Login -->
-              <div class="col-6 col-12-medium">
-                <section class="box">
-                  <span class="icon solid fa-chalkboard-teacher"></span>
-                  <h2>Canvas Login</h2>
-                  <p>Access your courses, assignments, discussions, and grades in Canvas.</p>
-                  <ul class="actions">
-                    <li>
-                      <a
-                        href="https://canvas.csun.edu"
-                        class="button primary"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Open Canvas
-                      </a>
-                    </li>
-                  </ul>
-                </section>
-              </div>
+            <h1>Major Skill Tree</h1>
+            <p>Track your major like a skill tree. Pass a class, level up until you prestige! I mean Graduate!</p>
+            <h2 id="welcome" style="margin-top: 0.75rem; text-transform: uppercase;"></h2>
+          </section>
 
-              <!-- Student Center -->
-              <div class="col-6 col-12-medium">
-                <section class="box">
-                  <span class="icon solid fa-university"></span>
-                  <h2>Student Center</h2>
-                  <p>
-                    View your schedule, finances, holds, and personal information in the CSUN Student
-                    Center.
-                  </p>
-                  <ul class="actions">
-                    <li>
-                      <a
-                        href="https://cmsweb.csun.edu/psp/CNRPRD/EMPLOYEE/SA/c/SA_LEARNER_SERVICES.SSS_STUDENT_CENTER.GBL?"
-                        class="button primary"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Open Student Center
-                      </a>
-                    </li>
-                  </ul>
-                </section>
-              </div>
-
-              <!-- Find / Enroll in Classes -->
-              <div class="col-6 col-12-medium">
-                <section class="box">
-                  <span class="icon solid fa-search"></span>
-                  <h2>Find / Enroll in Classes</h2>
-                  <p>
-                    Search for classes, check availability, and enroll for upcoming terms through the
-                    CSUN portal.
-                  </p>
-                  <ul class="actions">
-                    <li>
-                      <a
-                        href="https://portal.csun.edu/student/student_homescreen/_/find_classes"
-                        class="button primary"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Find Classes
-                      </a>
-                    </li>
-                  </ul>
-                </section>
-              </div>
-
-              <!-- Degree Progress Report -->
-              <div class="col-6 col-12-medium">
-                <section class="box">
-                  <span class="icon solid fa-clipboard-check"></span>
-                  <h2>Degree Progress Report</h2>
-                  <p>
-                    Run your degree audit (uAchieve) to see completed requirements and what’s
-                    remaining for graduation.
-                  </p>
-                  <ul class="actions">
-                    <li>
-                      <a
-                        href="https://cmsweb.csun.edu/psp/CNRPRD/EMPLOYEE/SA/s/WEBLIB_NR_UACHV.ISCRIPT1.FieldFormula.IScript_Uachieve_Direct"
-                        class="button primary"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Open Degree Progress
-                      </a>
-                    </li>
-                  </ul>
-                </section>
-              </div>
-            </div>
+          <section id="cit-skill-tree-section">
+            <h2>CIT Major Skill Tree</h2>
+            <small class="legend">Complete earlier courses to unlock the next ones in your major.</small>
+            <div id="tree"></div>
           </section>
         </div>
       </div>
-
-      <!--
-WHERE: Used at the bottom of style480 pages.
-WHAT: The <footer> element represents footer information about the page.
-HOW: I use it to contain copyright information and additional site details.
--->
-      <!-- Footer -->
-      <footer id="footer">
-        <div class="inner">
-          <section>
-            <h2>About This Dashboard</h2>
-            <p>
-              This student dashboard is part of the CIT 480 Senior Design project to make CSUN campus
-              resources easier to access.
-            </p>
-          </section>
-          <ul class="copyright">
-            <li>&copy; CSUN Campus Resource Hub.</li>
-          </ul>
-        </div>
-      </footer>
     </div>
 
-    <!-- Phantom Scripts -->
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/browser.min.js"></script>
     <script src="assets/js/breakpoints.min.js"></script>
     <script src="assets/js/util.js"></script>
     <script src="assets/js/main.js"></script>
 
-    <!-- Firebase Initialization and Auth Guard -->
-    <script>
-      // Your web app's Firebase configuration
-      const firebaseConfig = {
-        apiKey: "AIzaSyClTeS_q66bYQkVEOcSoc-TY3VX4QRKeho",
-        authDomain: "csunhub.firebaseapp.com",
-        projectId: "csunhub",
-        storageBucket: "csunhub.appspot.com",
-        messagingSenderId: "310029268686",
-        appId: "1:310029268686:web:f2ce71516f1f82e166829f",
-        measurementId: "G-ZEM4D9Y5XB"
-      };
+              <script>
+         
+                const firebaseConfig = {
+                  apiKey: "AIzaSyClTeS_q66bYQkVEOcSoc-TY3VX4QRKeho",
+                  authDomain: "csunhub.firebaseapp.com",
+                  databaseURL: "https://csunhub-default-rtdb.firebaseio.com/",
+                  projectId: "csunhub",
+                  storageBucket: "csunhub.appspot.com",
+                  messagingSenderId: "310029268686",
+                  appId: "1:310029268686:web:f2ce71516f1f82e166829f",
+                  measurementId: "G-ZEM4D9Y5XB"
+                };
+          
+                // Initialize Firebase
+                firebase.initializeApp(firebaseConfig);
+                const auth = firebase.auth();
+                const db = firebase.database();
+          
+                let currentUser = null;
+          
+                auth.onAuthStateChanged(user => {
+                  if (user) {
+                    // User is signed in.
+                    currentUser = user;
+                    loadWelcome(user);
+                    loadCoursesForUser(user);
+                  } else {
+                    // No user is signed in. Redirect to login.
+                    const params = new URLSearchParams();
+                    params.set("redirect", "myaccount.html");
+                    window.location.href = "login.html?" + params.toString();
+                  }
+                });
+          
+                function getStorageKey(user) {
+                  return `cit_skill_tree_completed_${user.uid}`;
+                }
+          
+                function logout() {
+                  auth.signOut().then(() => {
+                    // Sign-out successful.
+                    window.location.href = "login.html";
+                  }).catch((error) => {
+                    // An error happened.
+                    console.error("Logout error:", error);
+                  });
+                }
+          
+                // Welcome text
+                function loadWelcome(user) {
+                  const welcomeEl = document.getElementById("welcome");
+                  welcomeEl.textContent = `Welcome, ${user.email}`;
+                }
+          
+                // No fallback — starts empty until backend loads it
+                let courses = [];
+                let completedSet = new Set();
+          
+               function saveProgress(user) {
+            const completedObj = {};
+            completedSet.forEach((id) => (completedObj[id] = true));
+          
+            // update so you don't overwrite other user fields later
+            return db.ref("users/" + user.uid).update({
+              completedCourses: completedObj
+            });
+          }
+          
+          
+            function isUnlocked(course) {
+                if (completedSet.has(course.id)) return true;
+          
+            const prereqs = course.prereqs || [];
+              if (prereqs.length === 0) return course.starter === true;
+          
+            return prereqs.every((id) => completedSet.has(id));
+          }
+          
+          
+               function sortCoursesForDisplay(list) {
+            return [...list].sort((a, b) => {
+                const aStarter = a.starter === true;
+                const bStarter = b.starter === true;
+                  if (aStarter !== bStarter) return aStarter ? -1 : 1;
+          
+                const ta = Number.isFinite(a.tier) ? a.tier : 999;
+                const tb = Number.isFinite(b.tier) ? b.tier : 999;
+                  if (ta !== tb) return ta - tb;
+          
+              return (a.id || "").localeCompare(b.id || "");
+            });
+          }
+          
+          
+                async function loadCoursesForUser(user) {
+            // ----- A) Load user progress -----
+            const userSnap = await db.ref("users/" + user.uid).once("value");
+            const userData = userSnap.val() || {};
+          
+            // completedCourses stored as map: { "CIT101": true, ... }
+            const completedRaw = userData.completedCourses || {};
+              if (Array.isArray(completedRaw)) completedSet = new Set(completedRaw);
+              else completedSet = new Set(Object.keys(completedRaw));
 
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-      const auth = firebase.auth();
+          
+            // ----- B) Pick major + year (match your DB) -----
+            const catalogYear = userData.catalogYear || "2023-2024";
+            const majorId = userData.majorId || "CIT";
+          
+            // ----- C) Load catalog courses (OBJECT) -----
+            const coursesSnap = await db
+              .ref(`catalogs/${catalogYear}/${majorId}/courses`)
+              .once("value");
+          
+            const coursesObj = coursesSnap.val() || {};
+          
+            // Convert object -> array for your renderTree()
+            courses = Object.keys(coursesObj).map((key) => ({
+            id: coursesObj[key].id || key,
+            name: coursesObj[key].name || key,
+            prereqs: Array.isArray(coursesObj[key].prereqs) ? coursesObj[key].prereqs : [],
+            starter: coursesObj[key].starter === true,
+            tier: Number.isFinite(coursesObj[key].tier) ? coursesObj[key].tier : undefined
+          }));
+          
+          
+            renderTree();
+          }
 
-      auth.onAuthStateChanged(user => {
-        if (user) {
-          // User is signed in.
-          loadDashboard(user);
-        } else {
-          // No user is signed in. Redirect to login.
-          window.location.href = "login.html";
+
+        function renderTree() {
+  const treeEl = document.getElementById("tree");
+  if (!treeEl) return;
+
+  treeEl.innerHTML = "";
+
+  if (!courses.length) {
+    treeEl.innerHTML =
+      "<p style='text-align:center; color:#aaa;'>No catalog found for your assigned catalog year.</p>";
+    return;
+  }
+
+  sortCoursesForDisplay(courses).forEach((course) => {
+    const unlocked = isUnlocked(course);
+    const completed = completedSet.has(course.id);
+
+    const card = document.createElement("div");
+    card.classList.add("course");
+    if (completed) card.classList.add("completed");
+    else if (unlocked) card.classList.add("unlocked");
+    else card.classList.add("locked");
+
+    const title = document.createElement("div");
+    title.className = "course-title";
+    title.textContent = course.name;
+
+    const prereqText = document.createElement("div");
+    prereqText.className = "course-prereqs";
+    prereqText.textContent =
+      !course.prereqs || course.prereqs.length === 0
+        ? "Prereqs: None (starting node)"
+        : "Prereqs: " + course.prereqs.join(", ");
+
+    const statusPill = document.createElement("div");
+    statusPill.className = "status-pill";
+
+    const dot = document.createElement("span");
+    dot.className = "status-dot";
+
+    const statusLabel = document.createElement("span");
+    statusLabel.textContent = completed ? "Completed" : unlocked ? "Unlocked" : "Locked";
+
+    statusPill.appendChild(dot);
+    statusPill.appendChild(statusLabel);
+
+    const btn = document.createElement("button");
+    btn.className = "complete-btn";
+    btn.textContent = completed ? "Congrats!" : "Completed";
+    btn.classList.add(completed ? "undo" : "complete");
+
+    if (!unlocked && !completed) btn.disabled = true;
+
+    btn.addEventListener("click", async () => {
+      const nowUnlocked = isUnlocked(course);
+      const nowCompleted = completedSet.has(course.id);
+
+      if (!nowUnlocked && !nowCompleted) return;
+
+      if (nowCompleted) completedSet.delete(course.id);
+      else completedSet.add(course.id);
+
+      await saveProgress(currentUser);
+      renderTree();
+    });
+
+    
+    card.appendChild(title);
+    card.appendChild(prereqText);
+    card.appendChild(statusPill);
+    card.appendChild(btn);
+    treeEl.appendChild(card);
+  });
         }
-      });
-
-      function loadDashboard(user) {
-        const welcomeEl = document.getElementById("welcome");
-        welcomeEl.textContent = `Welcome, ${user.email}`;
-
-        // Redirect to dashboard if not already there
-        if (window.location.pathname !== "/dashboard480.html") {
-          window.location.href = "dashboard480.html";
-        }
-      }
-
-      function logout() {
-        auth.signOut().then(() => {
-          // Sign-out successful.
-          window.location.href = "login.html";
-        }).catch((error) => {
-          // An error happened.
-          console.error("Logout error:", error);
-        });
-      }
     </script>
   </body>
 </html>
