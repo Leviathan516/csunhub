@@ -1,147 +1,289 @@
 <!DOCTYPE HTML>
-<html>
-  <head>
-    <title>Log In | CSUN Campus Resource Hub</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="assets/css/main.css" />
-    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-  </head>
-  <body class="is-preload">
-    <!-- Wrapper -->
-    <div id="wrapper">
-      <!-- Header -->
-      <header id="header">
-        <div class="inner">
-          <!-- Logo -->
-          <a href="index.html" class="logo">
-            <span class="symbol">
-              <img src="images/CSUNlogo.png" alt="CSUN Logo" />
-            </span>
-            <span class="title">CSUN Campus Resource Hub</span>
-          </a>
+<html lang="en">
+<head>
+  <title>Log In | CSUN Campus Resource Hub</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-          <!-- Nav trigger -->
-          <nav>
-            <ul>
-              <li><a href="#menu">Menu</a></li>
-            </ul>
-          </nav>
-        </div>
-      </header>
+    :root {
+      --red:      #d22030;
+      --red-dim:  rgba(210,32,48,0.18);
+      --red-glow: rgba(210,32,48,0.4);
+      --bg:       #0b0d0f;
+      --surface:  rgba(255,255,255,0.045);
+      --border:   rgba(255,255,255,0.09);
+      --text:     #e8eaed;
+      --muted:    rgba(232,234,237,0.5);
+      --input-bg: rgba(255,255,255,0.05);
+    }
 
-      <!-- Off-canvas Menu -->
-      <nav id="menu">
-        <h2>Menu</h2>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="dashboard480.html">Student Dashboard</a></li>
-          <li><a href="map480.html">Campus Map</a></li>
-          <li><a href="dining480.html">Dining</a></li>
-          <li><a href="clubs480.html">Clubs &amp; Orgs</a></li>
-          <li><a href="career480.html">Careers</a></li>
-          <li><a href="signup.html">Sign Up / Login</a></li>
-          <li><a href="#" onclick="logout()">Logout</a></li>
-        </ul>
-      </nav>
+    html, body { height: 100%; }
 
-      <div id="main">
-        <div class="inner">
-          <section>
-            <h2>Log In</h2>
-            <form id="loginForm">
-              <div class="fields">
-                <div class="field">
-                  <label for="email">Email</label>
-                  <input type="email" id="email" required />
-                </div>
-                <div class="field">
-                  <label for="password">Password</label>
-                  <input type="password" id="password" required />
-                </div>
-              </div>
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 1.5rem;
+    }
 
-              <ul class="actions">
-                <li>
-                  <button type="button" class="primary" id="loginButton">Log In</button>
-                </li>
-              </ul>
+    /* Ambient background glow */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 55% at 20% 0%, rgba(210,32,48,0.13) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 45% at 85% 100%, rgba(210,32,48,0.08) 0%, transparent 55%);
+      pointer-events: none;
+      z-index: 0;
+    }
 
-              <p id="message" style="margin-top: 1rem;"></p>
+    /* Card */
+    .auth-card {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 420px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2.5rem 2.25rem 2.25rem;
+      backdrop-filter: blur(20px);
+      animation: fadeUp 0.45s ease both;
+    }
 
-              <p>
-                Need an account?
-                <a href="signup.html">Sign up here</a>.
-              </p>
-            </form>
-          </section>
-        </div>
-      </div>
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Logo row */
+    .auth-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 2rem;
+      text-decoration: none;
+    }
+
+    .auth-logo img {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+    }
+
+    .auth-logo span {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: 0.01em;
+    }
+
+    /* Heading */
+    .auth-heading {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.35rem;
+    }
+
+    .auth-sub {
+      font-size: 0.875rem;
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+
+    /* Fields */
+    .field {
+      margin-bottom: 1.1rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.45rem;
+    }
+
+    input[type="email"],
+    input[type="password"],
+    input[type="text"] {
+      width: 100%;
+      background: var(--input-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      padding: 0.75rem 1rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      -webkit-appearance: none;
+    }
+
+    input::placeholder { color: rgba(232,234,237,0.25); }
+
+    input:focus {
+      border-color: rgba(210,32,48,0.6);
+      box-shadow: 0 0 0 3px rgba(210,32,48,0.12);
+    }
+
+    /* Submit button */
+    .btn-primary {
+      width: 100%;
+      margin-top: 0.5rem;
+      padding: 0.85rem 1rem;
+      background: var(--red);
+      border: none;
+      border-radius: 10px;
+      color: #fff;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+    }
+
+    .btn-primary:hover {
+      background: #b8182a;
+      box-shadow: 0 0 22px var(--red-glow);
+    }
+
+    .btn-primary:active { transform: scale(0.98); }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Message */
+    #message {
+      font-size: 0.82rem;
+      margin-top: 1rem;
+      min-height: 1.2em;
+      color: #f87171;
+      text-align: center;
+    }
+
+    /* Footer link */
+    .auth-footer {
+      margin-top: 1.5rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .auth-footer a {
+      color: var(--text);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.2s;
+    }
+
+    .auth-footer a:hover { color: var(--red); }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 1.75rem 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="auth-card">
+    <!-- Logo -->
+    <a href="index.html" class="auth-logo">
+      <img src="images/CSUNlogo.png" alt="CSUN" />
+      <span>CSUN Hub</span>
+    </a>
+
+    <h1 class="auth-heading">Welcome back.</h1>
+    <p class="auth-sub">Sign in to your student account</p>
+
+    <div class="field">
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="you@my.csun.edu" required />
     </div>
 
-    <!-- Firebase Initialization and Auth -->
-    <script>
-      // Your web app's Firebase configuration
-      const firebaseConfig = {
-  apiKey: "AIzaSyClTeS_q66bYQkVEOcSoc-TY3VX4QRKeho",
-  authDomain: "csunhub.firebaseapp.com",
-  projectId: "csunhub",
-  storageBucket: "csunhub.firebasestorage.app",
-  messagingSenderId: "310029268686",
-  appId: "1:310029268686:web:f2ce71516f1f82e166829f",
-  measurementId: "G-ZEM4D9Y5XB"
-};
+    <div class="field">
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="••••••••" required />
+    </div>
 
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-      const auth = firebase.auth();
+    <button class="btn-primary" id="loginButton">Log In</button>
 
-      const messageEl = document.getElementById("message");
-      const loginBtn = document.getElementById("loginButton");
+    <p id="message"></p>
 
-      loginBtn.addEventListener("click", async () => {
-        messageEl.textContent = "";
+    <div class="divider"></div>
 
-        const email = document.getElementById("email").value.trim();
-        const password = document.getElementById("password").value;
+    <p class="auth-footer">
+      Don't have an account? <a href="signup.html">Sign up here</a>
+    </p>
+  </div>
 
-        if (!email || !password) {
-          messageEl.textContent = "Please enter your email and password.";
-          return;
-        }
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyClTeS_q66bYQkVEOcSoc-TY3VX4QRKeho",
+      authDomain: "csunhub.firebaseapp.com",
+      projectId: "csunhub",
+      storageBucket: "csunhub.firebasestorage.app",
+      messagingSenderId: "310029268686",
+      appId: "1:310029268686:web:f2ce71516f1f82e166829f",
+      measurementId: "G-ZEM4D9Y5XB"
+    };
 
-        try {
-          const userCredential = await auth.signInWithEmailAndPassword(email, password);
-          const user = userCredential.user;
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
 
-          console.log("Login success:", user);
+    const messageEl = document.getElementById("message");
+    const loginBtn  = document.getElementById("loginButton");
 
-          // Go to dashboard once logged in
-          const params = new URLSearchParams(window.location.search);
-          const redirect = params.get("redirect") || "dashboard480.html";
-          window.location.href = redirect;
-        } catch (error) {
-          console.error("Login error:", error);
-          messageEl.textContent = error.message;
-        }
-      });
+    loginBtn.addEventListener("click", async () => {
+      messageEl.textContent = "";
+      const email    = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
 
-      function logout() {
-        auth.signOut().then(() => {
-          // Sign-out successful.
-          localStorage.removeItem("authToken");
-          localStorage.removeItem("username");
-          localStorage.removeItem("major");
-          localStorage.removeItem("catalogYear");
-          window.location.href = "login.html";
-        }).catch((error) => {
-          // An error happened.
-          console.error("Logout error:", error);
-        });
+      if (!email || !password) {
+        messageEl.textContent = "Please enter your email and password.";
+        return;
       }
-    </script>
-  </body>
+
+      loginBtn.disabled = true;
+      loginBtn.textContent = "Signing in…";
+
+      try {
+        await auth.signInWithEmailAndPassword(email, password);
+        const params   = new URLSearchParams(window.location.search);
+        const redirect = params.get("redirect") || "dashboard480.html";
+        window.location.href = redirect;
+      } catch (error) {
+        messageEl.textContent = error.message;
+        loginBtn.disabled = false;
+        loginBtn.textContent = "Log In";
+      }
+    });
+
+    // Allow Enter key to submit
+    document.addEventListener("keydown", e => {
+      if (e.key === "Enter") loginBtn.click();
+    });
+  </script>
+</body>
 </html>
