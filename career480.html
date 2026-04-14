@@ -257,6 +257,7 @@
         <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
 <script>
   const firebaseConfig = {
@@ -271,6 +272,7 @@
 
   firebase.initializeApp(firebaseConfig);
   const auth = firebase.auth();
+  const db   = firebase.firestore();
 
   const welcomeEl  = document.getElementById("welcome");
   const pill       = document.getElementById("welcome-pill");
@@ -278,21 +280,21 @@
   const menuSignup = document.getElementById("menu-signup");
   const menuLogout = document.getElementById("menu-logout");
 
-  auth.onAuthStateChanged(user => {
-    if (user) {
-      if (pill)       pill.textContent = user.email;
-      if (welcomeEl)  welcomeEl.textContent = `Welcome back, ${user.email}`;
-      if (menuLogin)  menuLogin.style.display  = "none";
-      if (menuSignup) menuSignup.style.display = "none";
-      if (menuLogout) menuLogout.style.display = "";
-    } else {
-      if (pill)       pill.textContent = "Not signed in";
-      if (welcomeEl)  welcomeEl.textContent = "";
-      if (menuLogin)  menuLogin.style.display  = "";
-      if (menuSignup) menuSignup.style.display = "";
-      if (menuLogout) menuLogout.style.display = "none";
+  auth.onAuthStateChanged(async user => {
+  const pill = document.getElementById("welcome-pill");
+  if (user) {
+    try {
+      const snap = await db.collection('users').doc(user.uid).get();
+      const username = snap.exists ? snap.data().username : null;
+      if (pill) pill.textContent = username || user.displayName || user.email;
+    } catch (err) {
+      // Firestore read failed, fall back 
+      if (pill) pill.textContent = user.displayName || user.email;
     }
-  });
+  } else {
+    if (pill) pill.textContent = "Not signed in";
+  }
+});
 
   function logout() {
     auth.signOut().then(() => {
