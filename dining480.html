@@ -29,9 +29,8 @@
   position: relative;
   max-width: 800px;
   margin: 0 auto 2.5rem;
-  height: 430px;              /* 🔐 FIXED HEIGHT – adjust if needed */
-  overflow: hidden;           /* hides any extra overflow */
-}
+  height: 430px;              
+  overflow: hidden;           
 
   .slide {
   display: none;
@@ -218,7 +217,10 @@
         <a href="myaccount.html">Skill Tree</a>
         <a href="signup.html">Sign Up</a>
       </nav>
-      <div class="topbar-right"></div>
+      <div class="topbar-right">
+        <span id="welcome-pill">Loading…</span>
+        <a href="#" class="btn-logout" onclick="logout(); return false;">Sign out</a>
+      </div>
     </header>
   <!-- Wrapper -->
   <div id="wrapper">
@@ -777,6 +779,53 @@
   <script src="assets/js/main.js"></script>
   <!-- LINK JAVASCRIPT -->
   <script src="js/dining.js"></script>
+  <!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyClTeS_q66bYQkVEOcSoc-TY3VX4QRKeho",
+    authDomain: "csunhub.firebaseapp.com",
+    projectId: "csunhub",
+    storageBucket: "csunhub.appspot.com",
+    messagingSenderId: "310029268686",
+    appId: "1:310029268686:web:f2ce71516f1f82e166829f",
+    measurementId: "G-ZEM4D9Y5XB"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+
+  const welcomeEl  = document.getElementById("welcome");
+  const pill       = document.getElementById("welcome-pill");
+  const menuLogin  = document.getElementById("menu-login");
+  const menuSignup = document.getElementById("menu-signup");
+  const menuLogout = document.getElementById("menu-logout");
+
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      if (pill)       pill.textContent = user.email;
+      if (welcomeEl)  welcomeEl.textContent = `Welcome back, ${user.email}`;
+      if (menuLogin)  menuLogin.style.display  = "none";
+      if (menuSignup) menuSignup.style.display = "none";
+      if (menuLogout) menuLogout.style.display = "";
+    } else {
+      if (pill)       pill.textContent = "Not signed in";
+      if (welcomeEl)  welcomeEl.textContent = "";
+      if (menuLogin)  menuLogin.style.display  = "";
+      if (menuSignup) menuSignup.style.display = "";
+      if (menuLogout) menuLogout.style.display = "none";
+    }
+  });
+
+  function logout() {
+    auth.signOut().then(() => {
+      window.location.href = "login.html";
+    }).catch(err => console.error("Logout error:", err));
+  }
+</script>
+  
 </body>
 
 <html>
