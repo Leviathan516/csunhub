@@ -16,7 +16,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+
     <style>
+      /* ── Topbar variables ── */
       :root {
         --red:       #d22030;
         --red-dim:   rgba(210,32,48,0.18);
@@ -27,35 +33,136 @@
         --tb-muted:  rgba(232,234,237,0.5);
         --tb-surface:rgba(255,255,255,0.045);
       }
+
+      /* Hide the original header + off-canvas menu so topbar takes over */
       #header { display: none !important; }
       #menu   { display: none !important; }
+
+      /* Push page content below the fixed topbar */
       body { padding-top: 64px; } #main { padding-top: 2.5rem; }
+
+      /* ── Topbar ── */
       .topbar {
-        position: fixed; top: 0; left: 0; right: 0; z-index: 10000;
-        display: flex; align-items: center; justify-content: space-between;
-        padding: 0 2.5rem; height: 64px;
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 2.5rem;
+        height: 64px;
         background: var(--tb-bg);
-        backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
         border-bottom: 1px solid var(--tb-border);
       }
-      .topbar-logo { display: flex; align-items: center; gap: 0.65rem; text-decoration: none; border-bottom: none; }
-      .topbar-logo img { width: 32px; height: 32px; object-fit: contain; }
-      .topbar-logo span { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 800; color: var(--tb-text); letter-spacing: 0.01em; }
-      .topbar-nav { display: flex; align-items: center; gap: 0.25rem; margin-left: -8rem;}
-      .topbar-nav a { color: var(--tb-muted); text-decoration: none; border-bottom: none; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 500; padding: 0.4rem 0.85rem; border-radius: 6px; transition: color 0.2s, background 0.2s; letter-spacing: 0.02em; }
-      .topbar-nav a:hover { color: var(--tb-text) !important; background: var(--tb-surface); border-bottom: none; }
-      .topbar-right { display: flex; align-items: center; gap: 0.85rem; }
-      @media screen and (max-width: 736px) { .topbar { padding: 0 1rem; } .topbar-nav { display: none; } }
+
+      .topbar-logo {
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+        text-decoration: none;
+        border-bottom: none;
+      }
+
+      .topbar-logo img {
+        width: 32px;
+        height: 32px;
+        object-fit: contain;
+      }
+
+      .topbar-logo span {
+        font-family: 'Syne', sans-serif;
+        font-size: 0.95rem;
+        font-weight: 800;
+        color: var(--tb-text);
+        letter-spacing: 0.01em;
+      }
+
+      .topbar-nav {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        margin-left: -8rem;
+      }
+
+      .topbar-nav a {
+        color: var(--tb-muted);
+        text-decoration: none;
+        border-bottom: none;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 0.82rem;
+        font-weight: 500;
+        padding: 0.4rem 0.85rem;
+        border-radius: 6px;
+        transition: color 0.2s, background 0.2s;
+        letter-spacing: 0.02em;
+      }
+
+      .topbar-nav a:hover {
+        color: var(--tb-text) !important;
+        background: var(--tb-surface);
+        border-bottom: none;
+      }
+
+      .topbar-right {
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+      }
+
+      #welcome-pill {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 0.78rem;
+        color: var(--tb-muted);
+        background: var(--tb-surface);
+        border: 1px solid var(--tb-border);
+        padding: 0.3rem 0.85rem;
+        border-radius: 99px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 220px;
+      }
+
+      .btn-logout {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: var(--red) !important;
+        background: var(--red-dim);
+        border: 1px solid var(--red-glow);
+        padding: 0.35rem 0.9rem;
+        border-radius: 6px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background 0.2s, box-shadow 0.2s;
+      }
+
+      .btn-logout:hover {
+        background: rgba(210,32,48,0.28);
+        box-shadow: 0 0 12px var(--red-glow);
+        border-bottom: none;
+      }
+
+      /* Mobile: hide nav links on small screens */
+      @media screen and (max-width: 736px) {
+        .topbar { padding: 0 1rem; }
+        .topbar-nav { display: none; }
+        #welcome-pill { max-width: 130px; }
+      }
     </style>
   </head>
 
-<body>
+  <body class="is-preload">
+
     <!-- ── New Topbar ── -->
     <header class="topbar">
       <a href="index.html" class="topbar-logo">
         <img src="images/CSUNlogo.png" alt="CSUN Logo" />
         <span>CSUN Hub</span>
       </a>
+
       <nav class="topbar-nav">
         <a href="index.html">Home</a>
         <a href="dashboard480.html">Dashboard</a>
@@ -63,10 +170,13 @@
         <a href="dining480.html">Dining</a>
         <a href="clubs480.html">Clubs</a>
         <a href="career480.html">Careers</a>
-        <a href="myaccount.html">Skill Tree</a>
         <a href="signup.html">Sign Up</a>
       </nav>
-      <div class="topbar-right"></div>
+
+      <div class="topbar-right">
+        <span id="welcome-pill">Loading…</span>
+        <a href="#" class="btn-logout" onclick="logout(); return false;">Sign out</a>
+      </div>
     </header>
 
   <!-- Wrapper -->
@@ -144,6 +254,52 @@
         <script src="assets/js/breakpoints.min.js"></script>
         <script src="assets/js/util.js"></script>
         <script src="assets/js/main.js"></script>
+        <!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyClTeS_q66bYQkVEOcSoc-TY3VX4QRKeho",
+    authDomain: "csunhub.firebaseapp.com",
+    projectId: "csunhub",
+    storageBucket: "csunhub.appspot.com",
+    messagingSenderId: "310029268686",
+    appId: "1:310029268686:web:f2ce71516f1f82e166829f",
+    measurementId: "G-ZEM4D9Y5XB"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+
+  const welcomeEl  = document.getElementById("welcome");
+  const pill       = document.getElementById("welcome-pill");
+  const menuLogin  = document.getElementById("menu-login");
+  const menuSignup = document.getElementById("menu-signup");
+  const menuLogout = document.getElementById("menu-logout");
+
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      if (pill)       pill.textContent = user.email;
+      if (welcomeEl)  welcomeEl.textContent = `Welcome back, ${user.email}`;
+      if (menuLogin)  menuLogin.style.display  = "none";
+      if (menuSignup) menuSignup.style.display = "none";
+      if (menuLogout) menuLogout.style.display = "";
+    } else {
+      if (pill)       pill.textContent = "Not signed in";
+      if (welcomeEl)  welcomeEl.textContent = "";
+      if (menuLogin)  menuLogin.style.display  = "";
+      if (menuSignup) menuSignup.style.display = "";
+      if (menuLogout) menuLogout.style.display = "none";
+    }
+  });
+
+  function logout() {
+    auth.signOut().then(() => {
+      window.location.href = "login.html";
+    }).catch(err => console.error("Logout error:", err));
+  }
+</script>
 </body>
 
 </html>
