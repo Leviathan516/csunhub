@@ -295,66 +295,52 @@ graduate.
     <script src="assets/js/util.js"></script>
     <script src="assets/js/main.js"></script>
 
-    <!-- AWS Amplify (for dynamic login/logout + welcome) -->
-    <script src="https://unpkg.com/aws-amplify@5.x/dist/aws-amplify.min.js"></script>
-    <script>
-      const { Amplify, Auth } = aws_amplify;
+   <!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
 
-      Amplify.configure({
-  Auth: {
-    region: "us-west-1",
-    userPoolId: "us-west-1_6ctTVtWp5",
-    userPoolWebClientId: "2g61h83ohkj63kbalblcmuu0gt"
-  },
-  API: {
-    endpoints: [
-      {
-        name: "csunhubapi",
-        endpoint: "https://2bbbazs3gc.execute-api.us-west-1.amazonaws.com/dev",
-        region: "us-west-1"
-      }
-    ]
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyClTeS_q66bYQkVEOcSoc-TY3VX4QRKeho",
+    authDomain: "csunhub.firebaseapp.com",
+    projectId: "csunhub",
+    storageBucket: "csunhub.appspot.com",
+    messagingSenderId: "310029268686",
+    appId: "1:310029268686:web:f2ce71516f1f82e166829f",
+    measurementId: "G-ZEM4D9Y5XB"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+
+  const welcomeEl  = document.getElementById("welcome");
+  const pill       = document.getElementById("welcome-pill");
+  const menuLogin  = document.getElementById("menu-login");
+  const menuSignup = document.getElementById("menu-signup");
+  const menuLogout = document.getElementById("menu-logout");
+
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      if (pill)       pill.textContent = user.email;
+      if (welcomeEl)  welcomeEl.textContent = `Welcome back, ${user.email}`;
+      if (menuLogin)  menuLogin.style.display  = "none";
+      if (menuSignup) menuSignup.style.display = "none";
+      if (menuLogout) menuLogout.style.display = "";
+    } else {
+      if (pill)       pill.textContent = "Not signed in";
+      if (welcomeEl)  welcomeEl.textContent = "";
+      if (menuLogin)  menuLogin.style.display  = "";
+      if (menuSignup) menuSignup.style.display = "";
+      if (menuLogout) menuLogout.style.display = "none";
+    }
+  });
+
+  function logout() {
+    auth.signOut().then(() => {
+      window.location.href = "login.html";
+    }).catch(err => console.error("Logout error:", err));
   }
-});
-
-
-      async function initIndex() {
-        const welcomeEl = document.getElementById("welcome");
-        const pill = document.getElementById('welcome-pill');
-        const menuLogin = document.getElementById("menu-login");
-        const menuSignup = document.getElementById("menu-signup");
-        const menuLogout = document.getElementById("menu-logout");
-
-        try {
-          const user = await Auth.currentAuthenticatedUser();
-          const attrs = user.attributes || {};
-          const major = attrs["custom:major"] || "CSUN Student";
-          const year = attrs["custom:catalogYear"] || "";
-
-          welcomeEl.textContent =
-            `Welcome back, ${user.username} (${major}${year ? ", Catalog " + year : ""})`;
-
-          if (menuLogin) menuLogin.style.display = "none";
-          if (menuSignup) menuSignup.style.display = "none";
-          if (menuLogout) menuLogout.style.display = "";
-        } catch (err) {
-          // Not logged in
-          if (welcomeEl) welcomeEl.textContent = "";
-          if (menuLogin) menuLogin.style.display = "";
-          if (menuSignup) menuSignup.style.display = "";
-          if (menuLogout) menuLogout.style.display = "none";
-        }
-      }
-
-      async function logout() {
-        try {
-          await Auth.signOut();
-        } catch (e) {
-          console.error(e);
-        }
-        window.location.href = "login.html";
-      }
-
+</script>
       initIndex();
     </script>
   </body>
