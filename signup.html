@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -420,60 +421,77 @@
 
   <script>
     const firebaseConfig = {
-      apiKey: "AIzaSyClTeS_q66bYQkVEOcSoc-TY3VX4QRKeho",
-      authDomain: "csunhub.firebaseapp.com",
-      projectId: "csunhub",
-      storageBucket: "csunhub.appspot.com",
-      messagingSenderId: "310029268686",
-      appId: "1:310029268686:web:f2ce71516f1f82e166829f",
-      measurementId: "G-ZEM4D9Y5XB"
-    };
+  apiKey: "AIzaSyClTeS_q66bYQkVEOcSoc-TY3VX4QRKeho",
+  authDomain: "csunhub.firebaseapp.com",
+  databaseURL: "https://csunhub-default-rtdb.firebaseio.com",
+  projectId: "csunhub",
+  storageBucket: "csunhub.firebasestorage.app",
+  messagingSenderId: "310029268686",
+  appId: "1:310029268686:web:f2ce71516f1f82e166829f",
+  measurementId: "G-ZEM4D9Y5XB"
+};
 
-    firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db   = firebase.firestore();
 
-    const signupButton = document.getElementById('signupButton');
-    const messageEl    = document.getElementById('message');
+const signupButton = document.getElementById('signupButton');
+const messageEl    = document.getElementById('message');
 
-    signupButton.addEventListener('click', async () => {
-      messageEl.textContent = '';
-      messageEl.className   = '';
+signupButton.addEventListener('click', async () => {
+  messageEl.textContent = '';
+  messageEl.className   = '';
 
-      const username        = document.getElementById('username').value.trim();
-      const email           = document.getElementById('email').value.trim();
-      const password        = document.getElementById('password').value;
-      const confirmPassword = document.getElementById('confirmPassword').value;
-      const major           = document.getElementById('major').value.trim();
-      const catalogYear     = document.getElementById('catalogYear').value.trim();
+  const username        = document.getElementById('username').value.trim();
+  const email           = document.getElementById('email').value.trim();
+  const password        = document.getElementById('password').value;
+  const confirmPassword = document.getElementById('confirmPassword').value;
+  const major           = document.getElementById('major').value.trim();
+  const catalogYear     = document.getElementById('catalogYear').value.trim();
 
-      if (!email || !password) {
-        messageEl.textContent = 'Please enter a valid email and password.';
-        return;
-      }
+  if (!username) {
+    messageEl.textContent = 'Please enter a username.';
+    return;
+  }
+  if (!email || !password) {
+    messageEl.textContent = 'Please enter a valid email and password.';
+    return;
+  }
+  if (password !== confirmPassword) {
+    messageEl.textContent = 'Passwords do not match.';
+    return;
+  }
 
-      if (password !== confirmPassword) {
-        messageEl.textContent = 'Passwords do not match.';
-        return;
-      }
+  signupButton.disabled    = true;
+  signupButton.textContent = 'Creating account…';
 
-      signupButton.disabled     = true;
-      signupButton.textContent  = 'Creating account…';
+  try {
+    // 1. Create the auth account
+    const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+    const user = userCredential.user;
 
-      try {
-        const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
-        const user = userCredential.user;
+    // 2. Save displayName to Firebase Auth
+    await user.updateProfile({ displayName: username });
 
-        console.log('User created:', user.uid, { username, major, catalogYear });
-
-        messageEl.className   = 'success';
-        messageEl.textContent = 'Account created! Redirecting to login…';
-
-        setTimeout(() => { window.location.href = 'login.html'; }, 2000);
-      } catch (error) {
-        messageEl.textContent     = error.message;
-        signupButton.disabled     = false;
-        signupButton.textContent  = 'Create Account';
-      }
+    // 3. Save full profile to Firestore
+    await db.collection('users').doc(user.uid).set({
+      username,
+      email,
+      major,
+      catalogYear,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
     });
+
+    messageEl.className   = 'success';
+    messageEl.textContent = 'Account created! Redirecting to login…';
+    setTimeout(() => { window.location.href = 'login.html'; }, 2000);
+
+  } catch (error) {
+    messageEl.textContent    = error.message;
+    signupButton.disabled    = false;
+    signupButton.textContent = 'Create Account';
+  }
+});
   </script>
 </body>
 </html>
