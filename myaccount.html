@@ -11,6 +11,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
     <!-- Google Fonts for topbar -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -234,31 +235,42 @@
       };
 
       firebase.initializeApp(firebaseConfig);
-      const auth = firebase.auth();
-      const db   = firebase.database();
+const auth    = firebase.auth();
+const db      = firebase.database();   // Realtime DB — used for courses/progress
+const firestore = firebase.firestore(); // Firestore — used for username
 
-      let currentUser  = null;
-      let courses      = [];
-      let completedSet = new Set();
+let currentUser  = null;
+let courses      = [];
+let completedSet = new Set();
 
-      // ── Auth guard ──────────────────────────────────────────────
-      auth.onAuthStateChanged(user => {
-        if (user) {
-          currentUser = user;
+// ── Auth guard ──────────────────────────────────────────────
+auth.onAuthStateChanged(async user => {
+  if (user) {
+    currentUser = user;
 
-          // Populate topbar pill and welcome heading
-          const pill      = document.getElementById("welcome-pill");
-          const welcomeEl = document.getElementById("welcome");
-          if (pill)      pill.textContent      = user.email;
-          if (welcomeEl) welcomeEl.textContent = `Welcome, ${user.email}`;
+    const pill      = document.getElementById("welcome-pill");
+    const welcomeEl = document.getElementById("welcome");
 
-          loadCoursesForUser(user);
-        } else {
-          const params = new URLSearchParams();
-          params.set("redirect", "myaccount.html");
-          window.location.href = "login.html?" + params.toString();
-        }
-      });
+    // Fetch username from Firestore
+    try {
+      const snap     = await firestore.collection('users').doc(user.uid).get();
+      const username = snap.exists ? snap.data().username : null;
+      const display  = username || user.displayName || user.email;
+
+      if (pill)      pill.textContent      = display;
+      if (welcomeEl) welcomeEl.textContent = `Welcome, ${display}`;
+    } catch (err) {
+      if (pill)      pill.textContent      = user.email;
+      if (welcomeEl) welcomeEl.textContent = `Welcome, ${user.email}`;
+    }
+
+    loadCoursesForUser(user);
+  } else {
+    const params = new URLSearchParams();
+    params.set("redirect", "myaccount.html");
+    window.location.href = "login.html?" + params.toString();
+  }
+});
 
       // ── Logout ──────────────────────────────────────────────────
       function logout() {
