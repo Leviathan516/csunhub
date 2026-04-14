@@ -293,6 +293,52 @@ HOW: I use it to contain the main navigation menu that links to Home, Map, Dinin
   <script src="assets/js/breakpoints.min.js"></script>
   <script src="assets/js/util.js"></script>
   <script src="assets/js/main.js"></script>
+    <!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyClTeS_q66bYQkVEOcSoc-TY3VX4QRKeho",
+    authDomain: "csunhub.firebaseapp.com",
+    projectId: "csunhub",
+    storageBucket: "csunhub.appspot.com",
+    messagingSenderId: "310029268686",
+    appId: "1:310029268686:web:f2ce71516f1f82e166829f",
+    measurementId: "G-ZEM4D9Y5XB"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+
+  const welcomeEl  = document.getElementById("welcome");
+  const pill       = document.getElementById("welcome-pill");
+  const menuLogin  = document.getElementById("menu-login");
+  const menuSignup = document.getElementById("menu-signup");
+  const menuLogout = document.getElementById("menu-logout");
+
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      if (pill)       pill.textContent = user.email;
+      if (welcomeEl)  welcomeEl.textContent = `Welcome back, ${user.email}`;
+      if (menuLogin)  menuLogin.style.display  = "none";
+      if (menuSignup) menuSignup.style.display = "none";
+      if (menuLogout) menuLogout.style.display = "";
+    } else {
+      if (pill)       pill.textContent = "Not signed in";
+      if (welcomeEl)  welcomeEl.textContent = "";
+      if (menuLogin)  menuLogin.style.display  = "";
+      if (menuSignup) menuSignup.style.display = "";
+      if (menuLogout) menuLogout.style.display = "none";
+    }
+  });
+
+  function logout() {
+    auth.signOut().then(() => {
+      window.location.href = "login.html";
+    }).catch(err => console.error("Logout error:", err));
+  }
+</script>
 </body>
 
 
