@@ -6,95 +6,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-    <!-- Firebase SDK -->
+
+    <!-- Firebase SDK (loaded once) -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
-    <!-- Skill tree styling -->
-    <style>
-      #cit-skill-tree-section { margin-top: 2rem; }
-      #cit-skill-tree-section h2 { text-align: center; margin-bottom: 0.25rem; }
-      #cit-skill-tree-section .legend {
-        display: block; text-align: center; margin-bottom: 16px;
-        color: #9ca3af; font-size: 0.8rem;
-      }
-      #tree {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 16px;
-        max-width: 1200px;
-        margin: 0 auto;
-      }
-      .course {
-        border-radius: 12px;
-        padding: 12px 14px;
-        border: 1px solid #1f2937;
-        background: #111827;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.45);
-        position: relative;
-        height: 240px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        padding-bottom: 20px;
-        gap: 6px;
-        transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
-        color: #f9fafb;
-      }
-      .course.unlocked { border-color: #22c55e; box-shadow: 0 0 0 1px rgba(34,197,94,0.3); }
-      .course.locked { opacity: 0.4; border-style: dashed; }
-      .course.completed { border-color: #38bdf8; background: linear-gradient(135deg, #0f172a, #082f49); }
-      .course-title { min-height: 48px; font-weight: 600; font-size: 0.95rem; line-height: 1.2; }
-      .course-prereqs { font-size: 0.75rem; color: #9ca3af; }
-      .status-pill {
-        display: inline-flex; align-items: center; gap: 6px;
-        padding: 2px 8px; border-radius: 999px;
-        font-size: 0.75rem; background: #020617; border: 1px solid #1f2937;
-        align-self: flex-start;
-      }
-      .status-dot { width: 8px; height: 8px; border-radius: 999px; background: #4b5563; }
-      .course.unlocked .status-dot { background: #22c55e; }
-      .course.completed .status-dot { background: #38bdf8; }
-      button.complete-btn {
-        margin-top: auto; width: 100%;
-        padding: 6px 10px; border-radius: 999px;
-        border: none; cursor: pointer;
-        font-size: 0.75rem; font-weight: 500;
-      }
-      .complete-btn.complete { background: #22c55e; color: #022c22; }
-      .complete-btn.undo { background: #6b7280; color: #f9fafb; }
-      .course.locked button { cursor: not-allowed; opacity: 0.6; }
-    </style>
-  
-   <!-- Google Fonts for topbar -->
+    <!-- Google Fonts for topbar -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-
     <style>
       /* ── Topbar variables ── */
       :root {
-        --red:       #d22030;
-        --red-dim:   rgba(210,32,48,0.18);
-        --red-glow:  rgba(210,32,48,0.35);
-        --tb-bg:     rgba(11,13,15,0.88);
-        --tb-border: rgba(255,255,255,0.08);
-        --tb-text:   #e8eaed;
-        --tb-muted:  rgba(232,234,237,0.5);
-        --tb-surface:rgba(255,255,255,0.045);
+        --red:        #d22030;
+        --red-dim:    rgba(210,32,48,0.18);
+        --red-glow:   rgba(210,32,48,0.35);
+        --tb-bg:      rgba(11,13,15,0.88);
+        --tb-border:  rgba(255,255,255,0.08);
+        --tb-text:    #e8eaed;
+        --tb-muted:   rgba(232,234,237,0.5);
+        --tb-surface: rgba(255,255,255,0.045);
       }
 
-      /* Hide the original header + off-canvas menu so topbar takes over */
       #header { display: none !important; }
       #menu   { display: none !important; }
 
-      /* Push page content below the fixed topbar */
-      body { padding-top: 64px; } #main { padding-top: 2.5rem; }
+      body { padding-top: 64px; }
+      #main { padding-top: 2.5rem; }
 
       /* ── Topbar ── */
       .topbar {
@@ -111,107 +51,104 @@
         -webkit-backdrop-filter: blur(18px);
         border-bottom: 1px solid var(--tb-border);
       }
-
       .topbar-logo {
-        display: flex;
-        align-items: center;
-        gap: 0.65rem;
-        text-decoration: none;
-        border-bottom: none;
+        display: flex; align-items: center; gap: 0.65rem;
+        text-decoration: none; border-bottom: none;
       }
-
-      .topbar-logo img {
-        width: 32px;
-        height: 32px;
-        object-fit: contain;
-      }
-
+      .topbar-logo img { width: 32px; height: 32px; object-fit: contain; }
       .topbar-logo span {
-        font-family: 'Syne', sans-serif;
-        font-size: 0.95rem;
-        font-weight: 800;
-        color: var(--tb-text);
-        letter-spacing: 0.01em;
+        font-family: 'Syne', sans-serif; font-size: 0.95rem;
+        font-weight: 800; color: var(--tb-text); letter-spacing: 0.01em;
       }
-
       .topbar-nav {
-        display: flex;
-        align-items: center;
-        gap: 0.25rem;
-        margin-left: -8rem;
+        display: flex; align-items: center;
+        gap: 0.25rem; margin-left: -8rem;
       }
-
       .topbar-nav a {
-        color: var(--tb-muted);
-        text-decoration: none;
-        border-bottom: none;
-        font-family: 'DM Sans', sans-serif;
-        font-size: 0.82rem;
-        font-weight: 500;
-        padding: 0.4rem 0.85rem;
-        border-radius: 6px;
-        transition: color 0.2s, background 0.2s;
-        letter-spacing: 0.02em;
+        color: var(--tb-muted); text-decoration: none; border-bottom: none;
+        font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 500;
+        padding: 0.4rem 0.85rem; border-radius: 6px;
+        transition: color 0.2s, background 0.2s; letter-spacing: 0.02em;
       }
-
       .topbar-nav a:hover {
         color: var(--tb-text) !important;
-        background: var(--tb-surface);
-        border-bottom: none;
+        background: var(--tb-surface); border-bottom: none;
       }
-
-      .topbar-right {
-        display: flex;
-        align-items: center;
-        gap: 0.85rem;
-      }
-
+      .topbar-right { display: flex; align-items: center; gap: 0.85rem; }
       #welcome-pill {
-        font-family: 'DM Sans', sans-serif;
-        font-size: 0.78rem;
-        color: var(--tb-muted);
-        background: var(--tb-surface);
-        border: 1px solid var(--tb-border);
-        padding: 0.3rem 0.85rem;
-        border-radius: 99px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        max-width: 220px;
+        font-family: 'DM Sans', sans-serif; font-size: 0.78rem;
+        color: var(--tb-muted); background: var(--tb-surface);
+        border: 1px solid var(--tb-border); padding: 0.3rem 0.85rem;
+        border-radius: 99px; white-space: nowrap;
+        overflow: hidden; text-overflow: ellipsis; max-width: 220px;
       }
-
       .btn-logout {
-        font-family: 'DM Sans', sans-serif;
-        font-size: 0.78rem;
-        font-weight: 600;
-        color: var(--red) !important;
-        background: var(--red-dim);
-        border: 1px solid var(--red-glow);
-        padding: 0.35rem 0.9rem;
-        border-radius: 6px;
-        cursor: pointer;
-        text-decoration: none;
+        font-family: 'DM Sans', sans-serif; font-size: 0.78rem; font-weight: 600;
+        color: var(--red) !important; background: var(--red-dim);
+        border: 1px solid var(--red-glow); padding: 0.35rem 0.9rem;
+        border-radius: 6px; cursor: pointer; text-decoration: none;
         transition: background 0.2s, box-shadow 0.2s;
       }
-
       .btn-logout:hover {
         background: rgba(210,32,48,0.28);
-        box-shadow: 0 0 12px var(--red-glow);
-        border-bottom: none;
+        box-shadow: 0 0 12px var(--red-glow); border-bottom: none;
       }
-
-      /* Mobile: hide nav links on small screens */
       @media screen and (max-width: 736px) {
         .topbar { padding: 0 1rem; }
         .topbar-nav { display: none; }
         #welcome-pill { max-width: 130px; }
       }
+
+      /* ── Skill Tree ── */
+      #cit-skill-tree-section { margin-top: 2rem; }
+      #cit-skill-tree-section h2 { text-align: center; margin-bottom: 0.25rem; }
+      #cit-skill-tree-section .legend {
+        display: block; text-align: center;
+        margin-bottom: 16px; color: #9ca3af; font-size: 0.8rem;
+      }
+      #tree {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 16px; max-width: 1200px; margin: 0 auto;
+      }
+      .course {
+        border-radius: 12px; padding: 12px 14px;
+        border: 1px solid #1f2937; background: #111827;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.45);
+        position: relative; height: 240px;
+        display: flex; flex-direction: column;
+        justify-content: space-between; padding-bottom: 20px;
+        gap: 6px; transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+        color: #f9fafb;
+      }
+      .course.unlocked   { border-color: #22c55e; box-shadow: 0 0 0 1px rgba(34,197,94,0.3); }
+      .course.locked     { opacity: 0.4; border-style: dashed; }
+      .course.completed  { border-color: #38bdf8; background: linear-gradient(135deg, #0f172a, #082f49); }
+      .course-title      { min-height: 48px; font-weight: 600; font-size: 0.95rem; line-height: 1.2; }
+      .course-prereqs    { font-size: 0.75rem; color: #9ca3af; }
+      .status-pill {
+        display: inline-flex; align-items: center; gap: 6px;
+        padding: 2px 8px; border-radius: 999px; font-size: 0.75rem;
+        background: #020617; border: 1px solid #1f2937; align-self: flex-start;
+      }
+      .status-dot { width: 8px; height: 8px; border-radius: 999px; background: #4b5563; }
+      .course.unlocked  .status-dot { background: #22c55e; }
+      .course.completed .status-dot { background: #38bdf8; }
+      button.complete-btn {
+        margin-top: auto; width: 100%;
+        padding: 6px 10px; border-radius: 999px;
+        border: none; cursor: pointer;
+        font-size: 0.75rem; font-weight: 500;
+      }
+      .complete-btn.complete { background: #22c55e; color: #022c22; }
+      .complete-btn.undo     { background: #6b7280; color: #f9fafb; }
+      .course.locked button  { cursor: not-allowed; opacity: 0.6; }
     </style>
   </head>
 
   <body class="is-preload">
 
-    <!-- ── New Topbar ── -->
+    <!-- ── Topbar ── -->
     <header class="topbar">
       <a href="index.html" class="topbar-logo">
         <img src="images/CSUNlogo.png" alt="CSUN Logo" />
@@ -233,23 +170,17 @@
         <a href="#" class="btn-logout" onclick="logout(); return false;">Sign out</a>
       </div>
     </header>
-    </header>
+
     <div id="wrapper">
 
+      <!-- Hidden header kept so main.js doesn't error -->
       <header id="header">
         <div class="inner">
           <a href="index.html" class="logo">
-            <span class="symbol">
-              <img src="images/CSUNlogo.png" alt="CSUN Logo" />
-            </span>
+            <span class="symbol"><img src="images/CSUNlogo.png" alt="CSUN Logo" /></span>
             <span class="title">CSUN Campus Resource Hub</span>
           </a>
-
-          <nav>
-            <ul>
-              <li><a href="#menu">Menu</a></li>
-            </ul>
-          </nav>
+          <nav><ul><li><a href="#menu">Menu</a></li></ul></nav>
         </div>
       </header>
 
@@ -263,8 +194,6 @@
           <li><a href="clubs480.html">Clubs &amp; Orgs</a></li>
           <li><a href="career480.html">Careers</a></li>
           <li><a href="signup.html">Sign Up / Login</a></li>
-
-          <!-- prevent jump + call logout -->
           <li><a href="#" onclick="logout(); return false;">Logout</a></li>
         </ul>
       </nav>
@@ -292,255 +221,172 @@
     <script src="assets/js/util.js"></script>
     <script src="assets/js/main.js"></script>
 
-              <script>
-                // Your web app's Firebase configuration
-                const firebaseConfig = {
-                  apiKey: "AIzaSyClTeS_q66bYQkVEOcSoc-TY3VX4QRKeho",
-                  authDomain: "csunhub.firebaseapp.com",
-                  databaseURL: "https://csunhub-default-rtdb.firebaseio.com/",
-                  projectId: "csunhub",
-                  storageBucket: "csunhub.appspot.com",
-                  messagingSenderId: "310029268686",
-                  appId: "1:310029268686:web:f2ce71516f1f82e166829f",
-                  measurementId: "G-ZEM4D9Y5XB"
-                };
-          
-                // Initialize Firebase
-                firebase.initializeApp(firebaseConfig);
-                const auth = firebase.auth();
-                const db = firebase.database();
-          
-                let currentUser = null;
-          
-                auth.onAuthStateChanged(user => {
-                  if (user) {
-                    // User is signed in.
-                    currentUser = user;
-                    loadWelcome(user);
-                    loadCoursesForUser(user);
-                  } else {
-                    // No user is signed in. Redirect to login.
-                    const params = new URLSearchParams();
-                    params.set("redirect", "myaccount.html");
-                    window.location.href = "login.html?" + params.toString();
-                  }
-                });
-          
-                function getStorageKey(user) {
-                  return `cit_skill_tree_completed_${user.uid}`;
-                }
-          
-                function logout() {
-                  auth.signOut().then(() => {
-                    // Sign-out successful.
-                    window.location.href = "login.html";
-                  }).catch((error) => {
-                    // An error happened.
-                    console.error("Logout error:", error);
-                  });
-                }
-          
-                // Welcome text
-                function loadWelcome(user) {
-                  const welcomeEl = document.getElementById("welcome");
-                  welcomeEl.textContent = `Welcome, ${user.email}`;
-                }
-          
-                // No fallback — starts empty until backend loads it
-                let courses = [];
-                let completedSet = new Set();
-          
-               function saveProgress(user) {
-            const completedObj = {};
-            completedSet.forEach((id) => (completedObj[id] = true));
-          
-            // update so you don't overwrite other user fields later
-            return db.ref("users/" + user.uid).update({
-              completedCourses: completedObj
-            });
-          }
-          
-          
-            function isUnlocked(course) {
-                if (completedSet.has(course.id)) return true;
-          
-            const prereqs = course.prereqs || [];
-              if (prereqs.length === 0) return course.starter === true;
-          
-            return prereqs.every((id) => completedSet.has(id));
-          }
-          
-          
-               function sortCoursesForDisplay(list) {
-            return [...list].sort((a, b) => {
-                const aStarter = a.starter === true;
-                const bStarter = b.starter === true;
-                  if (aStarter !== bStarter) return aStarter ? -1 : 1;
-          
-                const ta = Number.isFinite(a.tier) ? a.tier : 999;
-                const tb = Number.isFinite(b.tier) ? b.tier : 999;
-                  if (ta !== tb) return ta - tb;
-          
-              return (a.id || "").localeCompare(b.id || "");
-            });
-          }
-          
-          
-                async function loadCoursesForUser(user) {
-            // ----- A) Load user progress -----
-            const userSnap = await db.ref("users/" + user.uid).once("value");
-            const userData = userSnap.val() || {};
-          
-            // completedCourses stored as map: { "CIT101": true, ... }
-            const completedRaw = userData.completedCourses || {};
-              if (Array.isArray(completedRaw)) completedSet = new Set(completedRaw);
-              else completedSet = new Set(Object.keys(completedRaw));
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyClTeS_q66bYQkVEOcSoc-TY3VX4QRKeho",
+        authDomain: "csunhub.firebaseapp.com",
+        databaseURL: "https://csunhub-default-rtdb.firebaseio.com/",
+        projectId: "csunhub",
+        storageBucket: "csunhub.appspot.com",
+        messagingSenderId: "310029268686",
+        appId: "1:310029268686:web:f2ce71516f1f82e166829f",
+        measurementId: "G-ZEM4D9Y5XB"
+      };
 
-          
-            // ----- B) Pick major + year (match your DB) -----
-            const catalogYear = userData.catalogYear || "2023-2024";
-            const majorId = userData.majorId || "CIT";
-          
-            // ----- C) Load catalog courses (OBJECT) -----
-            const coursesSnap = await db
-              .ref(`catalogs/${catalogYear}/${majorId}/courses`)
-              .once("value");
-          
-            const coursesObj = coursesSnap.val() || {};
-          
-            // Convert object -> array for your renderTree()
-            courses = Object.keys(coursesObj).map((key) => ({
-            id: coursesObj[key].id || key,
-            name: coursesObj[key].name || key,
-            prereqs: Array.isArray(coursesObj[key].prereqs) ? coursesObj[key].prereqs : [],
-            starter: coursesObj[key].starter === true,
-            tier: Number.isFinite(coursesObj[key].tier) ? coursesObj[key].tier : undefined
-          }));
-          
-          
-            renderTree();
-          }
+      firebase.initializeApp(firebaseConfig);
+      const auth = firebase.auth();
+      const db   = firebase.database();
 
+      let currentUser  = null;
+      let courses      = [];
+      let completedSet = new Set();
 
-        function renderTree() {
-  const treeEl = document.getElementById("tree");
-  if (!treeEl) return;
+      // ── Auth guard ──────────────────────────────────────────────
+      auth.onAuthStateChanged(user => {
+        if (user) {
+          currentUser = user;
 
-  treeEl.innerHTML = "";
+          // Populate topbar pill and welcome heading
+          const pill      = document.getElementById("welcome-pill");
+          const welcomeEl = document.getElementById("welcome");
+          if (pill)      pill.textContent      = user.email;
+          if (welcomeEl) welcomeEl.textContent = `Welcome, ${user.email}`;
 
-  if (!courses.length) {
-    treeEl.innerHTML =
-      "<p style='text-align:center; color:#aaa;'>No catalog found for your assigned catalog year.</p>";
-    return;
-  }
-
-  sortCoursesForDisplay(courses).forEach((course) => {
-    const unlocked = isUnlocked(course);
-    const completed = completedSet.has(course.id);
-
-    const card = document.createElement("div");
-    card.classList.add("course");
-    if (completed) card.classList.add("completed");
-    else if (unlocked) card.classList.add("unlocked");
-    else card.classList.add("locked");
-
-    const title = document.createElement("div");
-    title.className = "course-title";
-    title.textContent = course.name;
-
-    const prereqText = document.createElement("div");
-    prereqText.className = "course-prereqs";
-    prereqText.textContent =
-      !course.prereqs || course.prereqs.length === 0
-        ? "Prereqs: None (starting node)"
-        : "Prereqs: " + course.prereqs.join(", ");
-
-    const statusPill = document.createElement("div");
-    statusPill.className = "status-pill";
-
-    const dot = document.createElement("span");
-    dot.className = "status-dot";
-
-    const statusLabel = document.createElement("span");
-    statusLabel.textContent = completed ? "Completed" : unlocked ? "Unlocked" : "Locked";
-
-    statusPill.appendChild(dot);
-    statusPill.appendChild(statusLabel);
-
-    const btn = document.createElement("button");
-    btn.className = "complete-btn";
-    btn.textContent = completed ? "Congrats!" : "Completed";
-    btn.classList.add(completed ? "undo" : "complete");
-
-    if (!unlocked && !completed) btn.disabled = true;
-
-    btn.addEventListener("click", async () => {
-      const nowUnlocked = isUnlocked(course);
-      const nowCompleted = completedSet.has(course.id);
-
-      if (!nowUnlocked && !nowCompleted) return;
-
-      if (nowCompleted) completedSet.delete(course.id);
-      else completedSet.add(course.id);
-
-      await saveProgress(currentUser);
-      renderTree();
-    });
-
-    
-    card.appendChild(title);
-    card.appendChild(prereqText);
-    card.appendChild(statusPill);
-    card.appendChild(btn);
-    treeEl.appendChild(card);
-  });
+          loadCoursesForUser(user);
+        } else {
+          const params = new URLSearchParams();
+          params.set("redirect", "myaccount.html");
+          window.location.href = "login.html?" + params.toString();
         }
+      });
+
+      // ── Logout ──────────────────────────────────────────────────
+      function logout() {
+        auth.signOut()
+          .then(() => { window.location.href = "login.html"; })
+          .catch(err => console.error("Logout error:", err));
+      }
+
+      // ── Helpers ─────────────────────────────────────────────────
+      function isUnlocked(course) {
+        if (completedSet.has(course.id)) return true;
+        const prereqs = course.prereqs || [];
+        if (prereqs.length === 0) return course.starter === true;
+        return prereqs.every(id => completedSet.has(id));
+      }
+
+      function sortCoursesForDisplay(list) {
+        return [...list].sort((a, b) => {
+          const aStarter = a.starter === true;
+          const bStarter = b.starter === true;
+          if (aStarter !== bStarter) return aStarter ? -1 : 1;
+          const ta = Number.isFinite(a.tier) ? a.tier : 999;
+          const tb = Number.isFinite(b.tier) ? b.tier : 999;
+          if (ta !== tb) return ta - tb;
+          return (a.id || "").localeCompare(b.id || "");
+        });
+      }
+
+      function saveProgress(user) {
+        const completedObj = {};
+        completedSet.forEach(id => (completedObj[id] = true));
+        return db.ref("users/" + user.uid).update({ completedCourses: completedObj });
+      }
+
+      // ── Load data ───────────────────────────────────────────────
+      async function loadCoursesForUser(user) {
+        const userSnap  = await db.ref("users/" + user.uid).once("value");
+        const userData  = userSnap.val() || {};
+
+        const completedRaw = userData.completedCourses || {};
+        completedSet = Array.isArray(completedRaw)
+          ? new Set(completedRaw)
+          : new Set(Object.keys(completedRaw));
+
+        const catalogYear = userData.catalogYear || "2023-2024";
+        const majorId     = userData.majorId     || "CIT";
+
+        const coursesSnap = await db
+          .ref(`catalogs/${catalogYear}/${majorId}/courses`)
+          .once("value");
+
+        const coursesObj = coursesSnap.val() || {};
+        courses = Object.keys(coursesObj).map(key => ({
+          id:      coursesObj[key].id      || key,
+          name:    coursesObj[key].name    || key,
+          prereqs: Array.isArray(coursesObj[key].prereqs) ? coursesObj[key].prereqs : [],
+          starter: coursesObj[key].starter === true,
+          tier:    Number.isFinite(coursesObj[key].tier) ? coursesObj[key].tier : undefined
+        }));
+
+        renderTree();
+      }
+
+      // ── Render ──────────────────────────────────────────────────
+      function renderTree() {
+        const treeEl = document.getElementById("tree");
+        if (!treeEl) return;
+        treeEl.innerHTML = "";
+
+        if (!courses.length) {
+          treeEl.innerHTML =
+            "<p style='text-align:center; color:#aaa;'>No catalog found for your assigned catalog year.</p>";
+          return;
+        }
+
+        sortCoursesForDisplay(courses).forEach(course => {
+          const unlocked  = isUnlocked(course);
+          const completed = completedSet.has(course.id);
+
+          const card = document.createElement("div");
+          card.classList.add("course");
+          if (completed)      card.classList.add("completed");
+          else if (unlocked)  card.classList.add("unlocked");
+          else                card.classList.add("locked");
+
+          const title = document.createElement("div");
+          title.className   = "course-title";
+          title.textContent = course.name;
+
+          const prereqText = document.createElement("div");
+          prereqText.className   = "course-prereqs";
+          prereqText.textContent = (!course.prereqs || course.prereqs.length === 0)
+            ? "Prereqs: None (starting node)"
+            : "Prereqs: " + course.prereqs.join(", ");
+
+          const statusPill  = document.createElement("div");
+          statusPill.className = "status-pill";
+
+          const dot = document.createElement("span");
+          dot.className = "status-dot";
+
+          const statusLabel = document.createElement("span");
+          statusLabel.textContent = completed ? "Completed" : unlocked ? "Unlocked" : "Locked";
+
+          statusPill.appendChild(dot);
+          statusPill.appendChild(statusLabel);
+
+          const btn = document.createElement("button");
+          btn.className   = "complete-btn";
+          btn.textContent = completed ? "Congrats!" : "Completed";
+          btn.classList.add(completed ? "undo" : "complete");
+          if (!unlocked && !completed) btn.disabled = true;
+
+          btn.addEventListener("click", async () => {
+            if (!isUnlocked(course) && !completedSet.has(course.id)) return;
+            if (completedSet.has(course.id)) completedSet.delete(course.id);
+            else                             completedSet.add(course.id);
+            await saveProgress(currentUser);
+            renderTree();
+          });
+
+          card.appendChild(title);
+          card.appendChild(prereqText);
+          card.appendChild(statusPill);
+          card.appendChild(btn);
+          treeEl.appendChild(card);
+        });
+      }
     </script>
-    <!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-
-<script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyClTeS_q66bYQkVEOcSoc-TY3VX4QRKeho",
-    authDomain: "csunhub.firebaseapp.com",
-    projectId: "csunhub",
-    storageBucket: "csunhub.appspot.com",
-    messagingSenderId: "310029268686",
-    appId: "1:310029268686:web:f2ce71516f1f82e166829f",
-    measurementId: "G-ZEM4D9Y5XB"
-  };
-
-  firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth();
-
-  const welcomeEl  = document.getElementById("welcome");
-  const pill       = document.getElementById("welcome-pill");
-  const menuLogin  = document.getElementById("menu-login");
-  const menuSignup = document.getElementById("menu-signup");
-  const menuLogout = document.getElementById("menu-logout");
-
-  auth.onAuthStateChanged(user => {
-    if (user) {
-      if (pill)       pill.textContent = user.email;
-      if (welcomeEl)  welcomeEl.textContent = `Welcome back, ${user.email}`;
-      if (menuLogin)  menuLogin.style.display  = "none";
-      if (menuSignup) menuSignup.style.display = "none";
-      if (menuLogout) menuLogout.style.display = "";
-    } else {
-      if (pill)       pill.textContent = "Not signed in";
-      if (welcomeEl)  welcomeEl.textContent = "";
-      if (menuLogin)  menuLogin.style.display  = "";
-      if (menuSignup) menuSignup.style.display = "";
-      if (menuLogout) menuLogout.style.display = "none";
-    }
-  });
-
-  function logout() {
-    auth.signOut().then(() => {
-      window.location.href = "login.html";
-    }).catch(err => console.error("Logout error:", err));
-  }
-</script>
   </body>
 </html>
