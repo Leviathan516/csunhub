@@ -11,6 +11,7 @@ let slideIndexes = {
   group9: 0,
   group10: 0,
   group11: 0,
+  group12: 0,
 
 };
 
