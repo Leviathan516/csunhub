@@ -34,7 +34,7 @@ const clubs = [
         category: "Arts and Media",
         image: "media/images/clubs/acasola.jpg",
         description:
-            "Acasola is California State University, Northridge’s premiere A Cappella group. We are a diverse group of students who aim to deliver a unique musical experience to the CSUN community through the art of A Cappella music.",
+            "Acasola is California State University, Northridge\u2019s premiere A Cappella group. We are a diverse group of students who aim to deliver a unique musical experience to the CSUN community through the art of A Cappella music.",
         email: "",
         discord: "",
         socials: {
@@ -204,7 +204,7 @@ const clubs = [
         category: "Health and Pre-Professional",
         image: "media/images/clubs/american-medical-women-s-association.jpg",
         description:
-            "The American Medical Women’s Association is an organization that functions at the local, national, and international level to advance women in medicine and other pre-health-related fields.",
+            "The American Medical Women\u2019s Association is an organization that functions at the local, national, and international level to advance women in medicine and other pre-health-related fields.",
         email: "",
         discord: "",
         socials: {}
@@ -214,7 +214,7 @@ const clubs = [
         name: "American Society of Civil Engineers",
         shortName: "ASCE",
         category: "Engineering and Technology",
-        image: "media/images/clubs/american-society-of-civil-engineers.jpg",
+        image: "media/images/clubs/asce.jpg",
         description:
             "The American Society of Civil Engineers student chapter at California State University, Northridge is a student chapter that exposes the members to various networking, volunteering, internship and scholarship opportunities. Active members are also invo...",
         email: "",
@@ -226,7 +226,7 @@ const clubs = [
         name: "American Society of Mechanical Engineers",
         shortName: "ASME",
         category: "Engineering and Technology",
-        image: "media/images/clubs/american-society-of-mechanical-engineers.jpg",
+        image: "media/images/clubs/asme.jpg",
         description:
             "We are the student chapter of the ASME organization here at CSUN. The goal of ASME CSUN is to promote the enrichment of our student members through our 3 pillars, professional development, design experience, and STEM Outreach.",
         email: "",
@@ -379,7 +379,7 @@ const clubs = [
     },
     {
         id: "aztlan-graduation-and-scholarship-committee",
-        name: "Aztlán Graduation and Scholarship Committee",
+        name: "Aztl\u00e1n Graduation and Scholarship Committee",
         shortName: "ANGSC",
         category: "Arts and Media",
         image: "media/images/clubs/aztlan-graduation-and-scholarship-committee.jpg",
@@ -391,12 +391,12 @@ const clubs = [
     },
     {
         id: "ballet-folklorico-aztlan-de-csun",
-        name: "Ballet Folklórico Aztlán de CSUN",
-        shortName: "Ballet Folklórico Aztlán de CSUN",
+        name: "Ballet Folkl\u00f3rico Aztl\u00e1n de CSUN",
+        shortName: "Ballet Folkl\u00f3rico Aztl\u00e1n de CSUN",
         category: "Arts and Media",
         image: "media/images/clubs/ballet-folklorico-aztlan-de-csun.jpg",
         description:
-            "Ballet Folklórico Aztlán de CSUN is a Mexican folk dance group at CSUN that focuses on preserving the richness of Mexican culture and Mexica/Chicana/o Folklórico. Everyone is welcome, no experience is needed.",
+            "Ballet Folkl\u00f3rico Aztl\u00e1n de CSUN is a Mexican folk dance group at CSUN that focuses on preserving the richness of Mexican culture and Mexica/Chicana/o Folkl\u00f3rico. Everyone is welcome, no experience is needed.",
         email: "",
         discord: "",
         socials: {}
@@ -814,7 +814,7 @@ const clubs = [
         name: "CSUN Aeronautics",
         shortName: "Aeronautics",
         category: "Engineering and Technology",
-        image: "media/images/clubs/csun-aeronautics.jpg",
+        image: "media/images/clubs/csunaero.jpg",
         description:
             "We're a professional and personal development club that focuses on Aerospace engineering. We host workshops and panels with industry professionals to introduce theoretical and practical experience. This club is lead by the SAE Aero Senior Design Project.",
         email: "",
@@ -898,7 +898,7 @@ const clubs = [
         name: "CSUN Badminton Club",
         shortName: "Badminton Club",
         category: "Sports and Recreation",
-        image: "media/images/clubs/csun-badminton-club.jpg",
+        image: "media/images/clubs/badminton.jpg",
         description:
             "Welcome to the CSUN Badminton Club. We are open to all badminton players who wish to learn, practice, compete, and have fun! With weekly practices and annual competitions, we'll strengthen your badminton skills, and guarantee many memorable experiences!",
         email: "",
@@ -946,7 +946,7 @@ const clubs = [
         name: "CSUN Brazilian Jiu-Jitsu",
         shortName: "Brazilian Jiu-Jitsu",
         category: "Sports and Recreation",
-        image: "media/images/clubs/csun-brazilian-jiu-jitsu.jpg",
+        image: "media/images/clubs/bjj.jpg",
         description:
             "We the members of the California State University, Northridge Brazilian Jiu Jitsu Club aim to foster the physical and mental well-being of its members through the practice of the discipline of grappling as defined by FILA, the recognized international ...",
         email: "",
@@ -1078,7 +1078,7 @@ const clubs = [
         name: "CSUN Esports",
         shortName: "Esports",
         category: "Sports and Recreation",
-        image: "media/images/clubs/csun-esports.jpg",
+        image: "media/images/clubs/esports.jpg",
         description:
             "CSUN Esports. #EnterTheRing. Join our Discord and be a part of the growing gaming community here at CSUN.",
         email: "",
@@ -1150,7 +1150,7 @@ const clubs = [
         name: "CSUN Ice Hockey Club",
         shortName: "Ice Hockey Club",
         category: "Sports and Recreation",
-        image: "media/images/clubs/csun-ice-hockey-club.jpg",
+        image: "media/images/clubs/icehockey.jpg",
         description:
             "CSUN Ice Hockey was established 1971 making it the longest continuously running club sport at Cal State Northridge.",
         email: "",
@@ -1188,7 +1188,7 @@ const clubs = [
         category: "Arts and Media",
         image: "media/images/clubs/csun-jishin-taiko-ensemble.jpg",
         description:
-            "CSUN’s Jishin Taiko Ensemble was born from an interest in not only Japanese taiko drumming and Japanese culture but was also born from a desire to form an interpersonal social connection with the Japanese-American community at Cal State University, Nor...",
+            "CSUN\u2019s Jishin Taiko Ensemble was born from an interest in not only Japanese taiko drumming and Japanese culture but was also born from a desire to form an interpersonal social connection with the Japanese-American community at Cal State University, Nor...",
         email: "",
         discord: "",
         socials: {}
@@ -1200,7 +1200,7 @@ const clubs = [
         category: "Cultural and Identity",
         image: "media/images/clubs/csun-latin-club.jpg",
         description:
-            "Our club explores Roman culture through literature, theater, cuisine, and Latin. By engaging in activities tied to these traditions, members gain insight into how ancient Rome’s legacy still shapes art, language, and daily life today.",
+            "Our club explores Roman culture through literature, theater, cuisine, and Latin. By engaging in activities tied to these traditions, members gain insight into how ancient Rome\u2019s legacy still shapes art, language, and daily life today.",
         email: "",
         discord: "",
         socials: {}
@@ -1210,7 +1210,7 @@ const clubs = [
         name: "CSUN Matador Archery",
         shortName: "Matador Archery",
         category: "Sports and Recreation",
-        image: "media/images/clubs/csun-matador-archery.jpg",
+        image: "media/images/clubs/archery.jpg",
         description:
             "The CSUN Archery club is the representative for all forms of archery on campus. Whether you've shot in competition, shot a few times in a Summer camp, or even never shot at all, our club is dedicated to introducing and cultivating the sport to anyone!",
         email: "",
@@ -1236,7 +1236,7 @@ const clubs = [
         category: "Arts and Media",
         image: "media/images/clubs/csun-matafurs.jpg",
         description:
-            "CSUN MataFurs creates an inclusive, fun, and safe community space for students who are part of the “furry” fandom (those who like anthropomorphic animal characters; e.g. Kung Fu panda) or are curious and supportive of the community. Everyone is welcome!",
+            "CSUN MataFurs creates an inclusive, fun, and safe community space for students who are part of the \u201cfurry\u201d fandom (those who like anthropomorphic animal characters; e.g. Kung Fu panda) or are curious and supportive of the community. Everyone is welcome!",
         email: "",
         discord: "",
         socials: {}
@@ -1272,7 +1272,7 @@ const clubs = [
         category: "Sports and Recreation",
         image: "media/images/clubs/csun-men-s-volleyball-club.jpg",
         description:
-            "CSUN Men’s Volleyball Club's goal is to give students the opportunity to play competitive collegiate club volleyball while building lasting relationships with one another that are based upon understanding, commitment, and camaraderie.",
+            "CSUN Men\u2019s Volleyball Club's goal is to give students the opportunity to play competitive collegiate club volleyball while building lasting relationships with one another that are based upon understanding, commitment, and camaraderie.",
         email: "",
         discord: "",
         socials: {}
@@ -1291,12 +1291,12 @@ const clubs = [
     },
     {
         id: "csun-mens-rugby-club",
-        name: "CSUN Men’s Rugby Club",
-        shortName: "Men’s Rugby Club",
+        name: "CSUN Men\u2019s Rugby Club",
+        shortName: "Men\u2019s Rugby Club",
         category: "Fraternity and Sorority Life",
         image: "media/images/clubs/csun-mens-rugby-club.jpg",
         description:
-            "The purpose of the CSUN Men’s Rugby Club is to foster brotherhood, sportsmanship, respect, leadership, and discipline among CSUN students who share a love for the game of rugby.",
+            "The purpose of the CSUN Men\u2019s Rugby Club is to foster brotherhood, sportsmanship, respect, leadership, and discipline among CSUN students who share a love for the game of rugby.",
         email: "",
         discord: "",
         socials: {}
@@ -1308,7 +1308,7 @@ const clubs = [
         category: "Health and Pre-Professional",
         image: "media/images/clubs/csun-national-student-nurses-association.jpg",
         description:
-            "NSNA is a nationally recognized club on across college campuses. The National Student Nurses’ Association (NSNA) fosters the development of nursing students in their professional, academic and personal endeavors. NSNA provides students with leadership...",
+            "NSNA is a nationally recognized club on across college campuses. The National Student Nurses\u2019 Association (NSNA) fosters the development of nursing students in their professional, academic and personal endeavors. NSNA provides students with leadership...",
         email: "",
         discord: "",
         socials: {}
@@ -1356,7 +1356,7 @@ const clubs = [
         category: "Health and Pre-Professional",
         image: "media/images/clubs/csun-planned-parenthood-generation-action.jpg",
         description:
-            "PPGA CSUN aims to facilitate student leaders, educators, and community-serving activists who are dedicated to fulfilling Planned Parenthood’s mission of promoting reproductive health care access and education to empower the Matador family.",
+            "PPGA CSUN aims to facilitate student leaders, educators, and community-serving activists who are dedicated to fulfilling Planned Parenthood\u2019s mission of promoting reproductive health care access and education to empower the Matador family.",
         email: "",
         discord: "",
         socials: {}
@@ -1548,7 +1548,7 @@ const clubs = [
         category: "Sports and Recreation",
         image: "media/images/clubs/csun-s-women-s-basketball-club.jpg",
         description:
-            "Competitive women’s basketball team for students who want to compete at CSUN.",
+            "Competitive women\u2019s basketball team for students who want to compete at CSUN.",
         email: "",
         discord: "",
         socials: {}
@@ -1668,7 +1668,7 @@ const clubs = [
         category: "Engineering and Technology",
         image: "media/images/clubs/dreams-to-be-heard.jpg",
         description:
-            "“We are a family advocating for immigrant rights, through education, activism, and moral support to empower, liberate, and bring equality to our community.”",
+            "\u201cWe are a family advocating for immigrant rights, through education, activism, and moral support to empower, liberate, and bring equality to our community.\u201d",
         email: "",
         discord: "",
         socials: {}
@@ -1788,7 +1788,7 @@ const clubs = [
         category: "Arts and Media",
         image: "media/images/clubs/fasmode-dance-crew.jpg",
         description:
-            "Fasmode Dance Crew has been proudly representing Northridge since 2002. We are a competitive urban dance crew that branched out from CSUN’S Filipino American Student Association (FASA).",
+            "Fasmode Dance Crew has been proudly representing Northridge since 2002. We are a competitive urban dance crew that branched out from CSUN\u2019S Filipino American Student Association (FASA).",
         email: "",
         discord: "",
         socials: {}
@@ -1860,7 +1860,7 @@ const clubs = [
         category: "Honor Society",
         image: "media/images/clubs/ge-honors-club.jpg",
         description:
-            "The club’s purpose is to unite students who belong to the General Education (GE) Honors Program in order to seek support among each other, broaden their knowledge about the program, and contribute to the community.",
+            "The club\u2019s purpose is to unite students who belong to the General Education (GE) Honors Program in order to seek support among each other, broaden their knowledge about the program, and contribute to the community.",
         email: "",
         discord: "",
         socials: {}
@@ -1872,7 +1872,7 @@ const clubs = [
         category: "Service and Advocacy",
         image: "media/images/clubs/go-with-the-flow.jpg",
         description:
-            "Go With the Flow (GWTF) is a program at CSUN with the goal to expand accessibility, awareness, and education around menstrual equity. GWTF is a collaboration between the Women’s Research and Resources Center.",
+            "Go With the Flow (GWTF) is a program at CSUN with the goal to expand accessibility, awareness, and education around menstrual equity. GWTF is a collaboration between the Women\u2019s Research and Resources Center.",
         email: "",
         discord: "",
         socials: {}
@@ -2014,9 +2014,9 @@ const clubs = [
         name: "Institute of Electrical and Electronics Engineers (IEEE)",
         shortName: "IEEE",
         category: "Engineering and Technology",
-        image: "media/images/clubs/institute-of-electrical-and-electronics-engineers-ieee.jpg",
+        image: "media/images/clubs/ieee.jpg",
         description:
-            "IEEE is the world’s largest professional association dedicated to advancing technological innovation and excellence for the benefit of humanity. IEEE and its members inspire a global community through IEEE’s highly cited publications, conferences, tech...",
+            "IEEE is the world\u2019s largest professional association dedicated to advancing technological innovation and excellence for the benefit of humanity. IEEE and its members inspire a global community through IEEE\u2019s highly cited publications, conferences, tech...",
         email: "",
         discord: "",
         socials: {}
@@ -2160,7 +2160,7 @@ const clubs = [
         category: "Fraternity and Sorority Life",
         image: "media/images/clubs/lambda-chi-alpha.jpg",
         description:
-            "Lambda Chi Alpha is one of the largest men’s fraternities in North America providing brotherhood on college campuses to nearly 11,000 today and more than 290,000 alumni across the globe. Our brotherhood is dedicated to enhancing the collegiate experien...",
+            "Lambda Chi Alpha is one of the largest men\u2019s fraternities in North America providing brotherhood on college campuses to nearly 11,000 today and more than 290,000 alumni across the globe. Our brotherhood is dedicated to enhancing the collegiate experien...",
         email: "",
         discord: "",
         socials: {}
@@ -2194,7 +2194,7 @@ const clubs = [
         name: "Layer 8",
         shortName: "Layer 8",
         category: "Engineering and Technology",
-        image: "media/images/clubs/layer-8.jpg",
+        image: "media/images/clubs/layer8.jpg",
         description:
             "Layer 8 Cybersecurity Club focuses on educating our members and community in all aspects of technology and information security, from networking fundamentals and command-line skills to modern cybersecurity concepts.",
         email: "",
@@ -2263,12 +2263,12 @@ const clubs = [
     },
     {
         id: "mariachi-aztlan-nueva-generacion-de-chicana-o-studies-csun",
-        name: "Mariachi Aztlan Nueva Generacíon de Chicana/o Studies CSUN",
+        name: "Mariachi Aztlan Nueva Generac\u00edon de Chicana/o Studies CSUN",
         shortName: "MANGCOSC",
         category: "Arts and Media",
         image: "media/images/clubs/mariachi-aztlan-nueva-generacion-de-chicana-o-studies-csun.jpg",
         description:
-            "Mariachi Aztlan Nueva Generacíon was reestablished in 2024 by CSUN students that play traditional Mexican music. We are open to all CSUN students. We practice in Jerome Richfield 118 on Fridays from 4-6pm. Instruments are not provided.",
+            "Mariachi Aztlan Nueva Generac\u00edon was reestablished in 2024 by CSUN students that play traditional Mexican music. We are open to all CSUN students. We practice in Jerome Richfield 118 on Fridays from 4-6pm. Instruments are not provided.",
         email: "",
         discord: "",
         socials: {}
@@ -2467,12 +2467,12 @@ const clubs = [
     },
     {
         id: "movimiento-estudiantil-chicano-a-de-aztlan",
-        name: "Movimiento Estudiantil Chicano/a de Aztlán",
+        name: "Movimiento Estudiantil Chicano/a de Aztl\u00e1n",
         shortName: "MECAAN",
         category: "Cultural and Identity",
         image: "media/images/clubs/movimiento-estudiantil-chicano-a-de-aztlan.jpg",
         description:
-            "We’re a Chicane community organization that aims to empower students through political action and sharing knowledge of Indigenous, Mexican-American, and Latine cultures.",
+            "We\u2019re a Chicane community organization that aims to empower students through political action and sharing knowledge of Indigenous, Mexican-American, and Latine cultures.",
         email: "",
         discord: "",
         socials: {}
@@ -2724,7 +2724,7 @@ const clubs = [
         category: "Fraternity and Sorority Life",
         image: "media/images/clubs/panhellenic-council-of-csu-northridge.jpg",
         description:
-            "The word Panhellenic means “All Greek.”The Panhellenic council is the governing body of the seven sororities at CSUN. The purpose is to provide support and promote the growth of the chapters at CSUN. The success of Panhellenic lies solely in the unif...",
+            "The word Panhellenic means \u201cAll Greek.\u201dThe Panhellenic council is the governing body of the seven sororities at CSUN. The purpose is to provide support and promote the growth of the chapters at CSUN. The success of Panhellenic lies solely in the unif...",
         email: "",
         discord: "",
         socials: {}
@@ -2964,7 +2964,7 @@ const clubs = [
         category: "Business and Professional",
         image: "media/images/clubs/public-relations-student-society-of-america.jpg",
         description:
-            "We aspire to advance our members into the world of public relations by broadening their networks with PR professionals from various industries and enhancing their skills through our Chapters’ benefits!",
+            "We aspire to advance our members into the world of public relations by broadening their networks with PR professionals from various industries and enhancing their skills through our Chapters\u2019 benefits!",
         email: "",
         discord: "",
         socials: {}
@@ -2974,9 +2974,9 @@ const clubs = [
         name: "Python Club",
         shortName: "Python Club",
         category: "Engineering and Technology",
-        image: "media/images/clubs/python-club.jpg",
+        image: "media/images/clubs/python.jpg",
         description:
-            "Creating a community of students who have an interest in Python programming. The purpose of this club is to provide an education to those who seek an mastery of Python’s fundamental functions.",
+            "Creating a community of students who have an interest in Python programming. The purpose of this club is to provide an education to those who seek an mastery of Python\u2019s fundamental functions.",
         email: "",
         discord: "",
         socials: {}
@@ -3000,7 +3000,7 @@ const clubs = [
         category: "Health and Pre-Professional",
         image: "media/images/clubs/radiologic-sciences-student-association.jpg",
         description:
-            "The Radiologic Sciences Student Association (RSSA) has two main goals as a club:#1 - GIVE BACK! We are a club dedicated to our local community and patient population through service activities and participation in the community. #2 – MENTOR! We are a...",
+            "The Radiologic Sciences Student Association (RSSA) has two main goals as a club:#1 - GIVE BACK! We are a club dedicated to our local community and patient population through service activities and participation in the community. #2 \u2013 MENTOR! We are a...",
         email: "",
         discord: "",
         socials: {}
@@ -3012,7 +3012,7 @@ const clubs = [
         category: "Business and Professional",
         image: "media/images/clubs/reach-csun.jpg",
         description:
-            "CSUN’s community for aspiring content creators, social media marketers, and digital entrepreneurs. Join us to connect with peers, gain industry insights from guest speakers, and build your personal brand through collaborative workshops and other events.",
+            "CSUN\u2019s community for aspiring content creators, social media marketers, and digital entrepreneurs. Join us to connect with peers, gain industry insights from guest speakers, and build your personal brand through collaborative workshops and other events.",
         email: "",
         discord: "",
         socials: {}
@@ -3091,12 +3091,12 @@ const clubs = [
     },
     {
         id: "senas-unidas",
-        name: "Señas Unidas",
-        shortName: "Señas Unidas",
+        name: "Se\u00f1as Unidas",
+        shortName: "Se\u00f1as Unidas",
         category: "Cultural and Identity",
         image: "media/images/clubs/senas-unidas.jpg",
         description:
-            "Señas Unidas is a student club at CSUN for Deaf/ hard-of-hearing folks and allies. We aim to unite and provide support and offering a space with Latin backgrounds, creating friendships, intertwine, and celebrate Deaf and Latin communities simultaneously.",
+            "Se\u00f1as Unidas is a student club at CSUN for Deaf/ hard-of-hearing folks and allies. We aim to unite and provide support and offering a space with Latin backgrounds, creating friendships, intertwine, and celebrate Deaf and Latin communities simultaneously.",
         email: "",
         discord: "",
         socials: {}
@@ -3288,7 +3288,7 @@ const clubs = [
         category: "Health and Pre-Professional",
         image: "media/images/clubs/student-association-for-behavior-analysis.jpg",
         description:
-            "The mission of SABA is to promote educational and professional advancement for all students interested in behavior analysis. We are dedicated to disseminating behavior analysis and creating opportunities to facilitate students’ scholastic success.",
+            "The mission of SABA is to promote educational and professional advancement for all students interested in behavior analysis. We are dedicated to disseminating behavior analysis and creating opportunities to facilitate students\u2019 scholastic success.",
         email: "",
         discord: "",
         socials: {}
@@ -3324,7 +3324,7 @@ const clubs = [
         category: "Service and Advocacy",
         image: "media/images/clubs/student-veteran-organization.jpg",
         description:
-            "Founded November 11, 2008 at California State University, Northridge. The CSUN chapter of the Student Veterans of America® (SVA) national, nonprofit organization. We aim to give help student veterans thrive through a well-rounded college experience.",
+            "Founded November 11, 2008 at California State University, Northridge. The CSUN chapter of the Student Veterans of America\u00ae (SVA) national, nonprofit organization. We aim to give help student veterans thrive through a well-rounded college experience.",
         email: "",
         discord: "",
         socials: {}
@@ -3372,7 +3372,7 @@ const clubs = [
         category: "Fraternity and Sorority Life",
         image: "media/images/clubs/tau-omega-rho-fraternity.jpg",
         description:
-            "ΤΩΡ - Founding Chapter Established April 28, 2009Brothers.Scholars.Athletes.Philanthropists. The mission of Tau Omega Rho is to unite students for a stronger sense of involvement within the California State University, Northridge community, through the...",
+            "\u03a4\u03a9\u03a1 - Founding Chapter Established April 28, 2009Brothers.Scholars.Athletes.Philanthropists. The mission of Tau Omega Rho is to unite students for a stronger sense of involvement within the California State University, Northridge community, through the...",
         email: "",
         discord: "",
         socials: {}
@@ -3468,7 +3468,7 @@ const clubs = [
         category: "Engineering and Technology",
         image: "media/images/clubs/themed-entertainment-association.jpg",
         description:
-            "Our club’s mission is to connect students with the themed entertainment industry through professional development, networking, and educational opportunities with a focus on both the engineering and business aspects that drive the industry.",
+            "Our club\u2019s mission is to connect students with the themed entertainment industry through professional development, networking, and educational opportunities with a focus on both the engineering and business aspects that drive the industry.",
         email: "",
         discord: "",
         socials: {}
@@ -3516,7 +3516,7 @@ const clubs = [
         category: "Service and Advocacy",
         image: "media/images/clubs/transfer-student-alliance.jpg",
         description:
-            "We want to create a community that supports and guides transfer students’ transition to CSUN in an effort to offset the disadvantages that transfer students face when entering CSUN for the first time. Join our Discord!",
+            "We want to create a community that supports and guides transfer students\u2019 transition to CSUN in an effort to offset the disadvantages that transfer students face when entering CSUN for the first time. Join our Discord!",
         email: "",
         discord: "",
         socials: {}
@@ -3725,7 +3725,7 @@ function createClubCard(club) {
 
     article.innerHTML = `
     <div class="club-image-wrapper">
-      <img src="${club.image}" alt="${club.name}" onerror="this.onerror=null;this.src='images/CSUNlogo.png';">
+      <img src="${club.image}" alt="${club.name}">
     </div>
     <div class="club-content">
       <h3 class="club-title">${club.shortName || club.name}</h3>
