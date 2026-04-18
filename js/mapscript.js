@@ -87,154 +87,132 @@ Fri–Sun 11:30 AM–11:00 PM`,
       position: { lat: 34.23615109258849, lng: -118.53276403024567 },
       title: "Parking Structure B1",
       permit: "Student",
-      image: "images/parking-b1.jpg",
       note: "Usually easiest before 9:30 AM."
     },
     {
       position: { lat: 34.23803357258907, lng: -118.53330630462501 },
       title: "Parking Lot B3",
       permit: "Student",
-      image: "images/parking-b3.jpg",
       note: "Often gets busy around late morning."
     },
     {
       position: { lat: 34.23689615512934, lng: -118.5329054112827 },
       title: "Parking Lot B2",
       permit: "Mixed",
-      image: "images/parking-b2.jpg",
       note: "A flexible option for daytime parking."
     },
     {
       position: { lat: 34.2479, lng: -118.5287 },
       title: "Parking Lot B4",
       permit: "Mixed",
-      image: "images/parking-b4.jpg",
       note: "Usually calmer outside peak class hours."
     },
     {
       position: { lat: 34.23875844208851, lng: -118.53225450132838 },
       title: "Parking Structure B3",
       permit: "Student",
-      image: "images/parking-structure-b3.jpg",
       note: "Can fill up quickly on busy weekdays."
     },
     {
       position: { lat: 34.241519319035795, lng: -118.532711643305 },
       title: "Parking Structure B5",
       permit: "Student",
-      image: "images/parking-b5.jpg",
       note: "Popular with commuter students."
     },
     {
       position: { lat: 34.24394374599401, lng: -118.53250334278619 },
       title: "Parking Lot B6",
       permit: "Student",
-      image: "images/parking-b6.jpg",
       note: "Usually opens up more after afternoon classes."
     },
     {
       position: { lat: 34.24150526124224, lng: -118.52489938569944 },
       title: "Parking Lot F5",
       permit: "Mixed",
-      image: "images/parking-f5.jpg",
       note: "A decent backup when central lots get crowded."
     },
     {
       position: { lat: 34.240261771564654, lng: -118.52392656323893 },
       title: "Parking Lot G4",
       permit: "Student",
-      image: "images/parking-g4.jpg",
       note: "Good option near the east side of campus."
     },
     {
       position: { lat: 34.23832981453801, lng: -118.52394976751418 },
       title: "Parking Lot G3",
       permit: "Student",
-      image: "images/parking-g3.jpg",
       note: "Often crowded around mid-morning."
     },
     {
       position: { lat: 34.238168573775084, lng: -118.52519256582374 },
       title: "Parking Structure G3",
       permit: "Student",
-      image: "images/parking-structure-g3.jpg",
       note: "Usually steadier than nearby open lots."
     },
     {
       position: { lat: 34.23620590084155, lng: -118.52405566130483 },
       title: "Parking Lot G1",
       permit: "Mixed",
-      image: "images/parking-g1.jpg",
       note: "A solid mixed-permit fallback lot."
     },
     {
       position: { lat: 34.240778145281915, lng: -118.52611110651856 },
       title: "Parking Lot F4",
       permit: "Mixed",
-      image: "images/parking-f4.jpg",
       note: "Can be easier to enter than the larger structures."
     },
     {
       position: { lat: 34.23738075492532, lng: -118.52671119120299 },
       title: "Parking Lot F2",
       permit: "Mixed",
-      image: "images/parking-f2.jpg",
       note: "Usually a reasonable backup at midday."
     },
     {
       position: { lat: 34.24345412580359, lng: -118.52851811666409 },
       title: "Parking Lot E6",
       permit: "Student",
-      image: "images/parking-e6.jpg",
       note: "Popular because of its central location."
     },
     {
       position: { lat: 34.24937698146702, lng: -118.52555121043896 },
       title: "Parking Lot F9",
       permit: "Mixed",
-      image: "images/parking-f9.jpg",
       note: "Usually calmer than inner-campus lots."
     },
     {
       position: { lat: 34.25112905369409, lng: -118.52618338549338 },
       title: "Parking Lot F10",
       permit: "Student",
-      image: "images/parking-f10.jpg",
       note: "Usually best earlier in the day."
     },
     {
       position: { lat: 34.25107142939617, lng: -118.5237351212882 },
       title: "Parking Lot G10",
       permit: "Student",
-      image: "images/parking-g10.jpg",
       note: "Farther out, but sometimes easier to find space."
     },
     {
       position: { lat: 34.253850733394884, lng: -118.52425987158705 },
       title: "Parking Lot G12",
       permit: "Mixed",
-      image: "images/parking-g12.jpg",
       note: "A useful overflow option."
     },
     {
       position: { lat: 34.24857084180977, lng: -118.52391245027827 },
       title: "Parking Structure G8 (Housing)",
       permit: "Student",
-      image: "images/parking-g8.jpg",
       note: "Housing-adjacent structure with heavier evening demand."
     },
     {
       position: { lat: 34.248895917179446, lng: -118.52389489486981 },
       title: "Parking Structure G9 (Housing)",
       permit: "Student",
-      image: "images/parking-g9.jpg",
       note: "Usually busier at night because of nearby housing."
     },
     {
       position: { lat: 34.24301752285057, lng: -118.52939511070822 },
       title: "Parking Lot D6 (Employee)",
       permit: "Employee",
-      image: "images/parking-d6.jpg",
       note: "Restricted lot with higher weekday demand."
     }
   ],
@@ -470,17 +448,12 @@ function createMarkers(places, color) {
         ? `<div class="popup-note">${place.note}</div>`
         : "";
 
-      const image = place.image
-        ? `<img src="${place.image}" alt="${place.title}" class="popup-image">`
-        : "";
-
       const statusHTML = status
         ? `<div class="popup-status ${statusClass}">${status}</div>`
         : "";
 
       const html = `
         <div class="map-popup">
-          ${image}
           <div class="popup-title">${place.title || ""}</div>
           ${statusHTML}
           ${permit}
