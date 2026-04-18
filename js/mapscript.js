@@ -43,7 +43,6 @@ Fri 7:00 AM–8:00 PM
 Sat–Sun 10:00 AM–6:00 PM`,
       position: { lat: 34.2384, lng: -118.5286 }
     },
-    // ----- Near Campus (Reseda Blvd corridor) -----
     {
       title: "Waffle Love",
       place: "Reseda Blvd",
@@ -85,517 +84,442 @@ Fri–Sun 11:30 AM–11:00 PM`,
 
   parking: [
     {
-      "position": {
-        "lat": 34.23615109258849,
-        "lng": -118.53276403024567
-      },
-      "title": "Parking Structure B1",
-      "permit": "Student"
+      position: { lat: 34.23615109258849, lng: -118.53276403024567 },
+      title: "Parking Structure B1",
+      permit: "Student",
+      image: "images/parking-b1.jpg",
+      note: "Usually easiest before 9:30 AM."
     },
     {
-      "position": {
-        "lat": 34.23803357258907,
-        "lng": -118.53330630462501
-      },
-      "title": "Parking Lot B3",
-      "permit": "Student"
+      position: { lat: 34.23803357258907, lng: -118.53330630462501 },
+      title: "Parking Lot B3",
+      permit: "Student",
+      image: "images/parking-b3.jpg",
+      note: "Often gets busy around late morning."
     },
     {
-      "position": {
-        "lat": 34.23689615512934,
-        "lng": -118.5329054112827
-      },
-      "title": "Parking Lot B2",
-      "permit": "Mixed"
+      position: { lat: 34.23689615512934, lng: -118.5329054112827 },
+      title: "Parking Lot B2",
+      permit: "Mixed",
+      image: "images/parking-b2.jpg",
+      note: "A flexible option for daytime parking."
     },
     {
-      "position": {
-        "lat": 34.2479,
-        "lng": -118.5287
-      },
-      "title": "Parking Lot B4",
-      "permit": "Mixed"
+      position: { lat: 34.2479, lng: -118.5287 },
+      title: "Parking Lot B4",
+      permit: "Mixed",
+      image: "images/parking-b4.jpg",
+      note: "Usually calmer outside peak class hours."
     },
     {
-      "position": {
-        "lat": 34.23875844208851,
-        "lng": -118.53225450132838
-      },
-      "title": "Parking Structure B3",
-      "permit": "Student"
+      position: { lat: 34.23875844208851, lng: -118.53225450132838 },
+      title: "Parking Structure B3",
+      permit: "Student",
+      image: "images/parking-structure-b3.jpg",
+      note: "Can fill up quickly on busy weekdays."
     },
     {
-      "position": {
-        "lat": 34.241519319035795,
-        "lng": -118.532711643305
-      },
-      "title": "Parking Structure B5",
-      "permit": "Student"
+      position: { lat: 34.241519319035795, lng: -118.532711643305 },
+      title: "Parking Structure B5",
+      permit: "Student",
+      image: "images/parking-b5.jpg",
+      note: "Popular with commuter students."
     },
     {
-      "position": {
-        "lat": 34.24394374599401,
-        "lng": -118.53250334278619
-      },
-      "title": "Parking Lot B6",
-      "permit": "Student"
+      position: { lat: 34.24394374599401, lng: -118.53250334278619 },
+      title: "Parking Lot B6",
+      permit: "Student",
+      image: "images/parking-b6.jpg",
+      note: "Usually opens up more after afternoon classes."
     },
     {
-      "position": {
-        "lat": 34.24150526124224,
-        "lng": -118.52489938569944
-      },
-      "title": "Parking Lot F5",
-      "permit": "Mixed"
+      position: { lat: 34.24150526124224, lng: -118.52489938569944 },
+      title: "Parking Lot F5",
+      permit: "Mixed",
+      image: "images/parking-f5.jpg",
+      note: "A decent backup when central lots get crowded."
     },
     {
-      "position": {
-        "lat": 34.240261771564654,
-        "lng": -118.52392656323893
-      },
-      "title": "Parking Lot G4",
-      "permit": "Student"
+      position: { lat: 34.240261771564654, lng: -118.52392656323893 },
+      title: "Parking Lot G4",
+      permit: "Student",
+      image: "images/parking-g4.jpg",
+      note: "Good option near the east side of campus."
     },
     {
-      "position": {
-        "lat": 34.23832981453801,
-        "lng": -118.52394976751418
-      },
-      "title": "Parking Lot G3",
-      "permit": "Student"
+      position: { lat: 34.23832981453801, lng: -118.52394976751418 },
+      title: "Parking Lot G3",
+      permit: "Student",
+      image: "images/parking-g3.jpg",
+      note: "Often crowded around mid-morning."
     },
     {
-      "position": {
-        "lat": 34.238168573775084,
-        "lng": -118.52519256582374
-      },
-      "title": "Parking Structure G3",
-      "permit": "Student"
+      position: { lat: 34.238168573775084, lng: -118.52519256582374 },
+      title: "Parking Structure G3",
+      permit: "Student",
+      image: "images/parking-structure-g3.jpg",
+      note: "Usually steadier than nearby open lots."
     },
     {
-      "position": {
-        "lat": 34.23620590084155,
-        "lng": -118.52405566130483
-      },
-      "title": "Parking Lot G1",
-      "permit": "Mixed"
+      position: { lat: 34.23620590084155, lng: -118.52405566130483 },
+      title: "Parking Lot G1",
+      permit: "Mixed",
+      image: "images/parking-g1.jpg",
+      note: "A solid mixed-permit fallback lot."
     },
     {
-      "position": {
-        "lat": 34.240778145281915,
-        "lng": -118.52611110651856
-      },
-      "title": "Parking Lot F4",
-      "permit": "Mixed"
+      position: { lat: 34.240778145281915, lng: -118.52611110651856 },
+      title: "Parking Lot F4",
+      permit: "Mixed",
+      image: "images/parking-f4.jpg",
+      note: "Can be easier to enter than the larger structures."
     },
     {
-      "position": {
-        "lat": 34.23738075492532,
-        "lng": -118.52671119120299
-      },
-      "title": "Parking Lot F2",
-      "permit": "Mixed"
+      position: { lat: 34.23738075492532, lng: -118.52671119120299 },
+      title: "Parking Lot F2",
+      permit: "Mixed",
+      image: "images/parking-f2.jpg",
+      note: "Usually a reasonable backup at midday."
     },
     {
-      "position": {
-        "lat": 34.24345412580359,
-        "lng": -118.52851811666409
-      },
-      "title": "Parking Lot E6",
-      "permit": "Student"
+      position: { lat: 34.24345412580359, lng: -118.52851811666409 },
+      title: "Parking Lot E6",
+      permit: "Student",
+      image: "images/parking-e6.jpg",
+      note: "Popular because of its central location."
     },
     {
-      "position": {
-        "lat": 34.24937698146702,
-        "lng": -118.52555121043896
-      },
-      "title": "Parking Lot F9",
-      "permit": "Mixed"
+      position: { lat: 34.24937698146702, lng: -118.52555121043896 },
+      title: "Parking Lot F9",
+      permit: "Mixed",
+      image: "images/parking-f9.jpg",
+      note: "Usually calmer than inner-campus lots."
     },
     {
-      "position": {
-        "lat": 34.25112905369409,
-        "lng": -118.52618338549338
-      },
-      "title": "Parking Lot F10",
-      "permit": "Student"
+      position: { lat: 34.25112905369409, lng: -118.52618338549338 },
+      title: "Parking Lot F10",
+      permit: "Student",
+      image: "images/parking-f10.jpg",
+      note: "Usually best earlier in the day."
     },
     {
-      "position": {
-        "lat": 34.25107142939617,
-        "lng": -118.5237351212882
-      },
-      "title": "Parking Lot G10",
-      "permit": "Student"
+      position: { lat: 34.25107142939617, lng: -118.5237351212882 },
+      title: "Parking Lot G10",
+      permit: "Student",
+      image: "images/parking-g10.jpg",
+      note: "Farther out, but sometimes easier to find space."
     },
     {
-      "position": {
-        "lat": 34.253850733394884,
-        "lng": -118.52425987158705
-      },
-      "title": "Parking Lot G12",
-      "permit": "Mixed"
+      position: { lat: 34.253850733394884, lng: -118.52425987158705 },
+      title: "Parking Lot G12",
+      permit: "Mixed",
+      image: "images/parking-g12.jpg",
+      note: "A useful overflow option."
     },
     {
-      "position": {
-        "lat": 34.24857084180977,
-        "lng": -118.52391245027827
-      },
-      "title": "Parking Structure G8 (Housing)",
-      "permit": "Student"
+      position: { lat: 34.24857084180977, lng: -118.52391245027827 },
+      title: "Parking Structure G8 (Housing)",
+      permit: "Student",
+      image: "images/parking-g8.jpg",
+      note: "Housing-adjacent structure with heavier evening demand."
     },
     {
-      "position": {
-        "lat": 34.248895917179446,
-        "lng": -118.52389489486981
-      },
-      "title": "Parking Structure G9 (Housing)",
-      "permit": "Student"
+      position: { lat: 34.248895917179446, lng: -118.52389489486981 },
+      title: "Parking Structure G9 (Housing)",
+      permit: "Student",
+      image: "images/parking-g9.jpg",
+      note: "Usually busier at night because of nearby housing."
     },
     {
-      "position": {
-        "lat": 34.24301752285057,
-        "lng": -118.52939511070822
-      },
-      "title": "Parking Lot D6 (Employee)",
-      "permit": "Employee"
+      position: { lat: 34.24301752285057, lng: -118.52939511070822 },
+      title: "Parking Lot D6 (Employee)",
+      permit: "Employee",
+      image: "images/parking-d6.jpg",
+      note: "Restricted lot with higher weekday demand."
     }
   ],
+
   buildings: [
     {
-      "position": {
-        "lat": 34.2401,
-        "lng": -118.5293
-      },
-      "title": "University Library"
+      position: { lat: 34.2401, lng: -118.5293 },
+      title: "University Library"
     },
     {
-      "position": {
-        "lat": 34.24196605393645,
-        "lng": -118.53079831502039
-      },
-      "title": "Bookstein Hall"
+      position: { lat: 34.24196605393645, lng: -118.53079831502039 },
+      title: "Bookstein Hall"
     },
     {
-      "position": {
-        "lat": 34.238877942612916,
-        "lng": -118.53071557556179
-      },
-      "title": "Jerome Richfield Hall"
+      position: { lat: 34.238877942612916, lng: -118.53071557556179 },
+      title: "Jerome Richfield Hall"
     },
     {
-      "position": {
-        "lat": 34.24124184294615,
-        "lng": -118.52888268905467
-      },
-      "title": "Jacaranda Hall"
+      position: { lat: 34.24124184294615, lng: -118.52888268905467 },
+      title: "Jacaranda Hall"
     },
     {
-      "position": {
-        "lat": 34.240131811867286,
-        "lng": -118.52703814672604
-      },
-      "title": "University Student Union (USU)"
+      position: { lat: 34.240131811867286, lng: -118.52703814672604 },
+      title: "University Student Union (USU)"
     },
     {
-      "position": {
-        "lat": 34.23822992981255,
-        "lng": -118.53102437556188
-      },
-      "title": "Sierra Hall"
+      position: { lat: 34.23822992981255, lng: -118.53102437556188 },
+      title: "Sierra Hall"
     },
     {
-      "position": {
-        "lat": 34.23895590358568,
-        "lng": -118.53021073323313
-      },
-      "title": "Sierra Tower"
+      position: { lat: 34.23895590358568, lng: -118.53021073323313 },
+      title: "Sierra Tower"
     },
     {
-      "position": {
-        "lat": 34.237747282009735,
-        "lng": -118.53026034672615
-      },
-      "title": "Manzanita Hall"
+      position: { lat: 34.237747282009735, lng: -118.53026034672615 },
+      title: "Manzanita Hall"
     },
     {
-      "position": {
-        "lat": 34.240363381181886,
-        "lng": -118.531318433233
-      },
-      "title": "Bayramian Hall"
+      position: { lat: 34.240363381181886, lng: -118.531318433233 },
+      title: "Bayramian Hall"
     },
     {
-      "position": {
-        "lat": 34.2398696201719,
-        "lng": -118.53208961789045
-      },
-      "title": "University Hall"
+      position: { lat: 34.2398696201719, lng: -118.53208961789045 },
+      title: "University Hall"
     },
     {
-      "position": {
-        "lat": 34.24062352779417,
-        "lng": -118.52823257556173
-      },
-      "title": "Sequoia Hall"
+      position: { lat: 34.24062352779417, lng: -118.52823257556173 },
+      title: "Sequoia Hall"
     },
     {
-      "position": {
-        "lat": 34.239082991108205,
-        "lng": -118.52800655002395
-      },
-      "title": "Citrus Hall"
+      position: { lat: 34.239082991108205, lng: -118.52800655002395 },
+      title: "Citrus Hall"
     },
     {
-      "position": {
-        "lat": 34.23867616671749,
-        "lng": -118.52814284111932
-      },
-      "title": "Eucalyptus Hall"
+      position: { lat: 34.23867616671749, lng: -118.52814284111932 },
+      title: "Eucalyptus Hall"
     },
     {
-      "position": {
-        "lat": 34.23832473242764,
-        "lng": -118.52819760116141
-      },
-      "title": "Live Oak Hall"
+      position: { lat: 34.23832473242764, lng: -118.52819760116141 },
+      title: "Live Oak Hall"
     },
     {
-      "position": {
-        "lat": 34.24194971907548,
-        "lng": -118.52680484672598
-      },
-      "title": "Redwood Hall"
+      position: { lat: 34.24194971907548, lng: -118.52680484672598 },
+      title: "Redwood Hall"
     },
     {
-      "position": {
-        "lat": 34.2401,
-        "lng": -118.5312
-      },
-      "title": "Nordhoff Hall"
+      position: { lat: 34.2401, lng: -118.5312 },
+      title: "Nordhoff Hall"
     },
     {
-      "position": {
-        "lat": 34.2388,
-        "lng": -118.5327
-      },
-      "title": "Art and Design Center"
+      position: { lat: 34.2388, lng: -118.5327 },
+      title: "Art and Design Center"
     },
     {
-      "position": {
-        "lat": 34.2419,
-        "lng": -118.5289
-      },
-      "title": "Monterey Hall"
+      position: { lat: 34.2419, lng: -118.5289 },
+      title: "Monterey Hall"
     },
     {
-      "position": {
-        "lat": 34.2426,
-        "lng": -118.5296
-      },
-      "title": "Oasis Wellness Center"
+      position: { lat: 34.2426, lng: -118.5296 },
+      title: "Oasis Wellness Center"
     },
     {
-      "position": {
-        "lat": 34.2428,
-        "lng": -118.5278
-      },
-      "title": "The Soraya (VPAC)"
+      position: { lat: 34.2428, lng: -118.5278 },
+      title: "The Soraya (VPAC)"
     },
     {
-      "position": {
-        "lat": 34.242,
-        "lng": -118.5286
-      },
-      "title": "Extended University Commons"
+      position: { lat: 34.242, lng: -118.5286 },
+      title: "Extended University Commons"
     },
     {
-      "position": {
-        "lat": 34.23743119113274,
-        "lng": -118.52818173323318
-      },
-      "title": "Bookstore / Campus Store Complex"
+      position: { lat: 34.23743119113274, lng: -118.52818173323318 },
+      title: "Bookstore / Campus Store Complex"
     },
     {
-      "position": {
-        "lat": 34.239912350736546,
-        "lng": -118.52497424857565
-      },
-      "title": "Student Recreation Center (SRC)"
+      position: { lat: 34.239912350736546, lng: -118.52497424857565 },
+      title: "Student Recreation Center (SRC)"
     },
     {
-      "position": {
-        "lat": 34.2455,
-        "lng": -118.5361
-      },
-      "title": "University Village Apartments (Housing)"
+      position: { lat: 34.2455, lng: -118.5361 },
+      title: "University Village Apartments (Housing)"
     },
     {
-      "position": {
-        "lat": 34.2439,
-        "lng": -118.5357
-      },
-      "title": "Student Housing Administration"
+      position: { lat: 34.2439, lng: -118.5357 },
+      title: "Student Housing Administration"
     },
     {
-      "position": {
-        "lat": 34.2462,
-        "lng": -118.5363
-      },
-      "title": "G9 Housing Parking Structure (landmark)"
+      position: { lat: 34.2462, lng: -118.5363 },
+      title: "G9 Housing Parking Structure (landmark)"
     },
     {
-      "position": {
-        "lat": 34.2393,
-        "lng": -118.5275
-      },
-      "title": "Sustainability Center"
+      position: { lat: 34.2393, lng: -118.5275 },
+      title: "Sustainability Center"
     },
     {
-      "position": {
-        "lat": 34.238,
-        "lng": -118.5258
-      },
-      "title": "Police Services / Parking / Public Safety"
+      position: { lat: 34.238, lng: -118.5258 },
+      title: "Police Services / Parking / Public Safety"
     },
     {
-      "position": {
-        "lat": 34.2385,
-        "lng": -118.5271
-      },
-      "title": "Central Plant"
+      position: { lat: 34.2385, lng: -118.5271 },
+      title: "Central Plant"
     },
     {
-      "position": {
-        "lat": 34.2381,
-        "lng": -118.533
-      },
-      "title": "Physical Plant Management"
+      position: { lat: 34.2381, lng: -118.533 },
+      title: "Physical Plant Management"
     }
   ]
 };
 
+function getParkingStatus(place) {
+  const now = new Date();
+  const hour = now.getHours();
+  const day = now.getDay();
+  const isWeekend = day === 0 || day === 6;
 
-
-
-
-
-// --- Name -> coordinate resolver using Places Text Search ---
-async function geocodeItemsByName(items, placesService, campusCenter, radiusMeters = 1200) {
-  const resolved = [];
-  for (const item of items) {
-    if (item.position) { resolved.append(item); continue; }
-    const query = `${item.title} CSUN`;
-    const request = {
-      query,
-      locationBias: { center: campusCenter, radius: radiusMeters },
-    };
-    const result = await new Promise((resolve) => {
-      placesService.textSearch(request, (results, status) => {
-        if (status === google.maps.places.PlacesServiceStatus.OK && results && results.length) {
-          resolve(results[0]);
-        } else {
-          resolve(null);
-        }
-      });
-    });
-    if (result && result.geometry && result.geometry.location) {
-      item.position = result.geometry.location;
-    }
-    resolved.push(item);
+  if (place.permit === "Employee") {
+    if (!isWeekend && hour >= 8 && hour < 15) return "Packed";
+    if (!isWeekend && hour >= 15 && hour < 18) return "Busy";
+    return "Limited";
   }
-  return resolved;
-}
 
+  if (place.title.includes("Housing")) {
+    if (hour >= 18 && hour < 23) return "Busy";
+    if (hour >= 23 || hour < 8) return "Open";
+    return "Filling Up";
+  }
+
+  if (place.permit === "Student") {
+    if (!isWeekend && hour >= 9 && hour < 13) return "Packed";
+    if (!isWeekend && hour >= 13 && hour < 16) return "Busy";
+    if (!isWeekend && hour >= 7 && hour < 9) return "Filling Up";
+    return "Open";
+  }
+
+  if (place.permit === "Mixed") {
+    if (!isWeekend && hour >= 10 && hour < 14) return "Busy";
+    if (!isWeekend && hour >= 14 && hour < 17) return "Filling Up";
+    return "Open";
+  }
+
+  return "Open";
+}
 
 async function initMap() {
   const { Map } = await google.maps.importLibrary("maps");
-  const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
+  await google.maps.importLibrary("marker");
 
   const csunCenter = { lat: 34.2415, lng: -118.5295 };
   infoWindow = new google.maps.InfoWindow();
 
-  map = new Map(document.getElementById('map'), {
+  map = new Map(document.getElementById("map"), {
     center: csunCenter,
     zoom: 16,
-    mapId: 'DEMO_MAP_ID',
-    gestureHandling: 'greedy'
+    mapId: "DEMO_MAP_ID",
+    gestureHandling: "greedy"
   });
 
+  foodMarkers = createMarkers(locations.food, "#FFC107");
+  parkingMarkers = createMarkers(locations.parking, "#2196F3");
+  buildingMarkers = createMarkers(locations.buildings, "#4CAF50");
 
-  // Create markers for each category
-  foodMarkers = createMarkers(locations.food, '#FFC107'); // Amber
-  parkingMarkers = createMarkers(locations.parking, '#2196F3'); // Blue
-  buildingMarkers = createMarkers(locations.buildings, '#4CAF50'); // Green
+  document.getElementById("food-btn").addEventListener("click", () => {
+    toggleLayer(foodMarkers, "food-btn");
+  });
 
-  // event listeners for buttons
-  document.getElementById('food-btn').addEventListener('click', () => toggleLayer(foodMarkers, 'food-btn'));
-  document.getElementById('parking-btn').addEventListener('click', () => toggleLayer(parkingMarkers, 'parking-btn'));
-  document.getElementById('buildings-btn').addEventListener('click', () => toggleLayer(buildingMarkers, 'buildings-btn'));
+  document.getElementById("parking-btn").addEventListener("click", () => {
+    toggleLayer(parkingMarkers, "parking-btn");
+  });
 
-  function toggleLayer(markers, buttonId) {
-    const allMarkers = [foodMarkers, parkingMarkers, buildingMarkers];
-    const allButtons = document.querySelectorAll('#controls .button');
-    allMarkers.forEach(markerArray => {
-      markerArray.forEach(marker => marker.map = null);
-    });
+  document.getElementById("buildings-btn").addEventListener("click", () => {
+    toggleLayer(buildingMarkers, "buildings-btn");
+  });
 
-    allButtons.forEach(button => button.classList.remove('primary'));
-    markers.forEach(marker => {
-      marker.map = map;
-    });
-
-    document.getElementById(buttonId).classList.add('primary');
-  }
+  toggleLayer(foodMarkers, "food-btn");
 }
+
 function createMarkers(places, color) {
   const markers = [];
+
   for (const place of places) {
     const pin = new google.maps.marker.PinElement({
       background: color,
-      borderColor: '#000',
-      glyphColor: '#000',
+      borderColor: "#000",
+      glyphColor: "#000"
     });
+
     const marker = new google.maps.marker.AdvancedMarkerElement({
       position: place.position,
       title: place.title,
-      content: pin.element,
+      content: pin.element
     });
 
-    // Attach click handler to show an InfoWindow with optional place/hours
     marker.addListener("click", () => {
+      const isParking = color === "#2196F3";
       const loc = place.place ? `📍 ${place.place}` : "";
-      const hrs = place.hours ? `<pre style="margin:0; white-space:pre-wrap; line-height:1.35; font-size:12px;">${place.hours}</pre>` : "";
+      const hrs = place.hours
+        ? `<pre style="margin:0; white-space:pre-wrap; line-height:1.35; font-size:12px;">${place.hours}</pre>`
+        : "";
+
+      const status = isParking ? getParkingStatus(place) : null;
+
+      let statusClass = "";
+      if (status === "Open") statusClass = "status-open";
+      else if (status === "Filling Up") statusClass = "status-filling";
+      else if (status === "Busy") statusClass = "status-busy";
+      else if (status === "Packed") statusClass = "status-packed";
+      else if (status === "Limited") statusClass = "status-limited";
+
+      const permit = place.permit
+        ? `<div class="popup-meta"><strong>Permit:</strong> ${place.permit}</div>`
+        : "";
+
+      const note = place.note
+        ? `<div class="popup-note">${place.note}</div>`
+        : "";
+
+      const image = place.image
+        ? `<img src="${place.image}" alt="${place.title}" class="popup-image">`
+        : "";
+
+      const statusHTML = status
+        ? `<div class="popup-status ${statusClass}">${status}</div>`
+        : "";
+
       const html = `
-        <div style="max-width:220px;">
-          <div style="font-weight:600; font-size:14px; margin-bottom:4px;">${place.title || ""}</div>
-          ${loc ? `<div style="font-size:12px; opacity:.8; margin-bottom:6px;">${loc}</div>` : ""}
+        <div class="map-popup">
+          ${image}
+          <div class="popup-title">${place.title || ""}</div>
+          ${statusHTML}
+          ${permit}
+          ${loc ? `<div class="popup-meta">${loc}</div>` : ""}
+          ${note}
           ${hrs}
-        </div>`;
+        </div>
+      `;
+
       infoWindow.setContent(html);
-      infoWindow.open({ anchor: marker, map });
+      infoWindow.open({
+        anchor: marker,
+        map
+      });
     });
 
     markers.push(marker);
   }
+
   return markers;
 }
 
 function toggleLayer(markers, buttonId) {
   const allMarkers = [foodMarkers, parkingMarkers, buildingMarkers];
-  const allButtons = document.querySelectorAll('.control-button');
+  const allButtons = document.querySelectorAll(".control-button");
 
-  // First, hide all layers and deactivate all buttons
   allMarkers.forEach(markerArray => {
-    markerArray.forEach(marker => marker.map = null);
+    markerArray.forEach(marker => {
+      marker.map = null;
+    });
   });
-  allButtons.forEach(button => button.classList.remove('active'));
 
-  // Then, show the selected layer and activate its button
+  allButtons.forEach(button => button.classList.remove("active"));
+
   markers.forEach(marker => {
     marker.map = map;
   });
-  document.getElementById(buttonId).classList.add('active');
+
+  document.getElementById(buttonId).classList.add("active");
 }
 
 initMap();
