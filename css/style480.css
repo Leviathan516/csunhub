@@ -383,64 +383,53 @@ select,
 }
 
 /* Clubs page styling/ mostly animations */
-  .controls.clubs-filter-bar {
-  margin: 0 0 1.5rem 0;
-  flex-wrap: wrap;
+/* expand/collapse */
+.club-grid {
+  display: grid;
+  grid-template-rows: 1fr;
+  overflow: hidden;
+  opacity: 1;
+  max-height: 5000px;
+  transition: max-height 0.32s ease, opacity 0.24s ease, margin-top 0.24s ease;
+}
+
+.club-grid.is-collapsed {
+  max-height: 0;
+  opacity: 0;
+  margin-top: 0;
+  overflow: hidden;
+}
+
+/* arrow rotation */
+.club-category-toggle .material-icons {
+  transition: transform 0.22s ease, opacity 0.22s ease;
+}
+
+.club-category-toggle[aria-expanded="true"] .material-icons {
+  transform: rotate(180deg);
+}
+
+/*dropdown*/
+.clubs-filter-wrap {
+  position: relative;
+  width: min(100%, 320px);
 }
 
 .clubs-category-select {
-  min-width: 220px;
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  border-radius: 8px;
-  padding: 8px 12px;
-  background: rgba(255, 255, 255, 0.35);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  font: inherit;
-  color: inherit;
-  transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-}
-
-.clubs-category-select:hover,
-.clubs-category-select:focus {
-  background: rgba(255, 255, 255, 0.55);
-  border-color: rgba(210, 32, 48, 0.35);
-  box-shadow: 0 0 0 3px rgba(210, 32, 48, 0.08);
-  outline: none;
-}
-
-.club-category-toggle {
-  width: 100%;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  background: rgba(255, 255, 255, 0.22);
-  border-radius: 10px;
-  padding: 0.9rem 1rem;
-  text-align: left;
-  font: inherit;
-  color: inherit;
-  cursor: pointer;
-  transition: background 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
-}
-
-.club-category-toggle:hover {
-  background: rgba(255, 255, 255, 0.4);
-  border-color: rgba(210, 32, 48, 0.22);
-}
-
-.club-category-toggle:active {
-  transform: translateY(1px);
-}
-
-
-  .clubs-category-select {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
+  width: 100%;
+  transition: background 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease, transform 0.18s ease;
 }
 
-.clubs-filter-wrap {
-  position: relative;
-  display: inline-block;
+.clubs-category-select:hover {
+  background: rgba(255,255,255,0.42);
+}
+
+.clubs-category-select:focus {
+  background: rgba(255,255,255,0.5);
+  transform: translateY(-1px);
 }
 
 .clubs-filter-wrap::after {
@@ -449,16 +438,13 @@ select,
   position: absolute;
   right: 12px;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-50%) rotate(0deg);
   pointer-events: none;
   opacity: 0.7;
-  transition: transform 0.25s ease, opacity 0.25s ease;
+  transition: transform 0.22s ease, opacity 0.22s ease;
 }
 
-.clubs-filter-wrap:hover::after {
-  opacity: 1;
-}
-
+.clubs-filter-wrap:hover::after,
 .clubs-category-select:focus + .clubs-filter-wrap::after {
-  transform: translateY(-50%) rotate(180deg);
+  opacity: 1;
 }
