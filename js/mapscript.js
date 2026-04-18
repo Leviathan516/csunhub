@@ -349,7 +349,7 @@ Fri–Sun 11:30 AM–11:00 PM`,
       image: "media/images/buildings/oasiswellnesscenter.jpg",
     },
     {
-      position: { lat: 34.2428, lng: -118.5278 },
+      position: { lat: 34.2360648919923, lng: -118.52858363067132 },
       title: "The Soraya (VPAC)",
       description: "Major performing arts venue for concerts, dance, theatre, and campus cultural events.",
       hours: "Hours vary by event and box office schedule.",
