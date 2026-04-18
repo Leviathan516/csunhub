@@ -71,7 +71,7 @@ Fri–Sun 11:30 AM–11:00 PM`,
     {
       title: "Two Hands Corn Dogs",
       place: "Reseda Blvd",
-      hours: `Mon–Sun 11:00 AM–9:30 PM (Fri–Sun to 9:30 PM; Mon–Thu to 9:00 PM)`,
+      hours: `Mon–Sun 11:00 AM–9:30 PM`,
       position: { lat: 34.23601503655361, lng: -118.53494506663696 }
     },
     {
@@ -220,123 +220,201 @@ Fri–Sun 11:30 AM–11:00 PM`,
   buildings: [
     {
       position: { lat: 34.2401, lng: -118.5293 },
-      title: "University Library"
+      title: "University Library",
+      description: "Main research library with study rooms, archives, tech help, and course materials.",
+      hours: "Spring 2026: Mon-Thu 8am-10pm, Fri 8am-5pm, Sat 12pm-5pm, Sun 12pm-8pm.",
+      image: "media/images/buildings/universitylibrary.jpg",
     },
     {
       position: { lat: 34.24196605393645, lng: -118.53079831502039 },
-      title: "Bookstein Hall"
+      title: "Bookstein Hall",
+      description: "Smart classrooms and testing spaces; also home to some business advising and workshops.",
+      hours: "Hours vary by classes and department offices.",
+      image: "media/images/buildings/booksteinhall.jpg",
     },
     {
       position: { lat: 34.238877942612916, lng: -118.53071557556179 },
-      title: "Jerome Richfield Hall"
+      title: "Jerome Richfield Hall",
+      description: "Humanities building with language resources, tutoring, and courses in writing, languages, and culture.",
+      hours: "Hours vary by classes and departments.",
+      image: "media/images/buildings/jeromerichfieldhall.jpg",
     },
     {
       position: { lat: 34.24124184294615, lng: -118.52888268905467 },
-      title: "Jacaranda Hall"
+      title: "Jacaranda Hall",
+      description: "Engineering, computer science, health, and nursing building with labs, classrooms, and an auditorium.",
+      hours: "Hours vary by classes and labs.",
+      image: "media/images/buildings/jacaranda.jpg",
     },
     {
       position: { lat: 34.240131811867286, lng: -118.52703814672604 },
-      title: "University Student Union (USU)"
+      title: "University Student Union (USU)",
+      description: "Student hub with lounges, services, events, wellness spaces, dining, and recreation nearby.",
+      hours: "Fall/Spring: Mon-Thu 7am-10pm, Fri 7am-7pm, Sat-Sun 8am-5pm.",
+      image: "media/images/buildings/usu.jpg",
     },
     {
       position: { lat: 34.23822992981255, lng: -118.53102437556188 },
-      title: "Sierra Hall"
+      title: "Sierra Hall",
+      description: "Large classroom building used for social sciences, humanities, and test prep courses.",
+      hours: "Hours vary by class schedule.",
+      image: "media/images/buildings/sierrahall.jpg",
     },
     {
       position: { lat: 34.23895590358568, lng: -118.53021073323313 },
-      title: "Sierra Tower"
+      title: "Sierra Tower",
+      description: "Tower classrooms and academic offices used for general instruction and campus events.",
+      hours: "Hours vary by class and office schedule.",
+      image: "media/images/buildings/sierratower.jpg",
     },
     {
       position: { lat: 34.237747282009735, lng: -118.53026034672615 },
-      title: "Manzanita Hall"
+      title: "Manzanita Hall",
+      description: "Media and performance building with labs, production spaces, green screen tech, and screening rooms.",
+      hours: "Hours vary by classes, labs, and events.",
+      image: "media/images/buildings/manzanitahall.jpg",
     },
     {
       position: { lat: 34.240363381181886, lng: -118.531318433233 },
-      title: "Bayramian Hall"
+      title: "Bayramian Hall",
+      description: "Administrative building with student finance, records, counseling, outreach, and other student services.",
+      hours: "Office hours vary; many student services run weekdays.",
+      image: "media/images/buildings/bayramianhall.jpg",
     },
     {
       position: { lat: 34.2398696201719, lng: -118.53208961789045 },
-      title: "University Hall"
+      title: "University Hall",
+      description: "Academic and administrative building used for offices, classes, and university operations.",
+      hours: "Hours vary by offices and classes.",
+      image: "media/images/buildings/universityhall.jpg",
     },
     {
       position: { lat: 34.24062352779417, lng: -118.52823257556173 },
-      title: "Sequoia Hall"
+      title: "Sequoia Hall",
+      description: "Home to child development and family sciences, with food science labs and the Marilyn Magaram Center.",
+      hours: "Hours vary by classes and labs.",
+      image: "media/images/buildings/sequoiahall.jpg",
     },
     {
       position: { lat: 34.239082991108205, lng: -118.52800655002395 },
-      title: "Citrus Hall"
+      title: "Citrus Hall",
+      description: "Classroom and lab building commonly used for science and health-related instruction.",
+      hours: "Hours vary by classes and labs.",
     },
     {
       position: { lat: 34.23867616671749, lng: -118.52814284111932 },
-      title: "Eucalyptus Hall"
+      title: "Eucalyptus Hall",
+      description: "Science-focused lecture and lab building used for general coursework and labs.",
+      hours: "Hours vary by classes and labs.",
+      image: "media/images/buildings/eucalyptushall.jpg",
     },
     {
       position: { lat: 34.23832473242764, lng: -118.52819760116141 },
-      title: "Live Oak Hall"
+      title: "Live Oak Hall",
+      description: "Science lecture and laboratory building; also home to math and physics support spaces.",
+      hours: "Hours vary by classes and department offices.",
     },
     {
       position: { lat: 34.24194971907548, lng: -118.52680484672598 },
-      title: "Redwood Hall"
+      title: "Redwood Hall",
+      description: "Academic building used for classrooms, faculty offices, and student support spaces.",
+      hours: "Hours vary by classes and offices.",
+      image: "media/images/buildings/redwoodhall.jpg",
     },
     {
       position: { lat: 34.2401, lng: -118.5312 },
-      title: "Nordhoff Hall"
+      title: "Nordhoff Hall",
+      description: "Theatre building with performance spaces, dressing rooms, and production classrooms.",
+      hours: "Hours vary by classes, rehearsals, and performances.",
     },
     {
       position: { lat: 34.2388, lng: -118.5327 },
-      title: "Art and Design Center"
+      title: "Art and Design Center",
+      description: "Art studios, design spaces, galleries, and classrooms for visual arts and creative work.",
+      hours: "Hours vary by classes and gallery events.",
+      image: "media/images/buildings/artanddesigncenter.jpg",
     },
     {
       position: { lat: 34.2419, lng: -118.5289 },
-      title: "Monterey Hall"
+      title: "Monterey Hall",
+      description: "Academic building with classrooms and faculty offices for general university instruction.",
+      hours: "Hours vary by classes and offices.",
+      image: "media/images/buildings/montereyhall.jpg",
     },
     {
       position: { lat: 34.2426, lng: -118.5296 },
-      title: "Oasis Wellness Center"
+      title: "Oasis Wellness Center",
+      description: "Wellness space for relaxation, meditation, recovery tools, and student well-being programs.",
+      hours: "Hours vary by semester and services.",
+      image: "media/images/buildings/oasiswellnesscenter.jpg",
     },
     {
       position: { lat: 34.2428, lng: -118.5278 },
-      title: "The Soraya (VPAC)"
+      title: "The Soraya (VPAC)",
+      description: "Major performing arts venue for concerts, dance, theatre, and campus cultural events.",
+      hours: "Hours vary by event and box office schedule.",
+      image: "media/images/buildings/thesoraya.jpg",
     },
     {
       position: { lat: 34.242, lng: -118.5286 },
-      title: "Extended University Commons"
+      title: "Extended University Commons",
+      description: "Extended learning building with classrooms, program offices, and production support space.",
+      hours: "Hours vary; internal use and rentals only.",
     },
     {
       position: { lat: 34.23743119113274, lng: -118.52818173323318 },
-      title: "Bookstore / Campus Store Complex"
+      title: "Bookstore / Campus Store Complex",
+      description: "Campus store, course materials, supplies, dining, and grab-and-go student services.",
+      hours: "Campus Store: Mon-Thu 9am-3pm, Fri 9am-2pm, Sat-Sun closed; dining varies.",
     },
     {
       position: { lat: 34.239912350736546, lng: -118.52497424857565 },
-      title: "Student Recreation Center (SRC)"
+      title: "Student Recreation Center (SRC)",
+      description: "Gym, fitness, recreation, and wellness programs for students.",
+      hours: "Hours vary by semester; see SRC schedule.",
+      image: "media/images/buildings/src.jpg",
     },
     {
       position: { lat: 34.2455, lng: -118.5361 },
-      title: "University Village Apartments (Housing)"
+      title: "University Village Apartments (Housing)",
+      description: "On-campus apartment-style housing for students and families with nearby community spaces.",
+      hours: "Residential access daily; housing office weekdays 8am-5pm.",
     },
     {
       position: { lat: 34.2439, lng: -118.5357 },
-      title: "Student Housing Administration"
+      title: "Student Housing Administration",
+      description: "Main housing office for applications, resident services, and support.",
+      hours: "Mon-Fri 8am-5pm, Sat-Sun closed.",
     },
     {
       position: { lat: 34.2462, lng: -118.5363 },
-      title: "G9 Housing Parking Structure (landmark)"
+      title: "G9 Housing Parking Structure (landmark)",
+      description: "Housing-area parking landmark near residence spaces and campus apartments.",
+      hours: "Parking access varies by permit and event schedule.",
     },
     {
       position: { lat: 34.2393, lng: -118.5275 },
-      title: "Sustainability Center"
+      title: "Sustainability Center",
+      description: "Campus sustainability resource space tied to environmental programs and student initiatives.",
+      hours: "Hours vary by program and office activity.",
     },
     {
       position: { lat: 34.238, lng: -118.5258 },
-      title: "Police Services / Parking / Public Safety"
+      title: "Police Services / Parking / Public Safety",
+      description: "Public safety, dispatch, parking support, and emergency response services.",
+      hours: "Open 24/7 for police services.",
     },
     {
       position: { lat: 34.2385, lng: -118.5271 },
-      title: "Central Plant"
+      title: "Central Plant",
+      description: "Infrastructure building supporting campus utilities and facility operations.",
+      hours: "Not a general public building; operational access only.",
     },
     {
       position: { lat: 34.2381, lng: -118.533 },
-      title: "Physical Plant Management"
+      title: "Physical Plant Management",
+      description: "Facilities and maintenance operations supporting campus buildings and grounds.",
+      hours: "Operational offices; hours vary by unit.",
     }
   ]
 };
@@ -428,7 +506,11 @@ function createMarkers(places, color) {
       const isParking = color === "#2196F3";
       const loc = place.place ? `📍 ${place.place}` : "";
       const hrs = place.hours
-        ? `<pre style="margin:0; white-space:pre-wrap; line-height:1.35; font-size:12px;">${place.hours}</pre>`
+        ? `<div class="popup-meta"><strong>Hours:</strong> ${place.hours}</div>`
+        : "";
+
+      const desc = place.description
+        ? `<div class="popup-note">${place.description}</div>`
         : "";
 
       const status = isParking ? getParkingStatus(place) : null;
@@ -448,16 +530,22 @@ function createMarkers(places, color) {
         ? `<div class="popup-note">${place.note}</div>`
         : "";
 
+      const image = place.image
+        ? `<img src="${place.image}" alt="${place.title}" class="popup-image">`
+        : "";
+
       const statusHTML = status
         ? `<div class="popup-status ${statusClass}">${status}</div>`
         : "";
 
       const html = `
         <div class="map-popup">
+          ${image}
           <div class="popup-title">${place.title || ""}</div>
           ${statusHTML}
           ${permit}
           ${loc ? `<div class="popup-meta">${loc}</div>` : ""}
+          ${desc}
           ${note}
           ${hrs}
         </div>
