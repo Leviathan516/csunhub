@@ -299,13 +299,7 @@
   <script src="assets/js/util.js"></script>
   <script src="assets/js/main.js"></script>
 
-
   <script>
-    toggle.addEventListener("click", () => {
-  const expanded = toggle.getAttribute("aria-expanded") === "true";
-  toggle.setAttribute("aria-expanded", expanded ? "false" : "true");
-  grid.classList.toggle("is-collapsed", expanded);
-});
     document.addEventListener("DOMContentLoaded", () => {
       const clubsRoot = document.getElementById("clubs-root");
       const categoryFilter = document.getElementById("club-category-filter");
@@ -408,20 +402,19 @@
     const db   = firebase.firestore();
 
     auth.onAuthStateChanged(async user => {
-  const pill = document.getElementById("welcome-pill");
-  if (user) {
-    try {
-      const snap = await db.collection('users').doc(user.uid).get();
-      const username = snap.exists ? snap.data().username : null;
-      if (pill) pill.textContent = username || user.displayName || user.email;
-    } catch (err) {
-      // Firestore read failed, fall back 
-      if (pill) pill.textContent = user.displayName || user.email;
-    }
-  } else {
-    if (pill) pill.textContent = "Not signed in";
-  }
-});
+      const pill = document.getElementById("welcome-pill");
+      if (user) {
+        try {
+          const snap = await db.collection('users').doc(user.uid).get();
+          const username = snap.exists ? snap.data().username : null;
+          if (pill) pill.textContent = username || user.displayName || user.email;
+        } catch (err) {
+          if (pill) pill.textContent = user.displayName || user.email;
+        }
+      } else {
+        if (pill) pill.textContent = "Not signed in";
+      }
+    });
 
     function logout() {
       auth.signOut()
