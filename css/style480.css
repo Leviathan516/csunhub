@@ -449,8 +449,8 @@ select,
   opacity: 1;
 }
 
-.club-image-wrapper img[src*="placeholder.jpg"] {
-  width: 88%;
-  height: 88%;
-  object-fit: contain;
+.club-image-wrapper img[src*="placeholder"] {
+  width: 88% !important;
+  height: 88% !important;
+  object-fit: contain !important;
 }
