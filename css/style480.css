@@ -381,3 +381,84 @@ select,
   color: white;
   border-color: #1a73e8;
 }
+
+/* Clubs page styling/ mostly animations */
+  .controls.clubs-filter-bar {
+  margin: 0 0 1.5rem 0;
+  flex-wrap: wrap;
+}
+
+.clubs-category-select {
+  min-width: 220px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 8px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  font: inherit;
+  color: inherit;
+  transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.clubs-category-select:hover,
+.clubs-category-select:focus {
+  background: rgba(255, 255, 255, 0.55);
+  border-color: rgba(210, 32, 48, 0.35);
+  box-shadow: 0 0 0 3px rgba(210, 32, 48, 0.08);
+  outline: none;
+}
+
+.club-category-toggle {
+  width: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.22);
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  transition: background 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
+}
+
+.club-category-toggle:hover {
+  background: rgba(255, 255, 255, 0.4);
+  border-color: rgba(210, 32, 48, 0.22);
+}
+
+.club-category-toggle:active {
+  transform: translateY(1px);
+}
+
+
+  .clubs-category-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.clubs-filter-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.clubs-filter-wrap::after {
+  content: "expand_more";
+  font-family: "Material Icons";
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  opacity: 0.7;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.clubs-filter-wrap:hover::after {
+  opacity: 1;
+}
+
+.clubs-category-select:focus + .clubs-filter-wrap::after {
+  transform: translateY(-50%) rotate(180deg);
+}
