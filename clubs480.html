@@ -301,6 +301,11 @@
 
 
   <script>
+    toggle.addEventListener("click", () => {
+  const expanded = toggle.getAttribute("aria-expanded") === "true";
+  toggle.setAttribute("aria-expanded", expanded ? "false" : "true");
+  grid.classList.toggle("is-collapsed", expanded);
+});
     document.addEventListener("DOMContentLoaded", () => {
       const clubsRoot = document.getElementById("clubs-root");
       const categoryFilter = document.getElementById("club-category-filter");
