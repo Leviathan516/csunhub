@@ -448,3 +448,9 @@ select,
 .clubs-category-select:focus + .clubs-filter-wrap::after {
   opacity: 1;
 }
+
+.club-image-wrapper img[src*="placeholder.jpg"] {
+  width: 88%;
+  height: 88%;
+  object-fit: contain;
+}
