@@ -478,7 +478,7 @@ function createMarkers(places, color) {
 
 function toggleLayer(markers, buttonId) {
   const allMarkers = [foodMarkers, parkingMarkers, buildingMarkers];
-  const allButtons = document.querySelectorAll(".control-button");
+  const allButtons = document.querySelectorAll("#controls .button");
 
   allMarkers.forEach(markerArray => {
     markerArray.forEach(marker => {
@@ -486,13 +486,15 @@ function toggleLayer(markers, buttonId) {
     });
   });
 
-  allButtons.forEach(button => button.classList.remove("active"));
+  allButtons.forEach(button => {
+    button.classList.remove("primary");
+  });
 
   markers.forEach(marker => {
     marker.map = map;
   });
 
-  document.getElementById(buttonId).classList.add("active");
+  document.getElementById(buttonId).classList.add("primary");
 }
 
 initMap();
