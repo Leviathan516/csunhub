@@ -95,6 +95,101 @@
       .topbar-nav { display: none; }
       #welcome-pill { max-width: 130px; }
     }
+  
+    /* Clubs filter + simple category toggles */
+    .clubs-filter-bar {
+      margin: 1.5rem 0 1.5rem 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .clubs-filter-label {
+      font-weight: 700;
+      color: #55565a;
+      margin-bottom: 0.2rem;
+    }
+
+    .clubs-filter-wrap {
+      position: relative;
+      width: min(100%, 320px);
+    }
+
+    .clubs-category-select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      width: 100%;
+      border: 1px solid rgba(0, 0, 0, 0.10);
+      border-radius: 8px;
+      padding: 10px 40px 10px 12px;
+      background: rgba(255,255,255,0.32);
+      color: inherit;
+      font: inherit;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      outline: none;
+      box-shadow: none;
+    }
+
+    .clubs-filter-wrap::after {
+      content: "expand_more";
+      font-family: "Material Icons";
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      opacity: 0.7;
+    }
+
+    .club-category {
+      margin: 1.2rem 0 2rem 0;
+    }
+
+    .club-category-toggle {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.9rem 1rem;
+      margin: 0 0 1rem 0;
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.22);
+      color: inherit;
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .club-category-toggle:hover {
+      background: rgba(255,255,255,0.34);
+    }
+
+    .club-category-toggle .material-icons {
+      font-size: 1.2rem;
+      line-height: 1;
+      transition: transform 0.2s ease;
+      font-family: "Material Icons";
+    }
+
+    .club-category-toggle[aria-expanded="true"] .material-icons {
+      transform: rotate(180deg);
+    }
+
+    .club-grid.is-collapsed {
+      display: none;
+    }
+
+    .clubs-events-link {
+      margin-top: 2rem;
+    }
+
   </style>
 </head>
 
@@ -180,7 +275,7 @@
         <!-- EVENTS -->
         <section class="clubs-events-link">
           <h2>Upcoming Club Events</h2>
-          <p>For the most up-to-date club events, view the live MataSync events page.</p>
+          <p>For the latest club events, visit the live MataSync events page.</p>
           <p><a href="https://csun.campuslabs.com/engage/events" target="_blank" rel="noopener">Browse live club events on MataSync</a></p>
         </section>
 
@@ -204,6 +299,7 @@
   <script src="assets/js/util.js"></script>
   <script src="assets/js/main.js"></script>
 
+
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const clubsRoot = document.getElementById("clubs-root");
@@ -219,13 +315,13 @@
           .replace(/^-+|-+$/g, "");
       }
 
-      function buildCategoryUI() {
-        const categorySections = Array.from(clubsRoot.querySelectorAll(".club-category"));
-        if (!categorySections.length) return;
+      function enhanceCategories() {
+        const sections = Array.from(clubsRoot.querySelectorAll(".club-category"));
+        if (!sections.length || clubsRoot.dataset.enhanced === "true") return !!sections.length;
 
-        const seen = new Set();
+        clubsRoot.dataset.enhanced = "true";
 
-        categorySections.forEach((section, index) => {
+        sections.forEach((section, index) => {
           const heading = section.querySelector("h2");
           const grid = section.querySelector(".club-grid");
           if (!heading || !grid) return;
@@ -234,74 +330,58 @@
           const categorySlug = slugifyCategory(categoryName);
 
           section.setAttribute("data-category", categorySlug);
-          grid.id = `club-category-panel-${categorySlug}`;
 
-          if (!seen.has(categorySlug)) {
-            const option = document.createElement("option");
-            option.value = categorySlug;
-            option.textContent = categoryName;
-            categoryFilter.appendChild(option);
-            seen.add(categorySlug);
-          }
+          const option = document.createElement("option");
+          option.value = categorySlug;
+          option.textContent = categoryName;
+          categoryFilter.appendChild(option);
 
           const toggle = document.createElement("button");
           toggle.type = "button";
           toggle.className = "club-category-toggle";
           toggle.setAttribute("aria-expanded", index === 0 ? "true" : "false");
-          toggle.setAttribute("aria-controls", grid.id);
           toggle.innerHTML = `
             <span class="club-category-title">${categoryName}</span>
-            <span class="club-category-meta">
-              <span class="club-category-count">${grid.querySelectorAll(".club-card").length}</span>
-              <span class="club-category-icon material-icons" aria-hidden="true">expand_more</span>
-            </span>
+            <span class="material-icons" aria-hidden="true">expand_more</span>
           `;
 
           heading.replaceWith(toggle);
 
           if (index !== 0) {
-            grid.hidden = true;
+            grid.classList.add("is-collapsed");
           }
 
           toggle.addEventListener("click", () => {
-            const isExpanded = toggle.getAttribute("aria-expanded") === "true";
-            toggle.setAttribute("aria-expanded", String(!isExpanded));
-            grid.hidden = isExpanded;
+            const expanded = toggle.getAttribute("aria-expanded") === "true";
+            toggle.setAttribute("aria-expanded", expanded ? "false" : "true");
+            grid.classList.toggle("is-collapsed", expanded);
           });
         });
 
         categoryFilter.addEventListener("change", () => {
           const selected = categoryFilter.value;
-          const sections = Array.from(clubsRoot.querySelectorAll(".club-category"));
-
           sections.forEach((section) => {
-            const matches = selected === "all" || section.getAttribute("data-category") === selected;
-            section.hidden = !matches;
+            const match = selected === "all" || section.getAttribute("data-category") === selected;
+            section.style.display = match ? "" : "none";
 
-            if (matches) {
+            if (match) {
               const toggle = section.querySelector(".club-category-toggle");
               const grid = section.querySelector(".club-grid");
               if (toggle && grid) {
                 toggle.setAttribute("aria-expanded", "true");
-                grid.hidden = false;
+                grid.classList.remove("is-collapsed");
               }
             }
           });
         });
+
+        return true;
       }
 
-      const observer = new MutationObserver(() => {
-        if (clubsRoot.querySelector(".club-category") && !clubsRoot.dataset.enhanced) {
-          clubsRoot.dataset.enhanced = "true";
-          buildCategoryUI();
-          observer.disconnect();
-        }
-      });
-
-      if (clubsRoot.querySelector(".club-category")) {
-        clubsRoot.dataset.enhanced = "true";
-        buildCategoryUI();
-      } else {
+      if (!enhanceCategories()) {
+        const observer = new MutationObserver(() => {
+          if (enhanceCategories()) observer.disconnect();
+        });
         observer.observe(clubsRoot, { childList: true, subtree: true });
       }
     });
