@@ -28,9 +28,6 @@
       --tb-text:    #e8eaed;
       --tb-muted:   rgba(232,234,237,0.5);
       --tb-surface: rgba(255,255,255,0.045);
-      --soft-border:#e7e7ea;
-      --soft-bg:    #f7f7f8;
-      --soft-text:  #5f6368;
     }
 
     #header { display: none !important; }
@@ -91,113 +88,67 @@
       box-shadow: 0 0 12px var(--red-glow); border-bottom: none;
     }
 
-    .clubs-toolbar {
+    /* Simple category controls */
+    .club-tools {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      justify-content: space-between;
-      gap: 0.9rem;
-      margin: 1.5rem 0 1.8rem;
-      padding: 0.9rem 1rem;
-      border: 1px solid var(--soft-border);
-      border-radius: 14px;
-      background: #fff;
+      gap: 0.75rem;
+      margin: 1.75rem 0 1.25rem;
     }
 
-    .clubs-filter-wrap {
-      display: flex;
-      align-items: center;
-      gap: 0.65rem;
-      flex-wrap: wrap;
-    }
-
-    .clubs-filter-label {
-      margin: 0;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      color: var(--soft-text);
+    .club-tools-label {
+      font-size: 0.9rem;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
+      color: rgba(88,88,88,0.8);
+      margin: 0;
     }
 
-    .clubs-filter-select {
+    .category-filter-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .category-filter {
       appearance: none;
       -webkit-appearance: none;
       -moz-appearance: none;
-      min-width: 240px;
-      padding: 0.68rem 2.4rem 0.68rem 0.9rem;
-      border-radius: 999px;
-      border: 1px solid var(--soft-border);
-      background:
-        linear-gradient(45deg, transparent 50%, #8a8f98 50%),
-        linear-gradient(135deg, #8a8f98 50%, transparent 50%),
-        linear-gradient(to right, transparent, transparent);
-      background-position:
-        calc(100% - 18px) calc(50% - 3px),
-        calc(100% - 12px) calc(50% - 3px),
-        100% 0;
-      background-size: 6px 6px, 6px 6px, 2.6rem 100%;
-      background-repeat: no-repeat;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 500;
-      color: #2b2f33;
-      box-shadow: none;
-      margin: 0;
-    }
-
-    .clubs-filter-select:focus {
-      outline: none;
-      border-color: rgba(210,32,48,0.35);
-      box-shadow: 0 0 0 3px rgba(210,32,48,0.08);
-    }
-
-    .clubs-actions {
-      display: flex;
-      align-items: center;
-      gap: 0.55rem;
-      flex-wrap: wrap;
-    }
-
-    .clubs-subtle-btn {
-      border: 1px solid var(--soft-border);
-      background: var(--soft-bg);
-      color: #42464d;
-      border-radius: 999px;
-      padding: 0.56rem 0.9rem;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.88rem;
-      font-weight: 600;
+      min-width: 220px;
+      padding: 0.8rem 2.5rem 0.8rem 0.95rem;
+      border-radius: 12px;
+      border: 1px solid rgba(88, 88, 88, 0.16);
+      background: rgba(255,255,255,0.08);
+      color: #585858;
+      font: inherit;
       line-height: 1;
-      cursor: pointer;
-      transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transition: border-color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
     }
 
-    .clubs-subtle-btn:hover {
-      background: #f0f1f3;
-      border-color: #d7d9de;
-      color: #1f2328;
+    .category-filter:hover,
+    .category-filter:focus {
+      border-color: rgba(210,32,48,0.3);
+      background: rgba(255,255,255,0.16);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.06);
+      outline: none;
+      transform: translateY(-1px);
     }
 
-    .clubs-status {
-      width: 100%;
-      margin-top: -0.15rem;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.9rem;
-      color: #70757d;
+    .category-filter-wrap::after {
+      content: 'expand_more';
+      font-family: 'Material Icons';
+      position: absolute;
+      right: 0.8rem;
+      pointer-events: none;
+      color: rgba(88,88,88,0.75);
+      font-size: 1.2rem;
     }
 
     .club-category {
-      margin-bottom: 1.4rem;
-      border: 1px solid var(--soft-border);
-      border-radius: 16px;
-      background: #fff;
-      overflow: hidden;
-    }
-
-    .club-category .major {
-      margin: 0;
+      margin-bottom: 1.5rem;
     }
 
     .club-category-toggle {
@@ -206,151 +157,98 @@
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
-      padding: 1rem 1.15rem;
-      background: #fbfbfc;
-      border: 0;
-      cursor: pointer;
+      padding: 0.9rem 1rem;
+      border-radius: 14px;
+      border: 1px solid rgba(88, 88, 88, 0.12);
+      background: rgba(255,255,255,0.06);
+      color: inherit;
       text-align: left;
+      cursor: pointer;
+      transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
     }
 
     .club-category-toggle:hover {
-      background: #f6f6f8;
-    }
-
-    .club-category-titlewrap {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      flex-wrap: wrap;
+      background: rgba(255,255,255,0.12);
+      border-color: rgba(210,32,48,0.2);
+      transform: translateY(-1px);
     }
 
     .club-category-toggle h2 {
       margin: 0;
-      letter-spacing: 0.08em;
-      font-size: 0.95em;
+      text-transform: none;
+      letter-spacing: 0.02em;
+      font-size: 1.05rem;
     }
 
-    .club-count-pill {
+    .club-category-meta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: rgba(88,88,88,0.8);
+      font-size: 0.92rem;
+      flex-shrink: 0;
+    }
+
+    .club-count {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-width: 2rem;
-      padding: 0.22rem 0.55rem;
+      min-width: 34px;
+      padding: 0.25rem 0.55rem;
       border-radius: 999px;
-      background: var(--soft-bg);
-      border: 1px solid var(--soft-border);
-      color: #666c75;
-      font-family: 'DM Sans', sans-serif;
+      border: 1px solid rgba(88,88,88,0.12);
+      background: rgba(255,255,255,0.18);
       font-size: 0.82rem;
-      font-weight: 700;
-      line-height: 1;
     }
 
-    .club-category-caret {
-      color: #7a7f87;
-      font-size: 1.2rem;
-      transition: transform 0.2s ease;
+    .club-chevron {
+      font-family: 'Material Icons';
+      font-size: 1.25rem;
+      transition: transform 0.25s ease;
     }
 
-    .club-category.is-collapsed .club-category-caret {
+    .club-category.is-collapsed .club-chevron {
       transform: rotate(-90deg);
     }
 
     .club-category-body {
-      padding: 0 1.15rem 1.15rem;
+      overflow: hidden;
+      transition: max-height 0.3s ease, opacity 0.25s ease, margin-top 0.25s ease;
+      max-height: 4000px;
+      opacity: 1;
+      margin-top: 1rem;
     }
 
     .club-category.is-collapsed .club-category-body {
+      max-height: 0;
+      opacity: 0;
+      margin-top: 0;
+    }
+
+    .filter-empty {
       display: none;
-    }
-
-    .club-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
-      gap: 1rem;
-    }
-
-    .club-card {
-      border: 1px solid var(--soft-border);
-      border-radius: 14px;
-      overflow: hidden;
-      background: #fff;
-    }
-
-    .club-image-wrapper img {
-      width: 100%;
-      aspect-ratio: 500 / 280;
-      object-fit: cover;
-      display: block;
-      background: #f1f2f4;
-    }
-
-    .club-content {
-      padding: 1rem;
-    }
-
-    .club-title {
-      margin-bottom: 0.5rem;
-      font-size: 1rem;
-      letter-spacing: 0.02em;
-    }
-
-    .club-description {
-      margin-bottom: 0.8rem;
-      font-size: 0.92rem;
-      line-height: 1.65;
-    }
-
-    .club-links p,
-    .club-socials {
-      margin: 0 0 0.45rem;
-      font-size: 0.88rem;
-    }
-
-    .events-link-card {
-      margin: 1rem 0 2rem;
-      padding: 1.2rem 1.25rem;
-      border: 1px solid var(--soft-border);
-      border-radius: 14px;
-      background: #fbfbfc;
-    }
-
-    .events-link-card p {
-      margin: 0 0 0.9rem;
-    }
-
-    .events-link-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45rem;
-      padding: 0.72rem 1rem;
-      border-radius: 999px;
-      background: var(--red-dim);
-      border: 1px solid var(--red-glow);
-      color: var(--red) !important;
-      text-decoration: none;
-      border-bottom: none;
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 700;
-      font-size: 0.9rem;
-    }
-
-    .events-link-btn:hover {
-      background: rgba(210,32,48,0.24);
-      border-bottom: none;
+      margin-top: 1rem;
+      padding: 1rem 1.1rem;
+      border-radius: 12px;
+      border: 1px solid rgba(88,88,88,0.12);
+      background: rgba(255,255,255,0.08);
     }
 
     @media screen and (max-width: 736px) {
       .topbar { padding: 0 1rem; }
       .topbar-nav { display: none; }
       #welcome-pill { max-width: 130px; }
-      .clubs-toolbar { padding: 0.9rem; }
-      .clubs-filter-select { min-width: 100%; width: 100%; }
+      .club-tools { align-items: stretch; }
+      .category-filter { width: 100%; min-width: 0; }
+      .category-filter-wrap { width: 100%; }
+      .club-category-toggle { padding: 0.85rem 0.9rem; }
+      .club-category-meta { gap: 0.5rem; font-size: 0.85rem; }
     }
   </style>
 </head>
 
 <body class="is-preload">
+
   <header class="topbar">
     <a href="index.html" class="topbar-logo">
       <img src="images/CSUNlogo.png" alt="CSUN Logo" />
@@ -373,6 +271,7 @@
   </header>
 
   <div id="wrapper">
+
     <header id="header">
       <div class="inner">
         <a href="index.html" class="logo">
@@ -410,34 +309,27 @@
         <p>CSUN has hundreds of clubs covering academics, culture, sports, hobbies, and more. Explore the groups below,
           find ones that match your interests or major, and connect with fellow Matadors.</p>
 
-        <section class="clubs-toolbar" aria-label="Club filters and controls">
-          <div class="clubs-filter-wrap">
-            <p class="clubs-filter-label">Filter by category</p>
-            <select id="club-category-filter" class="clubs-filter-select" aria-label="Filter clubs by category">
+        <section class="club-tools" aria-label="Browse clubs">
+          <p class="club-tools-label">Browse by category</p>
+          <div class="category-filter-wrap">
+            <select id="categoryFilter" class="category-filter" aria-label="Filter clubs by category">
               <option value="all">All categories</option>
             </select>
           </div>
-
-          <div class="clubs-actions">
-            <button type="button" class="clubs-subtle-btn" id="expand-all-btn">Expand all</button>
-            <button type="button" class="clubs-subtle-btn" id="collapse-all-btn">Collapse all</button>
-          </div>
-
-          <div class="clubs-status" id="clubs-status">Loading clubs…</div>
         </section>
 
         <section id="clubs-root">
           <!-- JS will render all club categories + cards in here -->
         </section>
 
+        <div id="filter-empty" class="filter-empty">No clubs are showing in this category yet.</div>
+
         <h2>Upcoming Club Events</h2>
-        <div class="events-link-card">
-          <p>For the most current club events, meeting dates, and campus activities, view the official live calendar on MataSync.</p>
-          <a class="events-link-btn" href="https://csun.campuslabs.com/engage/events" target="_blank" rel="noopener">
-            View live MataSync events
-          </a>
+        <div class="event-card">
+          <a href="https://csun.campuslabs.com/engage/events" target="_blank" rel="noopener">View live club events on MataSync</a>
         </div>
 
+        <br>
         <h2>How to Register for a Club</h2>
         <ol>
           <li>Go to the MIC website.</li>
@@ -447,6 +339,7 @@
         </ol>
       </div>
     </div>
+
   </div>
 
   <script src="js/clubs.js"></script>
@@ -492,127 +385,93 @@
         .catch(err => console.error("Logout error:", err));
     }
 
-    function buildCategoryControls() {
-      const root = document.getElementById("clubs-root");
-      const filter = document.getElementById("club-category-filter");
-      const status = document.getElementById("clubs-status");
-      const expandBtn = document.getElementById("expand-all-btn");
-      const collapseBtn = document.getElementById("collapse-all-btn");
-      if (!root || !filter || !status) return;
+    function enhanceClubCategories() {
+      const root = document.getElementById('clubs-root');
+      const filter = document.getElementById('categoryFilter');
+      const emptyState = document.getElementById('filter-empty');
+      if (!root || !filter) return;
 
-      const categorySections = Array.from(root.querySelectorAll(".club-category"));
-      if (!categorySections.length) {
-        status.textContent = "No clubs available.";
-        return;
-      }
+      const sections = Array.from(root.querySelectorAll('.club-category'));
+      if (!sections.length) return;
 
       const categories = [];
 
-      categorySections.forEach((section, index) => {
-        const heading = section.querySelector("h2");
-        const categoryName = heading ? heading.textContent.trim() : `Category ${index + 1}`;
-        const cards = Array.from(section.querySelectorAll(".club-card"));
-        const body = section.querySelector(".club-grid");
+      sections.forEach((section, index) => {
+        const header = section.querySelector('header.major');
+        const grid = section.querySelector('.club-grid');
+        if (!header || !grid) return;
+
+        const title = header.textContent.trim();
+        const cards = Array.from(grid.querySelectorAll('.club-card'));
         const count = cards.length;
-        section.dataset.categoryName = categoryName;
-        categories.push({ name: categoryName, count });
+        const body = document.createElement('div');
+        body.className = 'club-category-body';
 
-        const header = section.querySelector("header.major") || document.createElement("header");
-        header.classList.add("major");
+        grid.parentNode.insertBefore(body, grid);
+        body.appendChild(grid);
 
-        const button = document.createElement("button");
-        button.type = "button";
-        button.className = "club-category-toggle";
-        button.setAttribute("aria-expanded", "true");
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'club-category-toggle';
+        button.setAttribute('aria-expanded', 'true');
         button.innerHTML = `
-          <span class="club-category-titlewrap">
-            <h2>${categoryName}</h2>
-            <span class="club-count-pill">${count}</span>
+          <h2>${title}</h2>
+          <span class="club-category-meta">
+            <span class="club-count">${count}</span>
+            <span class="club-chevron">expand_more</span>
           </span>
-          <span class="club-category-caret">▾</span>
         `;
 
-        header.innerHTML = "";
-        header.appendChild(button);
-        section.prepend(header);
-
-        const bodyWrap = document.createElement("div");
-        bodyWrap.className = "club-category-body";
-        if (body) bodyWrap.appendChild(body);
-        section.appendChild(bodyWrap);
-
-        button.addEventListener("click", () => {
-          const collapsed = section.classList.toggle("is-collapsed");
-          button.setAttribute("aria-expanded", collapsed ? "false" : "true");
+        button.addEventListener('click', () => {
+          const collapsed = section.classList.toggle('is-collapsed');
+          button.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
         });
+
+        section.insertBefore(button, body);
+        header.remove();
+        section.dataset.category = title;
+        categories.push(title);
+
+        if (index !== 0) {
+          section.classList.add('is-collapsed');
+          button.setAttribute('aria-expanded', 'false');
+        }
       });
 
-      categories.sort((a, b) => a.name.localeCompare(b.name));
-      categories.forEach(category => {
-        const option = document.createElement("option");
-        option.value = category.name;
-        option.textContent = `${category.name} (${category.count})`;
+      [...new Set(categories)].sort((a, b) => a.localeCompare(b)).forEach(category => {
+        const option = document.createElement('option');
+        option.value = category;
+        option.textContent = category;
         filter.appendChild(option);
       });
 
-      function applyFilter() {
+      filter.addEventListener('change', () => {
         const selected = filter.value;
-        let visibleCategories = 0;
-        let visibleClubs = 0;
+        let visibleCount = 0;
 
-        categorySections.forEach(section => {
-          const matches = selected === "all" || section.dataset.categoryName === selected;
-          section.style.display = matches ? "block" : "none";
-          if (matches) {
-            visibleCategories += 1;
-            visibleClubs += section.querySelectorAll(".club-card").length;
-          }
+        sections.forEach(section => {
+          const match = selected === 'all' || section.dataset.category === selected;
+          section.style.display = match ? '' : 'none';
+          if (match) visibleCount += 1;
         });
 
-        if (selected === "all") {
-          status.textContent = `Showing ${visibleClubs} clubs across ${visibleCategories} categories.`;
-        } else {
-          status.textContent = `Showing ${visibleClubs} clubs in ${selected}.`;
-        }
-      }
-
-      filter.addEventListener("change", applyFilter);
-      expandBtn.addEventListener("click", () => {
-        categorySections.forEach(section => {
-          section.classList.remove("is-collapsed");
-          const btn = section.querySelector(".club-category-toggle");
-          if (btn) btn.setAttribute("aria-expanded", "true");
-        });
+        emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
       });
-      collapseBtn.addEventListener("click", () => {
-        categorySections.forEach(section => {
-          if (section.style.display === "none") return;
-          section.classList.add("is-collapsed");
-          const btn = section.querySelector(".club-category-toggle");
-          if (btn) btn.setAttribute("aria-expanded", "false");
-        });
-      });
-
-      applyFilter();
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
-      const ready = () => {
-        if (document.querySelector("#clubs-root .club-category")) {
-          buildCategoryControls();
-          return true;
-        }
-        return false;
-      };
-
-      if (ready()) return;
-
-      let tries = 0;
+    document.addEventListener('DOMContentLoaded', () => {
+      const start = Date.now();
       const timer = setInterval(() => {
-        tries += 1;
-        if (ready() || tries > 40) clearInterval(timer);
-      }, 150);
+        const hasSections = document.querySelector('#clubs-root .club-category');
+        if (hasSections) {
+          clearInterval(timer);
+          enhanceClubCategories();
+        } else if (Date.now() - start > 4000) {
+          clearInterval(timer);
+        }
+      }, 100);
     });
   </script>
+
 </body>
 </html>
