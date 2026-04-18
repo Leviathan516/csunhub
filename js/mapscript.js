@@ -219,7 +219,7 @@ Fri–Sun 11:30 AM–11:00 PM`,
 
   buildings: [
     {
-      position: { lat: 34.2401, lng: -118.5293 },
+      position: { lat: 34.24006948351439, lng: -118.5293236298751 },
       title: "University Library",
       description: "Main research library with study rooms, archives, tech help, and course materials.",
       hours: "Spring 2026: Mon-Thu 8am-10pm, Fri 8am-5pm, Sat 12pm-5pm, Sun 12pm-8pm.",
@@ -322,41 +322,41 @@ Fri–Sun 11:30 AM–11:00 PM`,
       image: "media/images/buildings/redwoodhall.jpg",
     },
     {
-      position: { lat: 34.2401, lng: -118.5312 },
+      position: { lat: 34.2361444, lng: -118.530542 },
       title: "Nordhoff Hall",
       description: "Theatre building with performance spaces, dressing rooms, and production classrooms.",
       hours: "Hours vary by classes, rehearsals, and performances.",
     },
     {
-      position: { lat: 34.2388, lng: -118.5327 },
+      position: { lat: 34.24312844015794, lng: -118.52975859998882 },
       title: "Art and Design Center",
       description: "Art studios, design spaces, galleries, and classrooms for visual arts and creative work.",
       hours: "Hours vary by classes and gallery events.",
       image: "media/images/buildings/artanddesigncenter.jpg",
     },
     {
-      position: { lat: 34.2419, lng: -118.5289 },
+      position: { lat: 34.2366693706413, lng: -118.52379891348313 },
       title: "Monterey Hall",
       description: "Academic building with classrooms and faculty offices for general university instruction.",
       hours: "Hours vary by classes and offices.",
       image: "media/images/buildings/montereyhall.jpg",
     },
     {
-      position: { lat: 34.2426, lng: -118.5296 },
+      position: { lat: 34.2394602802, lng: -118.525822337 },
       title: "Oasis Wellness Center",
       description: "Wellness space for relaxation, meditation, recovery tools, and student well-being programs.",
       hours: "Hours vary by semester and services.",
       image: "media/images/buildings/oasiswellnesscenter.jpg",
     },
     {
-      position: { lat: 34.2360648919923, lng: -118.52858363067132 },
+      position: { lat: 34.236162459890366, lng: -118.52858363067132 },
       title: "The Soraya (VPAC)",
       description: "Major performing arts venue for concerts, dance, theatre, and campus cultural events.",
       hours: "Hours vary by event and box office schedule.",
       image: "media/images/buildings/thesoraya.jpg",
     },
     {
-      position: { lat: 34.242, lng: -118.5286 },
+      position: { lat: 34.240612997141255, lng: -118.53267431532977 },
       title: "Extended University Commons",
       description: "Extended learning building with classrooms, program offices, and production support space.",
       hours: "Hours vary; internal use and rentals only.",
@@ -368,20 +368,20 @@ Fri–Sun 11:30 AM–11:00 PM`,
       hours: "Campus Store: Mon-Thu 9am-3pm, Fri 9am-2pm, Sat-Sun closed; dining varies.",
     },
     {
-      position: { lat: 34.239912350736546, lng: -118.52497424857565 },
+      position: { lat: 34.2397767274, lng: -118.525089862 },
       title: "Student Recreation Center (SRC)",
       description: "Gym, fitness, recreation, and wellness programs for students.",
       hours: "Hours vary by semester; see SRC schedule.",
       image: "media/images/buildings/src.jpg",
     },
     {
-      position: { lat: 34.2455, lng: -118.5361 },
+      position: { lat: 34.252309136882246, lng: -118.52361714416513 },
       title: "University Village Apartments (Housing)",
       description: "On-campus apartment-style housing for students and families with nearby community spaces.",
       hours: "Residential access daily; housing office weekdays 8am-5pm.",
     },
     {
-      position: { lat: 34.2439, lng: -118.5357 },
+      position: { lat: 34.249843546542394, lng: -118.52420024047102 },
       title: "Student Housing Administration",
       description: "Main housing office for applications, resident services, and support.",
       hours: "Mon-Fri 8am-5pm, Sat-Sun closed.",
@@ -393,25 +393,25 @@ Fri–Sun 11:30 AM–11:00 PM`,
       hours: "Parking access varies by permit and event schedule.",
     },
     {
-      position: { lat: 34.2393, lng: -118.5275 },
+      position: { lat: 34.240902181188424, lng: -118.52662629999998 },
       title: "Sustainability Center",
       description: "Campus sustainability resource space tied to environmental programs and student initiatives.",
       hours: "Hours vary by program and office activity.",
     },
     {
-      position: { lat: 34.238, lng: -118.5258 },
+      position: { lat: 34.23863466910609, lng: -118.5334011306709 },
       title: "Police Services / Parking / Public Safety",
       description: "Public safety, dispatch, parking support, and emergency response services.",
       hours: "Open 24/7 for police services.",
     },
     {
-      position: { lat: 34.2385, lng: -118.5271 },
+      position: { lat: 34.243172449357196, lng: -118.53060013067119 },
       title: "Central Plant",
       description: "Infrastructure building supporting campus utilities and facility operations.",
       hours: "Not a general public building; operational access only.",
     },
     {
-      position: { lat: 34.2381, lng: -118.533 },
+      position: { lat: 34.2389668666044, lng: -118.52629011170083 },
       title: "Physical Plant Management",
       description: "Facilities and maintenance operations supporting campus buildings and grounds.",
       hours: "Operational offices; hours vary by unit.",
@@ -453,6 +453,120 @@ function getParkingStatus(place) {
   return "Open";
 }
 
+
+function getAllMapItems() {
+  return [
+    ...locations.food.map(place => ({ ...place, type: "Food", color: "#FFC107" })),
+    ...locations.parking.map(place => ({ ...place, type: "Parking", color: "#2196F3" })),
+    ...locations.buildings.map(place => ({ ...place, type: "Building", color: "#4CAF50" }))
+  ];
+}
+
+function buildPopupHTML(place, color) {
+  const isParking = color === "#2196F3";
+  const loc = place.place ? `📍 ${place.place}` : "";
+  const hrs = place.hours
+    ? `<pre style="margin:0; white-space:pre-wrap; line-height:1.35; font-size:12px;">${place.hours}</pre>`
+    : "";
+
+  const desc = place.description
+    ? `<div class="popup-note">${place.description}</div>`
+    : "";
+
+  const status = isParking ? getParkingStatus(place) : null;
+
+  let statusClass = "";
+  if (status === "Open") statusClass = "status-open";
+  else if (status === "Filling Up") statusClass = "status-filling";
+  else if (status === "Busy") statusClass = "status-busy";
+  else if (status === "Packed") statusClass = "status-packed";
+  else if (status === "Limited") statusClass = "status-limited";
+
+  const permit = place.permit
+    ? `<div class="popup-meta"><strong>Permit:</strong> ${place.permit}</div>`
+    : "";
+
+  const statusHTML = status
+    ? `<div class="popup-status ${statusClass}">${status}</div>`
+    : "";
+
+  const image = place.image
+    ? `<img src="${place.image}" alt="${place.title}" class="popup-image">`
+    : "";
+
+  return `
+    <div class="map-popup">
+      ${image}
+      <div class="popup-title">${place.title || ""}</div>
+      ${statusHTML}
+      ${permit}
+      ${loc ? `<div class="popup-meta">${loc}</div>` : ""}
+      ${desc}
+      ${hrs}
+    </div>
+  `;
+}
+
+function showSearchResults(matches) {
+  const resultsBox = document.getElementById("map-search-results");
+  if (!resultsBox) return;
+
+  resultsBox.innerHTML = "";
+
+  if (!matches.length) {
+    resultsBox.innerHTML = `<div class="map-search-result">No matches found.</div>`;
+    return;
+  }
+
+  matches.forEach(place => {
+    const item = document.createElement("div");
+    item.className = "map-search-result";
+    item.innerHTML = `
+      <strong>${place.title}</strong>
+      <div class="map-search-type">${place.type}</div>
+    `;
+
+    item.addEventListener("click", () => {
+      map.setCenter(place.position);
+      map.setZoom(18);
+
+      infoWindow.setContent(buildPopupHTML(place, place.color));
+      infoWindow.setPosition(place.position);
+      infoWindow.open({ map });
+
+      if (place.type === "Food") toggleLayer(foodMarkers, "food-btn");
+      else if (place.type === "Parking") toggleLayer(parkingMarkers, "parking-btn");
+      else toggleLayer(buildingMarkers, "buildings-btn");
+    });
+
+    resultsBox.appendChild(item);
+  });
+}
+
+function runMapSearch() {
+  const input = document.getElementById("map-search-input");
+  if (!input) return;
+
+  const query = input.value.trim().toLowerCase();
+
+  if (!query) {
+    const results = document.getElementById("map-search-results");
+    if (results) results.innerHTML = "";
+    return;
+  }
+
+  const matches = getAllMapItems().filter(place => {
+    const titleMatch = place.title && place.title.toLowerCase().includes(query);
+    const placeMatch = place.place && place.place.toLowerCase().includes(query);
+    const permitMatch = place.permit && place.permit.toLowerCase().includes(query);
+    const descMatch = place.description && place.description.toLowerCase().includes(query);
+    return titleMatch || placeMatch || permitMatch || descMatch;
+  });
+
+  showSearchResults(matches.slice(0, 8));
+}
+
+
 async function initMap() {
   const { Map } = await google.maps.importLibrary("maps");
   await google.maps.importLibrary("marker");
@@ -472,7 +586,23 @@ async function initMap() {
   buildingMarkers = createMarkers(locations.buildings, "#4CAF50");
 
   document.getElementById("food-btn").addEventListener("click", () => {
-    toggleLayer(foodMarkers, "food-btn");
+    const mapSearchBtn = document.getElementById("map-search-btn");
+  const mapSearchInput = document.getElementById("map-search-input");
+
+  if (mapSearchBtn) {
+    mapSearchBtn.addEventListener("click", runMapSearch);
+  }
+
+  if (mapSearchInput) {
+    mapSearchInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        runMapSearch();
+      }
+    });
+  }
+
+  toggleLayer(foodMarkers, "food-btn");
   });
 
   document.getElementById("parking-btn").addEventListener("click", () => {
@@ -482,6 +612,22 @@ async function initMap() {
   document.getElementById("buildings-btn").addEventListener("click", () => {
     toggleLayer(buildingMarkers, "buildings-btn");
   });
+
+  const mapSearchBtn = document.getElementById("map-search-btn");
+  const mapSearchInput = document.getElementById("map-search-input");
+
+  if (mapSearchBtn) {
+    mapSearchBtn.addEventListener("click", runMapSearch);
+  }
+
+  if (mapSearchInput) {
+    mapSearchInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        runMapSearch();
+      }
+    });
+  }
 
   toggleLayer(foodMarkers, "food-btn");
 }
@@ -503,53 +649,7 @@ function createMarkers(places, color) {
     });
 
     marker.addListener("click", () => {
-      const isParking = color === "#2196F3";
-      const loc = place.place ? `📍 ${place.place}` : "";
-      const hrs = place.hours
-        ? `<div class="popup-meta"><strong>Hours:</strong> ${place.hours}</div>`
-        : "";
-
-      const desc = place.description
-        ? `<div class="popup-note">${place.description}</div>`
-        : "";
-
-      const status = isParking ? getParkingStatus(place) : null;
-
-      let statusClass = "";
-      if (status === "Open") statusClass = "status-open";
-      else if (status === "Filling Up") statusClass = "status-filling";
-      else if (status === "Busy") statusClass = "status-busy";
-      else if (status === "Packed") statusClass = "status-packed";
-      else if (status === "Limited") statusClass = "status-limited";
-
-      const permit = place.permit
-        ? `<div class="popup-meta"><strong>Permit:</strong> ${place.permit}</div>`
-        : "";
-
-      const note = place.note
-        ? `<div class="popup-note">${place.note}</div>`
-        : "";
-
-      const image = place.image
-        ? `<img src="${place.image}" alt="${place.title}" class="popup-image">`
-        : "";
-
-      const statusHTML = status
-        ? `<div class="popup-status ${statusClass}">${status}</div>`
-        : "";
-
-      const html = `
-        <div class="map-popup">
-          ${image}
-          <div class="popup-title">${place.title || ""}</div>
-          ${statusHTML}
-          ${permit}
-          ${loc ? `<div class="popup-meta">${loc}</div>` : ""}
-          ${desc}
-          ${note}
-          ${hrs}
-        </div>
-      `;
+      const html = buildPopupHTML(place, color);
 
       infoWindow.setContent(html);
       infoWindow.open({
