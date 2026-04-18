@@ -3916,3 +3916,37 @@ body.is-menu-visible #menu .close {
 	background: #ececec;
 	color: #555;
 }
+
+#map-search-wrap {
+  margin: 0 0 1.25em 0;
+}
+
+#map-search-results {
+  margin-top: 0.75em;
+}
+
+.map-search-result {
+  border: solid 1px #c9c9c9;
+  border-radius: 4px;
+  padding: 0.75em 1em;
+  margin-bottom: 0.6em;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.map-search-result:hover {
+  border-color: #d22030;
+  background-color: rgba(210, 32, 48, 0.06);
+}
+
+.map-search-result strong {
+  display: block;
+  margin-bottom: 0.15em;
+}
+
+.map-search-type {
+  font-size: 0.8em;
+  color: #777;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
