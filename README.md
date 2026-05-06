@@ -1,6 +1,8 @@
 # CSUN Campus Resource Hub
  https://leviathan516.github.io/csunhub/ & https://csunhub2.onrender.com/
 
+<img width="1216" height="902" alt="image" src="https://github.com/user-attachments/assets/cc125460-deec-48e6-b1dd-bfc175994892" />
+
  
 A centralized web portal that helps CSUN students quickly find campus resources — maps, dining, clubs, careers, and a personalized major skill tree to track their path to graduation.
  
