@@ -416,6 +416,12 @@ Fri–Sun 11:30 AM–11:00 PM`,
       description: "Facilities and maintenance operations supporting campus buildings and grounds.",
       hours: "Operational offices; hours vary by unit.",
     }
+    {
+      position: { lat: 34.23657714994378, lng: -118.52820649995766 },
+      title: "Kurland Lecture Hall",
+      description: "Lecture hall used for general university classes, large courses, and academic events.",
+      hours: "Hours vary by class schedule and events.",
+    }
   ]
 };
 
